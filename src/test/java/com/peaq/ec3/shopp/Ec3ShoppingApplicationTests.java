@@ -1,6 +1,6 @@
 package com.peaq.ec3.shopp;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

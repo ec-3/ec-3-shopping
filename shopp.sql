@@ -1,6 +1,7 @@
 CREATE TABLE `ec^3`.`user_Info`(
   `id`          bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name`   varchar(32) NOT NULL  DEFAULT '' COMMENT '用户名称',
+  `username`   varchar(32) NOT NULL  DEFAULT '' COMMENT '用户名称',
+  `password` varchar(32)  NOT NULL DEFAULT '' COMMENT '密码',
   `card_type`   tinyint(1)  NOT NULL DEFAULT '0' COMMENT '证件类型：0 身份证，1 护照',
   `card_no`     varchar(32)  NOT NULL DEFAULT '0'  COMMENT '证件号码',
   `mobile`      varchar(32)NOT NULL DEFAULT '' COMMENT '手机号',
@@ -26,7 +27,7 @@ CREATE TABLE `ec^3`.`shop_car`(
     KEY `idx_user_product` (`user_id`,`product_num`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='购物车表';
 
-CREATE TABLE `ec^3`.`address_management` (
+CREATE TABLE `ec^3`.`address_manage` (
    `id` bigint(20) unsigned  NOT NULL AUTO_INCREMENT COMMENT '自增主键',
    `def_flag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否默认：0-非默认 1-默认',
    `user_id` varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
@@ -83,9 +84,9 @@ CREATE TABLE `ec^3`.`order` (
   `invoice_recipient_email` varchar(32) NOT NULL DEFAULT '' COMMENT '收票人邮箱',
   `invoice_additional_info` varchar(255) NOT NULL DEFAULT '' COMMENT '补充资料',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '支付状态：0-待支付 1-已支付 2-已取消 3-已关闭',
-  `pay_time` datetime NOT NULL DEFAULT null COMMENT '支付时间',
+  `pay_time` datetime  DEFAULT null COMMENT '支付时间',
   `delivery_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '发货状态：0-待发货 1-部分发货 2-已发货（全部发货）',
-  `cancel_time` datetime NOT NULL DEFAULT null COMMENT '取消订单时间',
+  `cancel_time` datetime  DEFAULT null COMMENT '取消订单时间',
   `create_operator` varchar(32) NOT NULL DEFAULT '' COMMENT '创建人',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_operator` varchar(32) NOT NULL DEFAULT '' COMMENT '更新人',
