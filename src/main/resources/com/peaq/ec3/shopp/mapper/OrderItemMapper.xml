@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.peaq.ec3.shopp.mapper.ShopCarMapper">
-    <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.ShopCar">
+<mapper namespace="com.peaq.ec3.shopp.mapper.OrderItemMapper">
+    <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.OrderItem">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
         <result column="product_num" jdbcType="VARCHAR" property="productNum"/>
+        <result column="master_pic" jdbcType="VARCHAR" property="masterPic"/>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
-        <result column="del_flag" jdbcType="BIT" property="delFlag"/>
+        <result column="price" jdbcType="BIGINT" property="price"/>
+        <result column="equity_price" jdbcType="BIGINT" property="equityPrice"/>
+        <result column="cost_price" jdbcType="BIGINT" property="costPrice"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
@@ -71,15 +77,16 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, user_id, product_num, quantity, del_flag, create_time, update_time
+    id, user_id, order_id, product_num, master_pic, product_name, quantity, price, equity_price, 
+    cost_price, `type`, create_time, update_time
   </sql>
-    <select id="selectByExample" parameterType="com.peaq.ec3.shopp.model.ShopCarExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.peaq.ec3.shopp.model.OrderItemExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from shop_car
+        from order_item
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -90,29 +97,33 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from shop_car
+        from order_item
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from shop_car
+    delete from order_item
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <delete id="deleteByExample" parameterType="com.peaq.ec3.shopp.model.ShopCarExample">
-        delete from shop_car
+    <delete id="deleteByExample" parameterType="com.peaq.ec3.shopp.model.OrderItemExample">
+        delete from order_item
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.peaq.ec3.shopp.model.ShopCar">
-    insert into shop_car (id, user_id, product_num, 
-      quantity, del_flag, create_time, 
+    <insert id="insert" parameterType="com.peaq.ec3.shopp.model.OrderItem">
+    insert into order_item (id, user_id, order_id, 
+      product_num, master_pic, product_name, 
+      quantity, price, equity_price, 
+      cost_price, `type`, create_time, 
       update_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{productNum,jdbcType=VARCHAR}, 
-      #{quantity,jdbcType=INTEGER}, #{delFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{productNum,jdbcType=VARCHAR}, #{masterPic,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{price,jdbcType=BIGINT}, #{equityPrice,jdbcType=BIGINT}, 
+      #{costPrice,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.ShopCar">
-        insert into shop_car
+    <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.OrderItem">
+        insert into order_item
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -120,14 +131,32 @@
             <if test="userId != null">
                 user_id,
             </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
             <if test="productNum != null">
                 product_num,
+            </if>
+            <if test="masterPic != null">
+                master_pic,
+            </if>
+            <if test="productName != null">
+                product_name,
             </if>
             <if test="quantity != null">
                 quantity,
             </if>
-            <if test="delFlag != null">
-                del_flag,
+            <if test="price != null">
+                price,
+            </if>
+            <if test="equityPrice != null">
+                equity_price,
+            </if>
+            <if test="costPrice != null">
+                cost_price,
+            </if>
+            <if test="type != null">
+                `type`,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -143,14 +172,32 @@
             <if test="userId != null">
                 #{userId,jdbcType=VARCHAR},
             </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
             <if test="productNum != null">
                 #{productNum,jdbcType=VARCHAR},
+            </if>
+            <if test="masterPic != null">
+                #{masterPic,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
             </if>
             <if test="quantity != null">
                 #{quantity,jdbcType=INTEGER},
             </if>
-            <if test="delFlag != null">
-                #{delFlag,jdbcType=BIT},
+            <if test="price != null">
+                #{price,jdbcType=BIGINT},
+            </if>
+            <if test="equityPrice != null">
+                #{equityPrice,jdbcType=BIGINT},
+            </if>
+            <if test="costPrice != null">
+                #{costPrice,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
@@ -160,14 +207,14 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="com.peaq.ec3.shopp.model.ShopCarExample" resultType="java.lang.Long">
-        select count(*) from shop_car
+    <select id="countByExample" parameterType="com.peaq.ec3.shopp.model.OrderItemExample" resultType="java.lang.Long">
+        select count(*) from order_item
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update shop_car
+        update order_item
         <set>
             <if test="row.id != null">
                 id = #{row.id,jdbcType=BIGINT},
@@ -175,14 +222,32 @@
             <if test="row.userId != null">
                 user_id = #{row.userId,jdbcType=VARCHAR},
             </if>
+            <if test="row.orderId != null">
+                order_id = #{row.orderId,jdbcType=VARCHAR},
+            </if>
             <if test="row.productNum != null">
                 product_num = #{row.productNum,jdbcType=VARCHAR},
+            </if>
+            <if test="row.masterPic != null">
+                master_pic = #{row.masterPic,jdbcType=VARCHAR},
+            </if>
+            <if test="row.productName != null">
+                product_name = #{row.productName,jdbcType=VARCHAR},
             </if>
             <if test="row.quantity != null">
                 quantity = #{row.quantity,jdbcType=INTEGER},
             </if>
-            <if test="row.delFlag != null">
-                del_flag = #{row.delFlag,jdbcType=BIT},
+            <if test="row.price != null">
+                price = #{row.price,jdbcType=BIGINT},
+            </if>
+            <if test="row.equityPrice != null">
+                equity_price = #{row.equityPrice,jdbcType=BIGINT},
+            </if>
+            <if test="row.costPrice != null">
+                cost_price = #{row.costPrice,jdbcType=BIGINT},
+            </if>
+            <if test="row.type != null">
+                `type` = #{row.type,jdbcType=TINYINT},
             </if>
             <if test="row.createTime != null">
                 create_time = #{row.createTime,jdbcType=TIMESTAMP},
@@ -196,32 +261,56 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update shop_car
+        update order_item
         set id = #{row.id,jdbcType=BIGINT},
         user_id = #{row.userId,jdbcType=VARCHAR},
+        order_id = #{row.orderId,jdbcType=VARCHAR},
         product_num = #{row.productNum,jdbcType=VARCHAR},
+        master_pic = #{row.masterPic,jdbcType=VARCHAR},
+        product_name = #{row.productName,jdbcType=VARCHAR},
         quantity = #{row.quantity,jdbcType=INTEGER},
-        del_flag = #{row.delFlag,jdbcType=BIT},
+        price = #{row.price,jdbcType=BIGINT},
+        equity_price = #{row.equityPrice,jdbcType=BIGINT},
+        cost_price = #{row.costPrice,jdbcType=BIGINT},
+        `type` = #{row.type,jdbcType=TINYINT},
         create_time = #{row.createTime,jdbcType=TIMESTAMP},
         update_time = #{row.updateTime,jdbcType=TIMESTAMP}
         <if test="example != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.ShopCar">
-        update shop_car
+    <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.OrderItem">
+        update order_item
         <set>
             <if test="userId != null">
                 user_id = #{userId,jdbcType=VARCHAR},
             </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
             <if test="productNum != null">
                 product_num = #{productNum,jdbcType=VARCHAR},
+            </if>
+            <if test="masterPic != null">
+                master_pic = #{masterPic,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
             </if>
             <if test="quantity != null">
                 quantity = #{quantity,jdbcType=INTEGER},
             </if>
-            <if test="delFlag != null">
-                del_flag = #{delFlag,jdbcType=BIT},
+            <if test="price != null">
+                price = #{price,jdbcType=BIGINT},
+            </if>
+            <if test="equityPrice != null">
+                equity_price = #{equityPrice,jdbcType=BIGINT},
+            </if>
+            <if test="costPrice != null">
+                cost_price = #{costPrice,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=TINYINT},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -232,42 +321,34 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.ShopCar">
-    update shop_car
+    <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.OrderItem">
+    update order_item
     set user_id = #{userId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
       product_num = #{productNum,jdbcType=VARCHAR},
+      master_pic = #{masterPic,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
       quantity = #{quantity,jdbcType=INTEGER},
-      del_flag = #{delFlag,jdbcType=BIT},
+      price = #{price,jdbcType=BIGINT},
+      equity_price = #{equityPrice,jdbcType=BIGINT},
+      cost_price = #{costPrice,jdbcType=BIGINT},
+      `type` = #{type,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="getShopCarList" resultMap="BaseResultMap">
+    <select id="getOrderItemList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from shop_car where user_id = #{userId}  order by create_time desc
+        from order_item
+        <where>
+            <if test="userId != null and userId!=''">
+                user_id = #{userId} and
+            </if>
+            <if test="orderId != null and orderId!=''">
+                order_id = #{orderId}
+            </if>
+        </where>
     </select>
-
-    <update id="delCarBatch">
-        UPDATE `shop_car` SET `del_flag` = '1' WHERE `id` IN
-        <foreach collection="ids" open="(" close=")" item="id" separator="," index="index">
-            {#id}
-        </foreach>
-    </update>
-
-    <insert id="addBatch">
-        INSERT INTO `shop_car` ( `user_id`,`product_num`,`quantity`)
-        VALUES
-        <foreach collection="cars" item="car" separator="," index="index">
-            (#{car.userId}, #{car.productNum},#{car.quantity})
-        </foreach>
-    </insert>
-
-    <update id="updateBatch">
-        <foreach collection="updateCar" item="car" index="index" separator=";">
-            update shop_car set quantity=${car.quantity} where user_id = ${car.userId}
-        </foreach>
-    </update>
-
 </mapper>

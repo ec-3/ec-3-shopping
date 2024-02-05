@@ -48,4 +48,9 @@ public class UserInfoController {
         return userInfoMapper.getUserByLogin(user);
     }
 
+    @GetMapping("/test")
+    public String test() {
+       return "哈哈哈哈哈";
+    }
+
 }

@@ -27,4 +27,12 @@ public interface ShopCarMapper {
     int updateByPrimaryKeySelective(ShopCar row);
 
     int updateByPrimaryKey(ShopCar row);
+
+    List<ShopCar> getShopCarList(String userId);
+
+    int delCarBatch(@Param("ids") List<Long> ids);
+
+    int addBatch(@Param("cars") List<ShopCar> cars);
+
+    int updateBatch(@Param("updateCar") List<ShopCar> updateCar);
 }

@@ -21,6 +21,8 @@ public class AddressManage {
 
     private String address;
 
+    private Byte label;
+
     private String createOperator;
 
     private Date createTime;
@@ -107,6 +109,14 @@ public class AddressManage {
         this.address = address;
     }
 
+    public Byte getLabel() {
+        return label;
+    }
+
+    public void setLabel(Byte label) {
+        this.label = label;
+    }
+
     public String getCreateOperator() {
         return createOperator;
     }
@@ -178,6 +188,7 @@ public class AddressManage {
         sb.append(", city=").append(city);
         sb.append(", district=").append(district);
         sb.append(", address=").append(address);
+        sb.append(", label=").append(label);
         sb.append(", createOperator=").append(createOperator);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateOperator=").append(updateOperator);

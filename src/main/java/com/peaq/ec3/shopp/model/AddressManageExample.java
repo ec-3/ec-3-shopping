@@ -715,6 +715,66 @@ public class AddressManageExample {
             return (Criteria) this;
         }
 
+        public Criteria andLabelIsNull() {
+            addCriterion("`label` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelIsNotNull() {
+            addCriterion("`label` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelEqualTo(Byte value) {
+            addCriterion("`label` =", value, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelNotEqualTo(Byte value) {
+            addCriterion("`label` <>", value, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelGreaterThan(Byte value) {
+            addCriterion("`label` >", value, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`label` >=", value, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelLessThan(Byte value) {
+            addCriterion("`label` <", value, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelLessThanOrEqualTo(Byte value) {
+            addCriterion("`label` <=", value, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelIn(List<Byte> values) {
+            addCriterion("`label` in", values, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelNotIn(List<Byte> values) {
+            addCriterion("`label` not in", values, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelBetween(Byte value1, Byte value2) {
+            addCriterion("`label` between", value1, value2, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andLabelNotBetween(Byte value1, Byte value2) {
+            addCriterion("`label` not between", value1, value2, "label");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateOperatorIsNull() {
             addCriterion("create_operator is null");
             return (Criteria) this;
