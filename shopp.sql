@@ -87,7 +87,7 @@ CREATE TABLE `ec^3`.`order` (
   UNIQUE KEY `uniq_order_id` (`order_id`),
   KEY `idx_order_user_id` (`user_id`),
   KEY `idx_order_create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='商品订单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='订单表';
 
 CREATE TABLE `ec^3`.`order_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
@@ -108,7 +108,45 @@ CREATE TABLE `ec^3`.`order_item` (
   KEY `idx_order_item_user_id` (`user_id`),
   KEY `idx_order_item_pid` (`product_num`),
   KEY `idx_order_create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='商品订单明细表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='订单明细表';
+
+
+CREATE TABLE `ec^3`.`product_info` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `product_num` varchar(32) NOT NULL DEFAULT '' COMMENT '商品编号',
+  `product_name` varchar(32) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `supplier_id` varchar(32) NOT NULL DEFAULT '' COMMENT '供应商ID',
+  `price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '销售单价',
+  `cost_price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '商品成本价',
+  `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '商品分类：0-xx, 1-xx',
+  `color_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '商品颜色：0-xx, 1-xx',
+  `publish_status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '上下架状态：0下架1上架',
+  `production_date` timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生产日期',
+  `describe` varchar(2000) NOT NULL DEFAULT '' COMMENT '商品描述',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_product_num` (`product_num`),
+  KEY `idx_product_name` (`product_name`),
+  KEY `idx_product_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='商品信息表';
+
+
+CREATE TABLE `ec^3`.`product_pic` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `product_id` bigint(20) NOT NULL  COMMENT '商品ID',
+  `pic_desc` varchar(1000) NOT NULL DEFAULT '' COMMENT '图片描述',
+  `pic_url` varchar(100) NOT NULL DEFAULT '' COMMENT '图片URL',
+  `is_master` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否主图：0.非主图1.主图',
+  `pic_order` tinyint(2) NOT NULL DEFAULT '0' COMMENT '图片排序',
+  `pic_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '图片是否有效：0无效 1有效',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_product_id` (`product_id`),
+  KEY `idx_pic_url` (`pic_url`),
+  KEY `idx_pic_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='商品图片表';
 
 
 

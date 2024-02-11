@@ -4,7 +4,6 @@ import java.util.List;
 
 public class PageResponse<T> {
 
-
     private long total;
 
     private List<T> records;

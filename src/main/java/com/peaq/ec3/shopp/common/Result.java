@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class Result<T> {
-    private String code;
+    private int code;
     private String msg;
     private T data;
 
@@ -13,87 +13,54 @@ public class Result<T> {
 
     }
 
-    public Result(String code, String msg) {
+    public Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Result(String code, String msg, T data) {
+    public Result(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
-    
-    public void setSuccessData(T data) {
-        this.code = ReturnCode.CODE_0;
-        this.msg = ReturnCode.DESC_0;
-        this.data = data;
-    }
 
-    public void setFailData(T data) {
-        this.code = ReturnCode.CODE_9;
-        this.msg = ReturnCode.DESC_9;
-        this.data = data;
-    }
-
-    public void setTimeOutData(T data) {
-        this.code = ReturnCode.CODE_5;
-        this.msg = ReturnCode.DESC_5;
-        this.data = data;
-    }
     public static <T> Result<T> returnFail() {
-        return new Result(ReturnCode.CODE_9, ReturnCode.DESC_9);
+        return new Result(ReturnMsg.EXCEPTION_CODE, ReturnMsg.EXCEPTION_DESC);
     }
 
     public static <T> Result<T> returnFail(String msg) {
-        return new Result(ReturnCode.CODE_9, msg);
+        return new Result(ReturnMsg.EXCEPTION_CODE, msg);
     }
 
     public static <T> Result<T> returnFail(T data) {
-        return new Result(ReturnCode.CODE_9, ReturnCode.DESC_9, data);
+        return new Result(ReturnMsg.EXCEPTION_CODE, ReturnMsg.EXCEPTION_DESC, data);
     }
 
     public static <T> Result<T> returnFail(String msg, T data) {
-        return new Result(ReturnCode.CODE_9, msg, data);
+        return new Result(ReturnMsg.EXCEPTION_CODE, msg, data);
     }
 
     public static <T> Result<T> returnFailReason(String reason) {
-        return new Result(ReturnCode.CODE_9, reason);
+        return new Result(ReturnMsg.EXCEPTION_CODE, reason);
     }
 
     public static <T> Result<T> returnSuccess() {
-        return new Result(ReturnCode.CODE_0, ReturnCode.DESC_0);
-    }
-
-    public static <T> Result<T> returnSuccess(String msg) {
-        return new Result(ReturnCode.CODE_0, msg);
+        return new Result(ReturnMsg.SUCCESS_CODE, ReturnMsg.SUCCESS_DESC);
     }
 
     public static <T> Result<T> returnSuccess(T data) {
-        return new Result(ReturnCode.CODE_0, ReturnCode.DESC_0, data);
+        return new Result(ReturnMsg.SUCCESS_CODE, ReturnMsg.SUCCESS_DESC, data);
     }
 
-    public static <T> Result<T> returnResult(String code, String desc, T data) {
+    public static <T> Result<T> returnResult(int code, String desc, T data) {
         return new Result(code, desc, data);
     }
 
-    public static String returnTimeOut() {
-        return new Result(ReturnCode.CODE_5, ReturnCode.DESC_5).toString();
-    }
 
-    public static <T> Result<T> returnTimeOut(T data) {
-        return new Result(ReturnCode.CODE_5, ReturnCode.DESC_5, data);
-    }
     @Override
     public String toString() {
         return JSON.toJSONString(this);
     }
 
-    public static <T> Result<T> sessionError(String msg){
-        return new Result(ReturnCode.ERROR_SESSION, msg);
-    }
 
-    public static <T> Result<T> freezeAccount(String msg){
-        return new Result(ReturnCode.FREEZE_ACCOUNT, msg);
-    }
 }

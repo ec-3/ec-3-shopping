@@ -1,6 +1,7 @@
 package com.peaq.ec3.shopp.exception;
 
 import com.peaq.ec3.shopp.common.Result;
+import com.peaq.ec3.shopp.common.ReturnMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -21,13 +22,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({Ec3Exception.class})
     public Result handleException(Ec3Exception e) {
         log.error("系统业务异常 : {}", e.getMessage(), e);
-        return Result.returnResult(null == e.getCode() ? "9" : e.getCode() + "", e.getMessage(), null);
+        return Result.returnResult(null == e.getCode() ? ReturnMsg.EXCEPTION_CODE : e.getCode(), e.getMessage(), null);
     }
 
     @ExceptionHandler({Exception.class})
     public Result handleException(Exception e) {
         log.error("Global Exception : {}", e.getMessage(), e);
-        return Result.returnFail("业务处理超时，请稍后再试");
+        return Result.returnFail(ReturnMsg.SYS_TIMED_OUT);
     }
 
     @ResponseBody
@@ -53,13 +54,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public Result handleException(HttpRequestMethodNotSupportedException e) {
         log.error("Global Exception", e);
-        return Result.returnFail("不支持的请求方式：" + e.getSupportedMethods());
+        return Result.returnFail(ReturnMsg.UNSUPPORTED + e.getSupportedMethods());
     }
 
     @ExceptionHandler({Throwable.class})
     public Result handleException(Throwable t) {
         log.error("Global Throwable : {}", t.getMessage(), t);
-        return Result.returnFail("系统响应超时，请稍后再试");
+        return Result.returnFail(ReturnMsg.SYS_TIMED_OUT);
     }
 
 }

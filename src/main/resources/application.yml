@@ -6,3 +6,10 @@ spring:
     username: root
     password: wayne
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .html
+
+
