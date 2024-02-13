@@ -6,28 +6,24 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class UserConfigurer implements WebMvcConfigurer {
+public class Ec3Configurer implements WebMvcConfigurer {
 
     @Autowired
-    UserInterceptor userInterceptor;
+    DataInterceptor dataInterceptor;
+    @Autowired
+    ViewInterceptor viewInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor)
+      /*  registry.addInterceptor(dataInterceptor)
         .addPathPatterns("/**")
         .excludePathPatterns(
-                "/",
-                "/login",
-                "/index",
-                "/register",
-                "/header",
                 "/userInfo/login",
                 "/userInfo/register",
                 "/userInfo/signOut",
-                "/js/**",
-                "/css/**",
-                "/img/**",
-                "/lib/**"
+                "/productInfo/list",
+                "/userInfo/verifyToken"
         );
+        registry.addInterceptor(viewInterceptor).pathMatcher(new Ec3PathMatcher());*/
     }
 }

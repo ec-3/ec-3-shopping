@@ -102,20 +102,6 @@
     `status`, pay_time, delivery_status, cancel_time, create_operator, create_time, update_operator, 
     update_time
   </sql>
-  <select id="selectByExample" parameterType="com.peaq.ec3.shopp.model.OrderExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -125,12 +111,6 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from order
     where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.peaq.ec3.shopp.model.OrderExample">
-    delete from order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
   </delete>
   <insert id="insert" parameterType="com.peaq.ec3.shopp.model.Order">
     insert into order (id, order_id, user_id, 
@@ -363,158 +343,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.peaq.ec3.shopp.model.OrderExample" resultType="java.lang.Long">
-    select count(*) from order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update order
-    <set>
-      <if test="row.id != null">
-        id = #{row.id,jdbcType=BIGINT},
-      </if>
-      <if test="row.orderId != null">
-        order_id = #{row.orderId,jdbcType=VARCHAR},
-      </if>
-      <if test="row.userId != null">
-        user_id = #{row.userId,jdbcType=VARCHAR},
-      </if>
-      <if test="row.amId != null">
-        am_id = #{row.amId,jdbcType=VARCHAR},
-      </if>
-      <if test="row.userName != null">
-        user_name = #{row.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="row.totalAmount != null">
-        total_amount = #{row.totalAmount,jdbcType=BIGINT},
-      </if>
-      <if test="row.couponDiscount != null">
-        coupon_discount = #{row.couponDiscount,jdbcType=BIGINT},
-      </if>
-      <if test="row.payAmount != null">
-        pay_amount = #{row.payAmount,jdbcType=BIGINT},
-      </if>
-      <if test="row.actualPayAmount != null">
-        actual_pay_amount = #{row.actualPayAmount,jdbcType=BIGINT},
-      </if>
-      <if test="row.payType != null">
-        pay_type = #{row.payType,jdbcType=TINYINT},
-      </if>
-      <if test="row.chainId != null">
-        chain_id = #{row.chainId,jdbcType=VARCHAR},
-      </if>
-      <if test="row.chainTx != null">
-        chain_tx = #{row.chainTx,jdbcType=VARCHAR},
-      </if>
-      <if test="row.recipient != null">
-        recipient = #{row.recipient,jdbcType=VARCHAR},
-      </if>
-      <if test="row.mobile != null">
-        mobile = #{row.mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="row.invoiceType != null">
-        invoice_type = #{row.invoiceType,jdbcType=TINYINT},
-      </if>
-      <if test="row.company != null">
-        company = #{row.company,jdbcType=VARCHAR},
-      </if>
-      <if test="row.taxpayerNum != null">
-        taxpayer_num = #{row.taxpayerNum,jdbcType=VARCHAR},
-      </if>
-      <if test="row.companyEmail != null">
-        company_email = #{row.companyEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="row.companyPhone != null">
-        company_phone = #{row.companyPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="row.bankCard != null">
-        bank_card = #{row.bankCard,jdbcType=VARCHAR},
-      </if>
-      <if test="row.openAccountBank != null">
-        open_account_bank = #{row.openAccountBank,jdbcType=VARCHAR},
-      </if>
-      <if test="row.invoiceRecipient != null">
-        invoice_recipient = #{row.invoiceRecipient,jdbcType=VARCHAR},
-      </if>
-      <if test="row.invoiceRecipientContact != null">
-        invoice_recipient_contact = #{row.invoiceRecipientContact,jdbcType=VARCHAR},
-      </if>
-      <if test="row.invoiceRecipientEmail != null">
-        invoice_recipient_email = #{row.invoiceRecipientEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="row.invoiceAdditionalInfo != null">
-        invoice_additional_info = #{row.invoiceAdditionalInfo,jdbcType=VARCHAR},
-      </if>
-      <if test="row.status != null">
-        `status` = #{row.status,jdbcType=TINYINT},
-      </if>
-      <if test="row.payTime != null">
-        pay_time = #{row.payTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.deliveryStatus != null">
-        delivery_status = #{row.deliveryStatus,jdbcType=TINYINT},
-      </if>
-      <if test="row.cancelTime != null">
-        cancel_time = #{row.cancelTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.createOperator != null">
-        create_operator = #{row.createOperator,jdbcType=VARCHAR},
-      </if>
-      <if test="row.createTime != null">
-        create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.updateOperator != null">
-        update_operator = #{row.updateOperator,jdbcType=VARCHAR},
-      </if>
-      <if test="row.updateTime != null">
-        update_time = #{row.updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update order
-    set id = #{row.id,jdbcType=BIGINT},
-      order_id = #{row.orderId,jdbcType=VARCHAR},
-      user_id = #{row.userId,jdbcType=VARCHAR},
-      am_id = #{row.amId,jdbcType=VARCHAR},
-      user_name = #{row.userName,jdbcType=VARCHAR},
-      total_amount = #{row.totalAmount,jdbcType=BIGINT},
-      coupon_discount = #{row.couponDiscount,jdbcType=BIGINT},
-      pay_amount = #{row.payAmount,jdbcType=BIGINT},
-      actual_pay_amount = #{row.actualPayAmount,jdbcType=BIGINT},
-      pay_type = #{row.payType,jdbcType=TINYINT},
-      chain_id = #{row.chainId,jdbcType=VARCHAR},
-      chain_tx = #{row.chainTx,jdbcType=VARCHAR},
-      recipient = #{row.recipient,jdbcType=VARCHAR},
-      mobile = #{row.mobile,jdbcType=VARCHAR},
-      invoice_type = #{row.invoiceType,jdbcType=TINYINT},
-      company = #{row.company,jdbcType=VARCHAR},
-      taxpayer_num = #{row.taxpayerNum,jdbcType=VARCHAR},
-      company_email = #{row.companyEmail,jdbcType=VARCHAR},
-      company_phone = #{row.companyPhone,jdbcType=VARCHAR},
-      bank_card = #{row.bankCard,jdbcType=VARCHAR},
-      open_account_bank = #{row.openAccountBank,jdbcType=VARCHAR},
-      invoice_recipient = #{row.invoiceRecipient,jdbcType=VARCHAR},
-      invoice_recipient_contact = #{row.invoiceRecipientContact,jdbcType=VARCHAR},
-      invoice_recipient_email = #{row.invoiceRecipientEmail,jdbcType=VARCHAR},
-      invoice_additional_info = #{row.invoiceAdditionalInfo,jdbcType=VARCHAR},
-      `status` = #{row.status,jdbcType=TINYINT},
-      pay_time = #{row.payTime,jdbcType=TIMESTAMP},
-      delivery_status = #{row.deliveryStatus,jdbcType=TINYINT},
-      cancel_time = #{row.cancelTime,jdbcType=TIMESTAMP},
-      create_operator = #{row.createOperator,jdbcType=VARCHAR},
-      create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      update_operator = #{row.updateOperator,jdbcType=VARCHAR},
-      update_time = #{row.updateTime,jdbcType=TIMESTAMP}
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.Order">
     update order
     <set>

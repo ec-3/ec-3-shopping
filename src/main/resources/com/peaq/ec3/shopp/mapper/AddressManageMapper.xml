@@ -83,20 +83,6 @@
     create_operator, create_time, update_operator, update_time, province_area_code, city_area_code, 
     district_area_code
   </sql>
-  <select id="selectByExample" parameterType="com.peaq.ec3.shopp.model.AddressManageExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from address_manage
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -106,12 +92,6 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from address_manage
     where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.peaq.ec3.shopp.model.AddressManageExample">
-    delete from address_manage
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
   </delete>
   <insert id="insert" parameterType="com.peaq.ec3.shopp.model.AddressManage">
     insert into address_manage (id, def_flag, user_id, 
@@ -236,94 +216,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.peaq.ec3.shopp.model.AddressManageExample" resultType="java.lang.Long">
-    select count(*) from address_manage
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update address_manage
-    <set>
-      <if test="row.id != null">
-        id = #{row.id,jdbcType=BIGINT},
-      </if>
-      <if test="row.defFlag != null">
-        def_flag = #{row.defFlag,jdbcType=TINYINT},
-      </if>
-      <if test="row.userId != null">
-        user_id = #{row.userId,jdbcType=VARCHAR},
-      </if>
-      <if test="row.recipient != null">
-        recipient = #{row.recipient,jdbcType=VARCHAR},
-      </if>
-      <if test="row.mobile != null">
-        mobile = #{row.mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="row.province != null">
-        province = #{row.province,jdbcType=VARCHAR},
-      </if>
-      <if test="row.city != null">
-        city = #{row.city,jdbcType=VARCHAR},
-      </if>
-      <if test="row.district != null">
-        district = #{row.district,jdbcType=VARCHAR},
-      </if>
-      <if test="row.address != null">
-        address = #{row.address,jdbcType=VARCHAR},
-      </if>
-      <if test="row.label != null">
-        `label` = #{row.label,jdbcType=TINYINT},
-      </if>
-      <if test="row.createOperator != null">
-        create_operator = #{row.createOperator,jdbcType=VARCHAR},
-      </if>
-      <if test="row.createTime != null">
-        create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.updateOperator != null">
-        update_operator = #{row.updateOperator,jdbcType=VARCHAR},
-      </if>
-      <if test="row.updateTime != null">
-        update_time = #{row.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.provinceAreaCode != null">
-        province_area_code = #{row.provinceAreaCode,jdbcType=VARCHAR},
-      </if>
-      <if test="row.cityAreaCode != null">
-        city_area_code = #{row.cityAreaCode,jdbcType=VARCHAR},
-      </if>
-      <if test="row.districtAreaCode != null">
-        district_area_code = #{row.districtAreaCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update address_manage
-    set id = #{row.id,jdbcType=BIGINT},
-      def_flag = #{row.defFlag,jdbcType=TINYINT},
-      user_id = #{row.userId,jdbcType=VARCHAR},
-      recipient = #{row.recipient,jdbcType=VARCHAR},
-      mobile = #{row.mobile,jdbcType=VARCHAR},
-      province = #{row.province,jdbcType=VARCHAR},
-      city = #{row.city,jdbcType=VARCHAR},
-      district = #{row.district,jdbcType=VARCHAR},
-      address = #{row.address,jdbcType=VARCHAR},
-      `label` = #{row.label,jdbcType=TINYINT},
-      create_operator = #{row.createOperator,jdbcType=VARCHAR},
-      create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      update_operator = #{row.updateOperator,jdbcType=VARCHAR},
-      update_time = #{row.updateTime,jdbcType=TIMESTAMP},
-      province_area_code = #{row.provinceAreaCode,jdbcType=VARCHAR},
-      city_area_code = #{row.cityAreaCode,jdbcType=VARCHAR},
-      district_area_code = #{row.districtAreaCode,jdbcType=VARCHAR}
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.AddressManage">
     update address_manage
     <set>

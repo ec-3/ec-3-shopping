@@ -11,26 +11,26 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public String login() {
         return "login";
     }
 
-    @RequestMapping("/details")
+    @RequestMapping("details")
     public String details() {
         return "details";
     }
 
-    @RequestMapping("/header")
+    @RequestMapping("header")
     public String header() {
         return "header";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("register")
     public String register() {
         return "register";
     }
-    @RequestMapping("/cart")
+    @RequestMapping("cart")
     public String cart() {
         return "cart";
     }

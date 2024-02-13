@@ -1,4 +1,7 @@
 $(function() {
+
+	$(".header-all").load("/header");
+
 	$(".pic-min ul li:nth-child(1)").click(function() {
 		$(".pic-max").find("img").css("display", "none");
 		$(".pic-max .max01 img").css("display", "block");
@@ -14,8 +17,8 @@ $(function() {
 	//数量选择
 	//数量增加
 	$(".number-select .num-plus").click(function() {
-		var number = $(".number-select input").val();
-		var tol = 0;
+		let number = $(".number-select input").val();
+		let tol = 0;
 		if (number < 5) {
 			number++;
 			$(".number-select input").val(number);
@@ -29,8 +32,8 @@ $(function() {
 	});
 	//数量减少
 	$(".number-select .num-minus").click(function() {
-		var number = $(".number-select input").val();
-		var tol = 0;
+		let number = $(".number-select input").val();
+		let tol = 0;
 		if (number > 1) {
 			number--;
 			$(".number-select input").val(number);
@@ -112,7 +115,7 @@ $(function() {
 	});
 	//页面回到顶部
 	$(document).scroll(function() {
-		var top = $(document).scrollTop();
+		let top = $(document).scrollTop();
 		if (top > 300) {
 			$("#scrolltop").stop().fadeIn("fast");
 			$(".float-nav").stop().slideDown("fast");
@@ -127,12 +130,11 @@ $(function() {
 		}, 500);
 	});
 
-	$(".commodity-buy button:nth-child(2)").click(function() {
-		layer.msg("添加成功");
-	});
-	$(".commodity-buy button").click(function() {
+
+	// 添加购物车
+	$("#addCart").click(function() {
 		$(function() {
-			var cart = sessionStorage.getItem("cart");
+			let cart = sessionStorage.getItem("cart");
 			if (cart === undefined) {
 				cart = {
 					items: [],
@@ -141,15 +143,15 @@ $(function() {
 			} else {
 				cart = JSON.parse(cart);
 			}
-			var product = {
+			let product = {
 				id: "001",
 				yanse: $(".selected").text(),
 				shuliang: $("#shuliang").val(),
 			}
-				cart.items.push(product);
+			cart.items.push(product);
 			sessionStorage.setItem("cart", JSON.stringify(cart));
 		});
-	})
+	});
 
 
 });

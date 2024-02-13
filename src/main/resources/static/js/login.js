@@ -1,4 +1,8 @@
 $(function () {
+    //引入头部
+    $(".floor1").load("/header");
+
+
     $(".btn_login").click(function () {
         let username = $(".content_one input.login_number").val();
         let password = $(".content_one input.login_password").val();
@@ -8,18 +12,18 @@ $(function () {
             "password": password
         }), function (response) {
             if (response.code === 0) {
-                localStorage.setItem("token", response.data);
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+                localStorage.setItem("token", response.data.token);
                 window.location.replace("/");
-                alert('登陆成功!');
+                alert('login successful !');
             } else {
                 alert(response.msg);
             }
         }, function (error) {
-            alert("系统错误，请稍后再试！");
+            alert("System response timed out, please try again later ！");
         });
     });
-    //引入头部
-    $(".floor1").load("header1.html");
+
     // 点击手机号登录改变
     $(".floor2 .container .three>a").click(function () {
         // 获取索引

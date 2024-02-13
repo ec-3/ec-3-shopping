@@ -5,8 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.peaq.ec3.shopp.common.Result;
 import com.peaq.ec3.shopp.mapper.ShopCarMapper;
 import com.peaq.ec3.shopp.model.ShopCar;
-import com.peaq.ec3.shopp.request.OperateCarReq;
 import com.peaq.ec3.shopp.request.ListReq;
+import com.peaq.ec3.shopp.request.OperateCarReq;
 import com.peaq.ec3.shopp.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -32,6 +35,19 @@ public class ShopCarController {
         return Result.returnSuccess(new PageResponse<>(page.getTotal(), page.getResult()));
     }
 
+    @PostMapping("/cart")
+    public Result<Map<Long, ShopCar>> cart(@RequestBody ListReq request) {
+        List<ShopCar> shopCarList = shopCarMapper.getShopCarList(request.getUserId());
+        if (!CollectionUtils.isEmpty(shopCarList)) {
+            Map<Long, ShopCar> map = new HashMap<>(shopCarList.size());
+            for (ShopCar shopCar : shopCarList) {
+                map.put(shopCar.getProductId(), shopCar);
+            }
+            return Result.returnSuccess(map);
+        }
+        return Result.returnSuccess();
+    }
+
     @PostMapping("/operate")
     public Result operate(@RequestBody OperateCarReq operateCar) {
         if (!CollectionUtils.isEmpty(operateCar.getAddCar())) {
@@ -43,6 +59,11 @@ public class ShopCarController {
         if (!CollectionUtils.isEmpty(operateCar.getDelCar())) {
             shopCarMapper.delCarBatch(operateCar.getDelCar().stream().map(ShopCar::getId).collect(Collectors.toList()));
         }
+        return Result.returnSuccess();
+    }
+
+    @PostMapping("/execute")
+    public Result execute(@RequestBody Map<Long, ShopCar> cart) {
         return Result.returnSuccess();
     }
 

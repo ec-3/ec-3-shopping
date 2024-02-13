@@ -17,8 +17,8 @@ CREATE TABLE `ec^3`.`user_Info`(
 
 CREATE TABLE `ec^3`.`shop_car`(
     `id`           bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `user_id`     varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
-    `product_num`  varchar(32) NOT NULL DEFAULT '' COMMENT '商品编号',
+    `user_id`      varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
+    `product_id`   bigint NOT NULL COMMENT '商品ID',
     `quantity`     int(11) NOT NULL DEFAULT '0' COMMENT '购物车数量',
     `del_flag`  tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除：0 否; 1 是',
     `create_time`  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -115,6 +115,8 @@ CREATE TABLE `ec^3`.`product_info` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `product_num` varchar(32) NOT NULL DEFAULT '' COMMENT '商品编号',
   `product_name` varchar(32) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `brand` varchar(32)  NOT NULL DEFAULT '' COMMENT '品牌',
+  `specification` varchar(32)  NOT NULL DEFAULT '' COMMENT '产品规格',
   `supplier_id` varchar(32) NOT NULL DEFAULT '' COMMENT '供应商ID',
   `price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '销售单价',
   `cost_price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '商品成本价',

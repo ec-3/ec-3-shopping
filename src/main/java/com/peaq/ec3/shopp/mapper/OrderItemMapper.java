@@ -1,14 +1,11 @@
 package com.peaq.ec3.shopp.mapper;
 
 import com.peaq.ec3.shopp.model.OrderItem;
-import com.peaq.ec3.shopp.model.OrderItemExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface OrderItemMapper {
-    long countByExample(OrderItemExample example);
+import java.util.List;
 
-    int deleteByExample(OrderItemExample example);
+public interface OrderItemMapper {
 
     int deleteByPrimaryKey(Long id);
 
@@ -16,13 +13,7 @@ public interface OrderItemMapper {
 
     int insertSelective(OrderItem row);
 
-    List<OrderItem> selectByExample(OrderItemExample example);
-
     OrderItem selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("row") OrderItem row, @Param("example") OrderItemExample example);
-
-    int updateByExample(@Param("row") OrderItem row, @Param("example") OrderItemExample example);
 
     int updateByPrimaryKeySelective(OrderItem row);
 

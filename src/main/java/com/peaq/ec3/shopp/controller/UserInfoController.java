@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RequestMapping("/userInfo")
 @RestController
 public class UserInfoController {
@@ -20,11 +22,12 @@ public class UserInfoController {
     UserInfoMapper userInfoMapper;
 
     @PostMapping("/login")
-    public Result<UserRes> login(@RequestBody UserLogin user) {
+    public Result<UserRes> login(@RequestBody UserLogin user, HttpSession session) {
         UserInfo userInfo = getUserInfo(user);
         if (userInfo == null) {
             throw new Ec3Exception(ReturnMsg.SIGN_INFO_ERR);
         }
+        session.setAttribute("user",user.getUsername());
         String token = JWTHelper.createToken(user);
         return Result.returnSuccess(new UserRes(userInfo,token));
     }
@@ -59,6 +62,12 @@ public class UserInfoController {
     public String test() {
 
         return "哈哈哈哈哈";
+    }
+
+    @GetMapping("/verifyToken")
+    public boolean verifyToken(@RequestParam String token) {
+        System.out.println(token);
+        return JWTHelper.verifyToken(token);
     }
 
 }

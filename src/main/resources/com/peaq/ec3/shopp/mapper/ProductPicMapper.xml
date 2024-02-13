@@ -74,20 +74,6 @@
     id, product_id, pic_desc, pic_url, is_master, pic_order, pic_status, create_time, 
     update_time
   </sql>
-  <select id="selectByExample" parameterType="com.peaq.ec3.shopp.model.ProductPicExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from product_pic
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -97,12 +83,6 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from product_pic
     where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.peaq.ec3.shopp.model.ProductPicExample">
-    delete from product_pic
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
   </delete>
   <insert id="insert" parameterType="com.peaq.ec3.shopp.model.ProductPic">
     insert into product_pic (id, product_id, pic_desc, 
@@ -175,62 +155,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.peaq.ec3.shopp.model.ProductPicExample" resultType="java.lang.Long">
-    select count(*) from product_pic
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update product_pic
-    <set>
-      <if test="row.id != null">
-        id = #{row.id,jdbcType=BIGINT},
-      </if>
-      <if test="row.productId != null">
-        product_id = #{row.productId,jdbcType=BIGINT},
-      </if>
-      <if test="row.picDesc != null">
-        pic_desc = #{row.picDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="row.picUrl != null">
-        pic_url = #{row.picUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="row.isMaster != null">
-        is_master = #{row.isMaster,jdbcType=TINYINT},
-      </if>
-      <if test="row.picOrder != null">
-        pic_order = #{row.picOrder,jdbcType=TINYINT},
-      </if>
-      <if test="row.picStatus != null">
-        pic_status = #{row.picStatus,jdbcType=TINYINT},
-      </if>
-      <if test="row.createTime != null">
-        create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="row.updateTime != null">
-        update_time = #{row.updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update product_pic
-    set id = #{row.id,jdbcType=BIGINT},
-      product_id = #{row.productId,jdbcType=BIGINT},
-      pic_desc = #{row.picDesc,jdbcType=VARCHAR},
-      pic_url = #{row.picUrl,jdbcType=VARCHAR},
-      is_master = #{row.isMaster,jdbcType=TINYINT},
-      pic_order = #{row.picOrder,jdbcType=TINYINT},
-      pic_status = #{row.picStatus,jdbcType=TINYINT},
-      create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      update_time = #{row.updateTime,jdbcType=TIMESTAMP}
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.ProductPic">
     update product_pic
     <set>
@@ -273,4 +197,15 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getPicByPIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product_pic
+    where product_id in (
+       <foreach collection="ids" index="index" item="id" separator=",">
+          #{id}
+       </foreach>
+    )
+  </select>
 </mapper>
