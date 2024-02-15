@@ -2,7 +2,8 @@ let routing = {
     login: '/userInfo/login',
     itemList: '/orderItem/list',
     productList: '/productInfo/list',
-    cart: '/shopCar/cart'
+    cart: '/shopCar/cart',
+    execute: '/shopCar/execute'
 };
 
 let pageObj = {
@@ -13,6 +14,8 @@ let pageObj = {
     details: '/details',
     register: '/register',
 };
+
+let error_msg = "System response timed out, please try again later ！: ";
 
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -54,4 +57,10 @@ function page_jump(page) {
         alert('please sign in');
         location.href = pageObj.login;
     }
+}
+
+function numberSort(array) {
+    array.sort((x, y) => {
+        return x - y;
+    });
 }

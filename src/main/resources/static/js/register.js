@@ -36,10 +36,7 @@ $(function() {
 	var usernamedom = document.querySelector("#usernameall");
 	var passworddom = document.querySelector("#password");
 	var passworddom1 = document.querySelector("#password1")
-	console.log(passworddom);
 	$(" .floor2 .zhuce .one .bot .btn_reg").click(function() {
-		console.log("ddd")
-		
 		// 获取到密码框的值
 		var password = passworddom.value;
 		var password1 = passworddom1.value;
@@ -59,11 +56,8 @@ $(function() {
 			} else {
 				var rag2 = /^\w{8,20}$/
 				var reset = rag2.test(password)
-				console.log(reset);
 				var rag3 = /[a-z]/
-				console.log(rag3.test(password));
 				var rag4 = /[A-Z]/
-				console.log(rag4.test(password));
 				if (reset == false) {
 					passworddom.focus();
 					alert("请重新输入,密码由8-20位组成，包括大写，小写，数字组成")

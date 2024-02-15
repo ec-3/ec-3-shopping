@@ -28,7 +28,6 @@ $(function () {
     $(".floor2 .container .three>a").click(function () {
         // 获取索引
         let idx = $(this).index()
-        console.log(idx)
         if (idx == 0) {
             $(".content_two").show();
             $(".content_one").hide();

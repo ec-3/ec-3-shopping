@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../css/header.css"/>
         <link rel="stylesheet" href="../css/cart.css"/>
         <script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
-        <script type="text/javascript" src="../js/httpUtils.js"></script>
+        <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="../js/cart.js"></script>
         <script type="text/javascript" src="../js/brand.js"></script>
     </head>
@@ -84,7 +84,7 @@
             <div class="checkoutProduct t">
                 <div class="checkoutProductInfo c">
                     <div class="checkoutTable">
-                        <em class="checkBox checkIcon"></em>
+                        <em class="checkBox checkIcon"  logo="all"></em>
                         <ul class="checkoutTableHeader">
                             <li>全选</li>
                             <li>商品信息</li>
@@ -124,7 +124,7 @@
             <div class="checkSubmitInfo c">
                 <div class="checkSubmitInfoBooking">
                     <div class="checkSubmitInfoLeft l">
-                        <em class="checkBox checkIcon l"></em>
+                        <em class="checkBox checkIcon l" logo="all"></em>
                         <a class="allClick">全选</a>
                         <a class="allDelete">批量删除</a>
                         <div class="split"></div>
@@ -136,7 +136,7 @@
                                 <span>已选<span id="itemTotal">0</span>件商品，合计<span class="pri" style="font-size: 14px;color: #000;">$<span class="lumpSum">0.00</span></span></span>
                             </li>
                             <li>
-                                <span>商品总额：<span class="pri" style="color: #000;">$<span class="lumpSum">0.00</span></span></span>
+                                <span>商品总额：<span class="lumpSum" style="color: #000;">$<span>0.00</span></span></span>
                                 <div class="rightSave"><i></i><span>共节省：$<span>0.00</span></span></div>
                             </li>
                         </ul>

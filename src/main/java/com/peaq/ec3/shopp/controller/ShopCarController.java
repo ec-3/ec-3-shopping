@@ -64,6 +64,7 @@ public class ShopCarController {
 
     @PostMapping("/execute")
     public Result execute(@RequestBody Map<Long, ShopCar> cart) {
+        System.out.println(cart);
         return Result.returnSuccess();
     }
 
