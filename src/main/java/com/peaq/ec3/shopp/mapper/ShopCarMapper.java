@@ -1,5 +1,6 @@
 package com.peaq.ec3.shopp.mapper;
 
+import com.peaq.ec3.shopp.model.OrderItem;
 import com.peaq.ec3.shopp.model.ShopCar;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,11 +20,13 @@ public interface ShopCarMapper {
 
     int updateByPrimaryKey(ShopCar row);
 
-    List<ShopCar> getShopCarList(String userId);
+    List<ShopCar> getShopCarList(Long userId);
 
     int delCarBatch(@Param("ids") List<Long> ids);
 
     int addBatch(@Param("cars") List<ShopCar> cars);
 
     int updateBatch(@Param("updateCar") List<ShopCar> updateCar);
+
+    int delCarByUser(Long userId);
 }

@@ -161,21 +161,18 @@ $(function () {
         })
     });
 
-    /*	$(".footer-all").load("/views/footer.html");*/
+    $("#products").on('click', '.pro_item', function () {
+        sessionStorage.setItem('pId', $(this).attr('pId'));
+        location.href = pageObj.details;
+    });
 
-    // 加载商品列表
-    post(routing.productList, JSON.stringify({}), function (response) {
-        if (response.code === 0) {
-            let lis = '';
-            let productList = response.data.records;
-            localStorage.setItem('keyPics',JSON.stringify(response.data.keyPics));
-            localStorage.setItem('productMap',JSON.stringify(response.data.productMap));
-            localStorage.setItem('productList',JSON.stringify(productList));
-            let picMap = new Map();
-            for (let record of productList) {
-                lis += ` <li class="fl">
+    function forProItems(productList) {
+        let lis = '';
+        let picMap = new Map();
+        for (let record of productList) {
+            lis += ` <li class="fl">
                             <div class="small_phone">
-                                <a href="/details">
+                                <a class="pro_item" pId="${record.product.id}">
                                     <span>新品</span>
                                     <div class="box">
                                         <p class="p1">${record.product.productName}</p>
@@ -186,15 +183,29 @@ $(function () {
                                 </a>
                             </div>
                         </li>`;
-                picMap.set(record.product.id,record.masterUrl);
-            }
-            localStorage.setItem('picMap',JSON.stringify(Array.from(picMap.entries())));
-            $('#products').append(lis);
-        } else {
-            alert(response.msg);
+            picMap.set(record.product.id, record.masterUrl);
         }
-    }, function (error) {
-        alert("系统错误，请稍后再试！");
-    });
+        $('#products').append(lis);
+        sessionStorage.setItem('picMap', JSON.stringify(Array.from(picMap.entries())));
+    }
 
+    // 加载商品列表
+    let productList = JSON.parse(sessionStorage.getItem("productList"));
+    if (productList) {
+        forProItems(productList);
+    } else {
+        post(routing.productList, JSON.stringify({}), function (response) {
+            if (response.code === 0) {
+                productList = response.data.records;
+                sessionStorage.setItem('keyPics', JSON.stringify(response.data.keyPics));
+                sessionStorage.setItem('productMap', JSON.stringify(response.data.productMap));
+                sessionStorage.setItem('productList', JSON.stringify(productList));
+                forProItems(productList);
+            } else {
+                alert(response.msg);
+            }
+        }, function (error) {
+            alert(error_msg + error);
+        });
+    }
 });

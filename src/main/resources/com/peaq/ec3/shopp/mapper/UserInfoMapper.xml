@@ -48,8 +48,8 @@
             <if test="username != null">
                 username,
             </if>
-             <if test="password != null">
-                 password,
+            <if test="password != null">
+                password,
             </if>
             <if test="cardType != null">
                 card_type,
@@ -82,8 +82,8 @@
             </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
-            </if> 
-             <if test="password != null">
+            </if>
+            <if test="password != null">
                 #{password,jdbcType=VARCHAR},
             </if>
             <if test="cardType != null">
@@ -112,15 +112,15 @@
             </if>
         </trim>
     </insert>
-  
+
     <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.UserInfo">
         update user_info
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
-            </if> 
-           <if test="password != null">
-               password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
             </if>
             <if test="cardType != null">
                 card_type = #{cardType,jdbcType=BIT},
@@ -169,6 +169,9 @@
         <where>
             <if test="email!=null and email!=''">
                 `email` = #{email} and
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                `mobile` = #{mobile} and
             </if>
             <if test="username!=null and username!=''">
                 `username` = #{username} and

@@ -1,79 +1,47 @@
-$(function() {
-	$(".header").load("header1.html");
-	//储存
-	$(".one input.btn_reg").click(function() {
-		// 点击注册按钮，添加到user
-		var userInfo = {
-			username: $(".one input.number").val(),
-			password: $(".one input#password").val(),
-		};
-		
-		// 存储到localStorage里面，并且转化为字符串
-		localStorage.setItem("user", JSON.stringify(userInfo));
-		// //页面跳转
-		//alert('注册成功');
-		//window.location.replace("login.html");
-	});
-	
-	
-	// 给注册下面的a链接添加点击样式
-	$(".floor2 .container .zhuce .menu a").click(function() {
-		// 点击当前的文字,变红,另一个显示黑色
-		$(this).css("color", "red").siblings().css("color", "black")
-		// 获取到索引
-		var idx = $(this).index();
-		// 如果索引等于0
-		if (idx == 0) {
-			// 第一个显示,第二个隐藏
-			$(".one").show();
-			$(".two").hide();
-		} else {
-			$(".one").hide();
-			$(".two").show();
-		}
-	})
+$(function () {
+    $(".header").load("/header");
 
-	var usernamedom = document.querySelector("#usernameall");
-	var passworddom = document.querySelector("#password");
-	var passworddom1 = document.querySelector("#password1")
-	$(" .floor2 .zhuce .one .bot .btn_reg").click(function() {
-		// 获取到密码框的值
-		var password = passworddom.value;
-		var password1 = passworddom1.value;
-		var username = usernamedom.value;
-		if (username == 0 || password == 0) {
-			alert('请输入用户名以及密码');
-		} else {
-			// 用户名的正则,1开头,第二个是3-9,最后0-9结尾的十一位手机号
-			var rage = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
-			var text = rage.test(username);
-			if (text == false) {
-				alert("请输入正确的手机号")
-				usernamedom.focus();
-				// 变为空
-				var nullAll = ""
-				usernamedom.value = nullAll
-			} else {
-				var rag2 = /^\w{8,20}$/
-				var reset = rag2.test(password)
-				var rag3 = /[a-z]/
-				var rag4 = /[A-Z]/
-				if (reset == false) {
-					passworddom.focus();
-					alert("请重新输入,密码由8-20位组成，包括大写，小写，数字组成")
-					var nullAll = ""
-					passworddom.value = nullAll;
-					passworddom1.value = nullAll;
-				} else {
-					//判断两次输入密码是否一致
-					if ($("#password").val() == $("#password1").val()) {
-						 alert('注册成功');
-						 window.location.replace("login.html");
-					} else {
-						alert("两次输入的密码不一致");
-					}
-				}
-			}
-		}
-	})
+    // 注册
+    $("#personal_reg").click(function () {
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let passAgain = $("#pass_again").val();
+        if (check_account(email, password, passAgain)) {
+            post(routing.register, JSON.stringify({
+                email: email,
+                password: password,
+            }), function (response) {
+                if (response.code === 0) {
+                    alert('registration successful !');
+                    location.replace("/login");
+                } else {
+                    alert(response.msg);
+                }
+            }, function (error) {
+                alert(error_msg + error);
+            });
+        }
+
+    });
+
+    function check_account(email, password, passAgain) {
+        if (!email && !password) {
+            alert('请输入Email以及密码');
+            return false;
+        }
+        if (!/^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/.test(email)) {
+            alert("请输入正确的邮箱");
+            return false;
+        }
+        if (!/^\w{8,20}$/.test(password)) {
+            alert("请重新输入,密码由8-20位组成，包括大写，小写，数字组成");
+            return false;
+        }
+        //判断两次输入密码是否一致
+        if (password !== passAgain) {
+            alert("两次输入的密码不一致");
+            return false;
+        }
+        return true;
+    }
 });

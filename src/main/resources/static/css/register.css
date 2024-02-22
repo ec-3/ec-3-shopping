@@ -46,7 +46,7 @@
 	height: 50px;
 	padding-left: 5px;
 }
-.floor2 .container .bot #two{
+.floor2 .container .bot .msg_code{
 	width: 250px;
 	height: 50px;
 
@@ -82,4 +82,8 @@
 }
 .btn1,.bot span{
 	cursor: pointer;
+}
+
+.reg{
+	background-color: red;border: 0;color: white;cursor: pointer;
 }

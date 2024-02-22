@@ -1,18 +1,18 @@
 package com.peaq.ec3.shopp.mapper;
 
-import com.peaq.ec3.shopp.model.AddressManage;
+import com.peaq.ec3.shopp.model.AddressChina;
 
 public interface AddressManageMapper {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(AddressManage row);
+    int insert(AddressChina row);
 
-    int insertSelective(AddressManage row);
+    int insertSelective(AddressChina row);
 
-    AddressManage selectByPrimaryKey(Long id);
+    AddressChina selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(AddressManage row);
+    int updateByPrimaryKeySelective(AddressChina row);
 
-    int updateByPrimaryKey(AddressManage row);
+    int updateByPrimaryKey(AddressChina row);
 }

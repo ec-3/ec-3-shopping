@@ -27,9 +27,9 @@ public class UserInfoController {
         if (userInfo == null) {
             throw new Ec3Exception(ReturnMsg.SIGN_INFO_ERR);
         }
-        session.setAttribute("user",user.getUsername());
+        session.setAttribute("user", user);
         String token = JWTHelper.createToken(user);
-        return Result.returnSuccess(new UserRes(userInfo,token));
+        return Result.returnSuccess(new UserRes(userInfo, token));
     }
 
     @PostMapping("/register")
@@ -38,6 +38,11 @@ public class UserInfoController {
         if (userInfo != null) {
             throw new Ec3Exception(ReturnMsg.USER_HAS);
         }
+        userInfo = new UserInfo();
+        userInfo.setEmail(user.getEmail());
+        userInfo.setMobile(user.getMobile());
+        userInfo.setPassword(user.getPassword());
+        userInfo.setUsername(user.getUsername());
         userInfoMapper.insertSelective(userInfo);
         return Result.returnSuccess();
     }
@@ -49,10 +54,12 @@ public class UserInfoController {
     }
 
     private UserInfo getUserInfo(UserLogin user) {
-        if (StringUtils.isEmpty(user.getEmail()) && StringUtils.isEmpty(user.getUsername())) {
+        if (StringUtils.isEmpty(user.getEmail()) &&
+            StringUtils.isEmpty(user.getMobile()) &&
+            StringUtils.isEmpty(user.getUsername())) {
             throw new Ec3Exception(ReturnMsg.TWO_EMPTY);
         }
-        if (!StringUtils.isEmpty(user.getUsername()) && StringUtils.isEmpty(user.getPassword())) {
+        if (StringUtils.isEmpty(user.getPassword())) {
             throw new Ec3Exception(ReturnMsg.PASS_NOT_BLANK);
         }
         return userInfoMapper.getUserByLogin(user);
@@ -61,6 +68,12 @@ public class UserInfoController {
     @GetMapping("/test")
     public String test() {
 
+        return "哈哈哈哈哈";
+    }
+
+    @PostMapping("/test2")
+    public String test2(@RequestBody Test test) {
+        System.out.println(test);
         return "哈哈哈哈哈";
     }
 

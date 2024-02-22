@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ListReq extends PageBase {
 
-    private String userId;
+    private Long userId;
     private String orderId;
 }

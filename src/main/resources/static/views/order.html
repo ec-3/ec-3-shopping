@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>订单结算页 -京东商城</title>
+        <link rel="stylesheet" type="text/css" href="../css/order_base.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/order_common.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/order.css"/>
+        <link rel="stylesheet" href="../css/order_iconfont.css">
+        <link rel="stylesheet" href="../css/order_style.css">
+
+    </head>
+    <body>
+        <div class="header-all"></div>
+        <!-- 结算页面头部 -->
+        <div class="js_head">
+            <div class="js_logo"></div>
+            <div class="js_text"></div>
+        </div>
+        <div class="head_title_text">填写并核对订单信息</div>
+
+        <!-- 结算详细内容信息 -->
+        <div class="js_main_con">
+            <!-- 收货人信息 -->
+            <div class="shouhuo_big">
+                <!-- 上部分 -->
+                <div class="shouhuo_top">
+                    <h3>收货信息</h3>
+                    <a href="javascript:;">新增收货地址</a>
+                </div>
+                <!-- 下部分 -->
+                <div class="shouhuo_bottom">
+                </div>
+            </div>
+
+            <!-- 支付方式 -->
+            <div class="zhifu_big">
+                <!-- 支付上部分 -->
+                <div class="zhifu_top">
+                    <h3>Payment type</h3>
+                </div>
+                <!-- 支付下部分 -->
+                <div class="zhifu_bottom">
+                    <a href="javascript:;" class="zifu_a">
+                        <!--<em>惠</em>-->
+                        <span>On-chain</span>
+                        <i></i>
+                    </a>
+                    <a href="javascript:;" class="zifu_a">
+                        <span>Visa</span>
+                        <i></i>
+                    </a>
+                    <a href="javascript:;" class="zifu_a">
+                        <span>Paypal</span>
+                        <i></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 送货清单 -->
+            <div class="songhuo_big">
+                <!-- 送货清单上部分 -->
+                <div class="songhuo_top">
+                    <h3>送货清单</h3>
+                    <a href="javascript:;" class="fanhui">返回修改购物车</a>
+                    <div class="price_img"></div>
+                </div>
+                <!-- 送货清单下部分 -->
+                <div id="product"></div>
+
+            </div>
+        </div>
+
+        <!-- 总件数和总金额 -->
+        <div class="summary">
+            <div class="statistic">
+                <div class="statistic_top">
+                    <em id="itemNum"></em>
+                    <span>&nbsp;件商品，总商品金额：</span>
+                    <i class="itemSum"></i>
+                </div>
+                <div class="statistic_bottom">
+                    <span>运费：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <i>$0.00</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 收货地 -->
+        <div class="trade_foot">
+            <!-- 上部分 -->
+            <div class="trade_foot_top">
+                <span class="itemSum"></span>
+                <em>应付总额：</em>
+            </div>
+            <!-- 下部分 -->
+            <div class="trade_foot_bottom">
+                <div class="shouhuo_people"> Receiver：
+                    <span id="b_name" class="uName">
+                    </span>
+                    <span id="b_phone" class="uPhone">
+                    </span>
+                </div>
+                <div class="jisong_address">Send to：
+                    <span id="b_address" class="uAddress">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提交订单 -->
+        <div class="submit">
+            <a target="_black" class="btn_submit"></a>
+        </div>
+
+        <!-- 新增收货地址盒子 -->
+        <div class="add_address_big">
+            <div class="add_addresss">
+                <!-- 新增收货地头部标题 -->
+                <div class="address_top_title">
+                    <span>Add consignee information</span>
+                    <a href="javascript:;" class="close_box"></a>
+                </div>
+                <!-- 主要收货信息 -->
+                <div class="main_address">
+                    <!-- 所在地区 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Country / Region</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Country" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 街道地址 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Street address</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Street" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 城镇 / 城市 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Town / City</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Town" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 州 / 县 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>State / County</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="State" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 详细地址 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>detailed address</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="detailed_address" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 邮政编码 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Postcode / ZIP</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Postcode" class="address_text" type="text">
+                        </div>
+                    </div>
+
+
+                    <!-- 手机号 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Phone</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Phone" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 收货人 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Receiver</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Receiver" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <!-- 邮箱地址 -->
+                    <div class="xuan_address clearfix">
+                        <div class="x_address_left">
+                            <span>*</span>
+                            <em>Email address</em>
+                        </div>
+                        <div class="x_name_right">
+                            <input id="Email_address" class="address_text" type="text">
+                        </div>
+                    </div>
+
+                    <div class="email_tishi_text">Used to receive order reminder emails so that you can know the status
+                        of your order in a timely manner
+                    </div>
+                    <!-- 地址别名 -->
+                    <div class="xuan_address_bie">
+                        <div class="xuan_address_bie_left">
+                            <em>address alias</em>
+                        </div>
+                        <div class="xuan_address_bie_right">
+                            <input id="address_alias" class="xuan_address_bie_text" type="text">
+                        </div>
+                        <i>It is recommended to fill in the common name</i>
+                        <a class="changyong_name" href="javascript:;">home</a>
+                        <a class="changyong_name" href="javascript:;">parents home</a>
+                        <a class="changyong_name" href="javascript:;">company</a>
+                    </div>
+                    <!-- 保存收货人信息 -->
+                    <a class="baocun_info" href="javascript:;">Save consignee information</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!------------------------------------------ JS脚本 ------------------------------------------>
+        <script src="../js/jquery-3.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/order.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/area.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/shop_cart.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+        <!------------------------------------------ JS脚本 ------------------------------------------>
+    </body>
+</html>

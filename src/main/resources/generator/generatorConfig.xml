@@ -40,6 +40,6 @@
                              type="XMLMAPPER" />
 
         <!-- tableName:数据库表名 domainObjectName:对应生成实体名称-->
-        <table tableName="product_pic" domainObjectName="ProductPic"/>
+        <table tableName="address_global" domainObjectName="AddressGlobal"/>
     </context>
 </generatorConfiguration>

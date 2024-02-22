@@ -13,7 +13,8 @@ public class ReturnMsg {
     public static final String UNSUPPORTED = "Unsupported request method";
     public static final String PASS_NOT_BLANK = "password can not be blank!";
     public static final String SIGN_INFO_ERR = "The login information is incorrect!";
-    public static final String TWO_EMPTY = "Username or email cannot be empty at the same time!";
+    public static final String TWO_EMPTY = "Username, email, and phone number cannot be empty at the same time!";
     public static final String SYS_TIMED_OUT = "System response timed out, please try again later";
+    public static final String DATA_EMPTY = "%s cannot be empty";
 
 }

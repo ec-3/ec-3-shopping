@@ -10,9 +10,9 @@ public class Order {
 
     private String orderId;
 
-    private String userId;
+    private Long userId;
 
-    private String amId;
+    private Long amId;
 
     private String userName;
 
@@ -57,6 +57,7 @@ public class Order {
     private String invoiceAdditionalInfo;
 
     private Byte status;
+    private Byte submitType;
 
     private Date payTime;
 

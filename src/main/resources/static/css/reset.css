@@ -156,7 +156,8 @@ a:hover {
 }
 
 a:focus {
-	outline: thin dotted;
+	/* outline: thin dotted; */
+	outline: none;
 }
 
 
@@ -191,7 +192,7 @@ a:active {
 }
 
 .container {
-	width: 1200px;
+	width: 1240px;
 	margin-right: auto;
 	margin-left: auto;
 	*zoom: 1;

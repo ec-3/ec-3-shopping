@@ -1,0 +1,859 @@
+body {
+    background: #fff;
+}
+/* 结算页面头部 */
+.js_head {
+    width: 990px;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.js_head .js_logo {
+    float: left;
+    width: 134px;
+    height: 42px;
+    background: url(../img/order/jslog.png);
+    margin-top: 15px;
+}
+.js_head .js_text {
+    float: left;
+    width: 100px;
+    height: 40px;
+    background: url(../img/order/purchase-icon.png) no-repeat;
+    margin-top: 22px;
+    margin-left: 10px;
+}
+.head_title_text {
+    width: 990px;
+    height: 42px;
+    margin: 0 auto;
+    line-height: 42px;
+    font-size: 16px;
+    color: #666;
+}
+/* __________________________________________________________ */
+/* 结算详细内容信息 */
+.js_main_con {
+    width: 990px;
+    margin: 0 auto;
+    border: 1px solid #f0f0f0;
+}
+/* 收货人信息 */
+.shouhuo_big {
+    width: 948px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-left: 20px;
+}
+/* 上部分 */
+.shouhuo_top {
+    width: 948px;
+    height: 40px;
+    line-height: 40px;
+}
+.shouhuo_top h3 {
+    float: left;
+    color: #333333;
+}
+.shouhuo_top a {
+    float: right;
+    color: #525ebb;
+}
+.shouhuo_top a:hover {
+    color: #f30213;
+}
+/* 下部分 */
+.shouhuo_bottom {
+    width: 948px;
+    margin-bottom: 10px;
+}
+.shouhuo_address {
+    width: 908px;
+    height: 42px;
+}
+.shouhuo_address .address_left {
+    position: relative;
+    float: left;
+    width: 144px;
+    height: 30px;
+    border: 2px solid #e4393c;
+    margin-top: 5px;
+    margin-left: 15px;
+    line-height: 30px;
+    text-align: center;
+    color: #666666;
+}
+.shouhuo_address .address_left em {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 12px;
+    height: 12px;
+    background: url(../img/order/selected-icon.png);
+}
+.shouhuo_address .address_right {
+    float: left;
+    width: 745px;
+    height: 30px;
+    margin-top: 5px;
+    line-height: 30px;
+}
+.address_right .uName {
+    padding-left: 15px;
+}
+.address_right .uAddress {
+    padding-left: 10px;
+}
+.address_right .u_gu_address {
+    padding-left: 5px;
+}
+.address_right .uPhone {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+.address_right .moren_biaoshi {
+    display: inline-block;
+    padding:0 5px;
+    line-height: 20px;
+    color: #fff;
+    background: #999999;
+   /* display: none;*/
+}
+.address_right .dele {
+    float: right;
+    color: #005ea7;
+    margin-right: 10px;
+    display: none;
+}
+.address_right .dele:hover {
+    color: #f30213;
+}
+.address_right .default_address {
+    float: right;
+    color: #005ea7;
+    display: none;
+    margin-right: 10px;
+}
+.address_right .default_address:hover {
+    color: #f30213;
+}
+.address_right .bianji {
+    float: right;
+    color: #005ea7;
+    display: none;
+    margin-right: 10px;
+}
+.address_right .bianji:hover {
+    color: #f30213;
+}
+.shouhuo_bottom .shouhuo_address .address_left {
+    border: 2px solid #dddddd;
+}
+.shouhuo_bottom .shouhuo_address .address_left em {
+    display: none;
+}
+.shouhuo_bottom .shouhuo_address:first-child .address_left {
+    border: 2px solid #e4393c;
+}
+.shouhuo_bottom .shouhuo_address:first-child .address_left em {
+    display: block;
+}
+.more_address {
+    width: 948px;
+    height: 28px;
+    border: 1px solid red;
+    margin-left: 15px;
+    line-height: 28px;
+    font-size: 12px;
+}
+.more_address a span {
+    color: #666;
+}
+.more_address a i {
+    display: inline-block;
+    width: 9px;
+    height: 10px;
+    background-image: url(../img/order/addr-i.png);
+    background-position: 0px 0px;
+}
+.more_address a span,.more_address a i {
+    vertical-align: middle;
+}
+
+/* 支付方式 */
+.zhifu_big {
+    width: 948px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-left: 20px;
+}
+/* 支付上部分 */
+.zhifu_top {
+    width: 948px;
+    height: 40px;
+    line-height: 40px;
+}
+.zhifu_top h3 {
+    color: #333333;
+}
+/* 支付下部分 */
+.zhifu_bottom {
+    width: 908px;
+    height: 30px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+.zhifu_bottom .zifu_a {
+    position: relative;
+    float: left;
+    width: 98px;
+    height: 30px;
+    border: 2px solid #e4393c;
+    line-height: 30px;
+    text-align: center;
+    margin-left: 8px;
+}
+.zhifu_bottom .zifu_a em {
+    padding: 0 2px;
+    background: #e4393c;
+    color: #fff;
+}
+.zhifu_bottom .zifu_a i {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 12px;
+    height: 12px;
+    background: url(../img/order/selected-icon.png);
+}
+.zhifu_bottom .zifu_a:nth-child(2),
+.zhifu_bottom .zifu_a:nth-child(3) {
+    border: 2px solid #dddddd;
+}
+.zhifu_bottom .zifu_a:nth-child(2) i,
+.zhifu_bottom .zifu_a:nth-child(3) i {
+    display: none;
+}
+/* 送货清单 */
+.songhuo_big {
+    width: 948px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+/* 送货清单上部分 */
+.songhuo_top {
+    width: 948px;
+    height: 40px;
+    line-height: 40px;
+}
+.songhuo_top h3 {
+    float: left;
+    color: #333333;
+}
+.songhuo_top .fanhui {
+    float: right;
+    color: #005ea7;
+}
+.songhuo_top .fanhui:hover {
+    color: #f30213;
+}
+.songhuo_top .price_shuoming {
+    float: right;
+    color: #005ea7;
+    margin-right: 30px;
+}
+.songhuo_top .price_shuoming:hover {
+    color: #f30213;
+}
+.songhuo_top .price_img {
+    float: right;
+    width: 24px;
+    height: 20px;
+    background: url(../img/order/presale-icon.png);
+    margin-top: 10px;
+    margin-right: 7px;
+}
+/* 送货清单下部分 */
+.songhuo_bottom {
+    width: 948px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+/* 左侧 */
+.songhuo_bottom .left {
+    float: left;
+    width: 330px;
+    height: 216px;
+    background: #f7f7f7;
+}
+.songhuo_bottom .left h6 {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+.songhuo_bottom .left .peisong_fs {
+    position: relative;
+    display: block;
+    width: 141px;
+    height: 30px;
+    border: 2px solid #e4393c;
+    margin-top: 10px;
+    line-height: 27px;
+    text-align: center;
+    margin-left: 20px;
+}
+.songhuo_bottom .left .peisong_fs span {
+    color: #666;
+}
+.songhuo_bottom .left .peisong_fs i {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 12px;
+    height: 12px;
+    background: url(../img/order/selected-icon.png);
+}
+.songhuo_bottom .left .peisong_time {
+    width: 300px;
+    height: 25px;
+    border-bottom: 1px solid #dddddd;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+.songhuo_bottom .left .peisong_time span:nth-child(1) {
+    color: #999999;
+}
+.songhuo_bottom .left .yunfei_xian {
+    width: 300px;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 2px;
+}
+.yunfei_xian .xian_img {
+    float: left;
+    width: 57px;
+    height: 16px;
+    background: url(../img/order/promise.png);
+    cursor: pointer;
+}
+.yunfei_xian .xian_img:hover {
+    background: url(../img/order/promise.png);
+    background-position: -143px 0px;
+}
+.yunfei_xian p {
+    float: left;
+    margin-left: 15px;
+    width: 226px;
+}
+/* 右侧 */
+.songhuo_bottom .right {
+    float: left;
+    width: 946px;
+    height: 160px;
+    background: #f3fbfe;
+}
+.songhuo_bottom .right h4 {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+/* 主要内容部分 */
+.songhuo_bottom .right .main_info {
+    width: 595px;
+    margin-left: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+/* 主要内容部分左侧 */
+.main_info_left {
+    float: left;
+    width: 331px;
+    overflow: hidden;
+}
+.main_info_left .sp_img {
+    float: left;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #dddddd;
+}
+.main_info_left .sp_img img {
+    width: 100%;
+}
+.main_info_left p {
+    float: left;
+    width: 241px;
+    height: 36px;
+    margin-left: 8px;
+    overflow: hidden;
+}
+.main_info_left .color_chima {
+    float: left;
+    width: 240px;
+    margin-left: 5px;
+    margin-top: 7px;
+    overflow: hidden;
+}
+.color_left {
+    width: 120px;
+    float: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.chima_right {
+    float: left;
+}
+.main_info_left .color_chima span {
+    color: #666666;
+    font-weight: 700;
+}
+.main_info_left .wuliyou_tui {
+    float: left;
+    overflow: hidden;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+.wuliyou_tui .tui_img {
+    float: left;
+    width: 18px;
+    height: 18px;
+    background: url(../img/order/purchase-icon-201808.png);
+    background-position: 0px -85px;
+}
+.wuliyou_tui span {
+    float: left;
+    margin-left: 8px;
+}
+/* 主要内容部分右侧 */
+.main_info_right {
+    float: left;
+}
+.main_info_right strong {
+    padding-left: 40px;
+    color: #e4393c;
+}
+.main_info_right span {
+    padding-left: 55px;
+}
+.main_info_right i {
+    padding-left: 30px;
+}
+/* 留言 */
+.remarks {
+    margin-left: 20px;
+    margin-top: 40px;
+}
+.remarks input {
+    height: 30px;
+    width: 512px;
+    background-color: #f4fbfe;
+    outline: 0;
+    border: 1px solid #e6e6e6;
+    padding-left: 10px;
+    font-size: 12px;
+}
+/* 总件数和总金额 */
+.summary {
+    width: 990px;
+    height: 88px;
+    margin: 0 auto;
+}
+.summary .statistic {
+    float: right;
+    width: 300px;
+    margin-top: 15px;
+    margin-right: 20px;
+    height: 58px;
+}
+.statistic .statistic_top {
+    width: 300px;
+    height: 24px;
+    line-height: 24px;
+}
+.statistic .statistic_top em {
+    float: left;
+    color: red;
+    margin-left: 30px;
+}
+.statistic .statistic_top span {
+    float: left;
+}
+.statistic .statistic_top i {
+    float: right;
+    color: #333;
+    width: 100px;
+    text-align: right;
+}
+.statistic_bottom {
+    width: 300px;
+    height: 24px;
+    margin-top: 10px;
+}
+.statistic_bottom span {
+    float: left;
+    padding-left: 120px;
+}
+.statistic_bottom i {
+    float: left;
+    color: #333;
+    width: 100px;
+    text-align: right;
+    padding-left: 85px;
+}
+/* 收货地 */
+.trade_foot {
+    width: 990px;
+    border: 1px solid #e6e6e6;
+    background: #f4f4f4;
+    margin: 0 auto;
+}
+/* 上部分 */
+.trade_foot_top {
+    width: 970px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.trade_foot_top span {
+    float: right;
+    color: #e4393c;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: Verdana;
+    width: 122px;
+    text-align: right;
+}
+.trade_foot_top em {
+    float: right;
+    margin-top: 5px;
+    margin-right: 22px;
+}
+/* 下部分 */
+.trade_foot_bottom {
+    width: 970px;
+    height: 16px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+.trade_foot_bottom .shouhuo_people {
+    float: right;
+    color: #999999;
+}
+.trade_foot_bottom .jisong_address {
+    float: right;
+    margin-right: 20px;
+    color: #999999;
+}
+/* 提交订单 */
+.submit {
+/*    width: 990px;
+    height: 50px; float: right;
+    margin: 0 auto;*/
+    width: 990px; height: 50px;   margin: 0 auto;
+}
+.btn_submit {
+    float: right;
+    width: 135px;
+    height: 36px;
+    background: url(../img/order/btn-submit.jpg);
+    margin-top: 7px;
+}
+.btn_submit:hover {
+    background: url(../img/order/btn-submit.jpg);
+    background-position: 0px -36px;
+}
+/* 新增收货地址盒子 */
+.add_address_big {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 9998;
+    background: rgb(0, 0, 0,0.15);
+    width: 1519px;
+    height: 2326px;
+}
+.add_address_big .add_addresss {
+    width: 698px;
+    height: 517px;
+    background: #fff;
+    margin: 0 auto;
+    margin-top: 120px;
+    border: 4px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+/* 新增收货地头部标题 */
+.add_address_big {
+    display: none;
+}
+.address_top_title {
+    width: 690px;
+    height: 31px;
+    background: #f3f3f3;
+    line-height: 31px;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+}
+.address_top_title span {
+    float: left;
+    margin-left: 10px;
+}
+.address_top_title .close_box {
+    float: right;
+    width: 13px;
+    height: 13px;
+    background: url(../img/order/dialog.png);
+    margin-top: 10px;
+    margin-right: 10px;
+}
+/* 主要收货信息 */
+.add_addresss .main_address {
+    width: 670px;
+    height: 400px;
+    margin: 20px 0 0 20px;
+}
+/* 所在地区 */
+.xuan_address {
+    margin-bottom: 10px;
+    /* border: 1px solid red; */
+}
+.x_address_left {
+    float: left;
+    line-height: 25px;
+    width: 140px;
+}
+.x_address_left span {
+    color: red;
+} 
+.x_address_right {
+    float: left;
+    height: 23px;
+    background: #fff;
+    border: 1px solid #CECBCE;
+    padding-left: 4px;
+    line-height: 20px;
+    margin-left: 20px;
+    color: #666666;
+}
+#bigOne #box {
+    border: 0
+}
+#bigOne #box {
+    height: 20px;
+    line-height: 20px;
+}
+#bigOne #totalConfirm {
+    height: 20px;
+}
+#bigOne {
+    position: relative;
+}
+#bigOne .reset {
+    width: 40px;
+    height: 23px;
+    line-height: 23px;
+    position: absolute;
+    top: -11px;
+    left: 408px;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    color: #666;
+    background: #fff;
+    font-size: 12px;
+}
+#bigOne .confirm {
+    width: 40px;
+    height: 23px;
+    line-height: 23px;
+    position: absolute;
+    top: -11px;
+    left: 460px;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    color: #666;
+    background: #fff;
+    font-size: 12px;
+}
+.province-list {
+    background: #fff;
+}
+.city-list {
+    background: #fff;
+}
+.area-list {
+    background: #fff;
+}
+/* 收货人 */
+.xuan_name {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.x_name_left {
+    float: left;
+    line-height: 25px;
+}
+.x_name_left span {
+    color: red;
+} 
+.x_name_right {
+    float: left;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    margin-left: 32px;
+    margin-top: 1px;
+}
+.x_name_right .address_text {
+    height: 20px;
+    width: 225px;
+    padding: 3px 5px 2px 10px;
+    outline: 0;
+}
+/* 详细地址 */
+.xuan_shou_address {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.shou_address_left {
+    float: left;
+    line-height: 25px;
+}
+.shou_address_left span {
+    color: red;
+} 
+.shou_address_right {
+    float: left;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+    margin-top: 1px;
+}
+.shou_address_right .address_text {
+    height: 20px;
+    width: 225px;
+    padding: 3px 5px 2px 10px;
+    outline: 0;
+}
+/* 手机号码 */
+.xuan_phone {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.xuan_phone_left,
+.xuan_gu_phone_left {
+    float: left;
+    line-height: 25px;
+}
+.xuan_phone_left span,
+.xuan_gu_phone_left span {
+    color: red;
+} 
+.xuan_phone_right,
+.xuan_gu_phone_right {
+    float: left;
+    margin-left: 20px;
+    margin-top: 1px;
+}
+.xuan_phone_right .phone_tishi,
+.xuan_gu_phone_right .phone_tishi {
+    float: left;
+    color: #ccc;
+    background-color: #f4f4f4;
+    width: 48px;
+    border: 1px solid #ccc;
+    text-align: center;
+    height: 23px;
+    line-height: 23px;
+    vertical-align: middle;
+}
+.xuan_phone_right span,
+.xuan_gu_phone_right span {
+    float: left;
+    border-top: 1px solid #bbb;
+    width: 5px;
+    height: 1px;
+    margin: 10px 7px 0 7px;
+    vertical-align: middle;
+}
+.xuan_phone_right .phone_text,
+.xuan_gu_phone_right .gu_phone_text {
+    float: left;
+    height: 23px;
+    width: 160px;
+    padding: 3px 5px 2px 10px;
+    line-height: 23px;
+    outline: 0;
+    border: 1px solid #ccc;
+}
+/* 固定电话 */
+.xuan_gu_phone {
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-left: 9px;
+}
+/* 邮箱地址 */
+.xuan_email {
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-left: 9px;
+}
+.email_left,
+.xuan_address_bie_left {
+    float: left;
+    line-height: 25px;
+}
+.email_right,
+.xuan_address_bie_right {
+    float: left;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+    margin-top: 1px;
+}
+.email_right .email_text,
+.xuan_address_bie_right .xuan_address_bie_text {
+    height: 20px;
+    width: 225px;
+    padding: 3px 5px 2px 10px;
+    outline: 0;
+}
+.email_tishi_text {
+    color: #999999;
+    margin: 0 0 10px 100px;
+}
+/* 地址别名 */
+.xuan_address_bie {
+    overflow: hidden;
+    margin-bottom: 20px;
+    margin-left: 9px;
+}
+.xuan_address_bie i {
+    float: left;
+    margin-top: 4px;
+    color: #999999;
+    margin-left: 10px;
+}
+.xuan_address_bie .changyong_name {
+    float: left;
+    margin-top: 2px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    color: #666;
+    padding: 2px 10px;
+}
+.xuan_address_bie .changyong_name:hover {
+    border: 1px solid #e4393c;
+    color: #e4393c;
+}
+/* 保存收货人信息 */
+.main_address .baocun_info {
+    height: 25px;
+    line-height: 25px;
+    background-color: #e74649;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 5px 15px;
+    margin-left: 76px;
+}
+.main_address .baocun_info:hover {
+    opacity: 0.9;
+}

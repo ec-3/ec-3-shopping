@@ -17,7 +17,7 @@ body a {
     margin-left: -10px;
     margin-right: 10px;
     vertical-align: middle;
-    background-image: url(../img/shoppingCar/car_logo1.png);
+    background-image: url(../img/cart/car_logo1.png);
 }
 
 #carHeader {
@@ -102,7 +102,7 @@ body a {
     margin-top: 7px;
     margin-bottom: 10px;
     /*background: red;*/
-    background-image: url(../img/shoppingCar/shoppingbag_header_step.png);
+    background-image: url(../img/cart/shoppingbag_header_step.png);
 }
 
 #checkoutPosition {
@@ -147,7 +147,7 @@ body a {
 }
 
 .checkIcon {
-    background-image: url(../img/shoppingCar/shoppingCar_input_checkbox.png);
+    background-image: url(../img/cart/shoppingCar_input_checkbox.png);
 }
 
 .checkoutTableHeader {
@@ -226,7 +226,7 @@ body a {
 }
 
 .checktoggle {
-    background-image: url(../img/shoppingCar/shoppingCar_input_checkbox.png);
+    background-image: url(../img/cart/shoppingCar_input_checkbox.png);
     background-position: -42px 0;
 }
 
@@ -343,7 +343,7 @@ body a {
     height: 19px;
     display: block;
     cursor: pointer;
-    background-image: url(../img/shoppingCar/shoppingBag_checkout_icon.png);
+    background-image: url(../img/cart/shoppingBag_checkout_icon.png);
 }
 
 #checkoutCoupons {
@@ -412,7 +412,7 @@ body a {
 .couponNone {
     width: 46px;
     height: 30px;
-    background-image: url(../img/shoppingCar/shopping_checkout_coupons.png);
+    background-image: url(../img/cart/shopping_checkout_coupons.png);
     background-position: -20px 0;
     margin-left: 42px;
 }
@@ -506,7 +506,7 @@ body a {
     position: absolute;
     top: 6px;
     right: 10px;
-    background-image: url(../img/shoppingCar/shopping-phone.png);
+    background-image: url(../img/cart/shopping-phone.png);
     background-repeat: no-repeat;
 }
 
@@ -544,7 +544,7 @@ body a {
     margin-right: 5px;
     vertical-align: bottom;
     position: relative;
-    background-image: url(../img/shoppingCar/checkout_first_minu.png);
+    background-image: url(../img/cart/checkout_first_minu.png);
 }
 
 .rightSubmit {
@@ -656,7 +656,7 @@ body a {
     width: 50px;
     height: 30px;
     cursor: pointer;
-    background-image: url(../img/shoppingCar/shopping_control.png);
+    background-image: url(../img/cart/shopping_control.png);
 }
 
 .controlLeft {

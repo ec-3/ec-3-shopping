@@ -18,5 +18,5 @@ public interface OrderMapper {
 
     int updateByPrimaryKey(Order row);
 
-    List<Order> getOrderList(String userId);
+    List<Order> getOrderList(Long userId);
 }

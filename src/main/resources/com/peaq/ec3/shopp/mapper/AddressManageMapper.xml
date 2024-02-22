@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.peaq.ec3.shopp.mapper.AddressManageMapper">
-  <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.AddressManage">
+  <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.AddressChina">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="def_flag" jdbcType="TINYINT" property="defFlag" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="recipient" jdbcType="VARCHAR" property="recipient" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="province" jdbcType="VARCHAR" property="province" />
@@ -20,64 +20,6 @@
     <result column="city_area_code" jdbcType="VARCHAR" property="cityAreaCode" />
     <result column="district_area_code" jdbcType="VARCHAR" property="districtAreaCode" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List">
     id, def_flag, user_id, recipient, mobile, province, city, district, address, `label`, 
     create_operator, create_time, update_operator, update_time, province_area_code, city_area_code, 
@@ -93,21 +35,21 @@
     delete from address_manage
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.peaq.ec3.shopp.model.AddressManage">
+  <insert id="insert" parameterType="com.peaq.ec3.shopp.model.AddressChina">
     insert into address_manage (id, def_flag, user_id, 
       recipient, mobile, province, 
       city, district, address, 
       `label`, create_operator, create_time, 
       update_operator, update_time, province_area_code, 
       city_area_code, district_area_code)
-    values (#{id,jdbcType=BIGINT}, #{defFlag,jdbcType=TINYINT}, #{userId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{defFlag,jdbcType=TINYINT}, #{userId,jdbcType=BIGINT},
       #{recipient,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{label,jdbcType=TINYINT}, #{createOperator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateOperator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{provinceAreaCode,jdbcType=VARCHAR}, 
       #{cityAreaCode,jdbcType=VARCHAR}, #{districtAreaCode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.AddressManage">
+  <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.AddressChina">
     insert into address_manage
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -170,7 +112,7 @@
         #{defFlag,jdbcType=TINYINT},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="recipient != null">
         #{recipient,jdbcType=VARCHAR},
@@ -216,14 +158,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.AddressManage">
+  <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.AddressChina">
     update address_manage
     <set>
       <if test="defFlag != null">
         def_flag = #{defFlag,jdbcType=TINYINT},
       </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="recipient != null">
         recipient = #{recipient,jdbcType=VARCHAR},
@@ -270,10 +212,10 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.AddressManage">
+  <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.AddressChina">
     update address_manage
     set def_flag = #{defFlag,jdbcType=TINYINT},
-      user_id = #{userId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
       recipient = #{recipient,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},

@@ -1,27 +1,35 @@
 $(function () {
-    //引入头部
-    $(".floor1").load("/header");
-
+    $(".header-all").load("/header");
 
     $(".btn_login").click(function () {
-        let username = $(".content_one input.login_number").val();
-        let password = $(".content_one input.login_password").val();
-        // 登录
-        post(routing.login, JSON.stringify({
-            "username": username,
-            "password": password
-        }), function (response) {
-            if (response.code === 0) {
-                localStorage.setItem("user", JSON.stringify(response.data.user));
-                localStorage.setItem("token", response.data.token);
-                window.location.replace("/");
-                alert('login successful !');
-            } else {
-                alert(response.msg);
-            }
-        }, function (error) {
-            alert("System response timed out, please try again later ！");
-        });
+        let login = $("#login").val();
+        let value = '';
+        if (isEmail(login)) {
+            value = 'email';
+        } else if (isPhoneNumber(login)) {
+            value = 'mobile';
+        }
+        if (value === '') {
+            alert('Email or mobile phone number format is wrong!');
+        } else {
+            let user = {};
+            user[value] = login;
+            user['password'] = $("#password").val();
+            // 登录
+            post(routing.login, JSON.stringify(user), function (response) {
+                if (response.code === 0) {
+                    sessionStorage.setItem("user", JSON.stringify(response.data.user));
+                    sessionStorage.setItem("token", response.data.token);
+                    window.location.replace("/");
+                    alert('login successful !');
+                } else {
+                    alert(response.msg);
+                }
+            }, function (error) {
+                alert(error_msg + error);
+            });
+        }
+
     });
 
     // 点击手机号登录改变

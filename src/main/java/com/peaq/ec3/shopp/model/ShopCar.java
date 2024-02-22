@@ -8,7 +8,7 @@ import java.util.Date;
 public class ShopCar {
     private Long id;
 
-    private String userId;
+    private Long userId;
 
     private Long productId;
 

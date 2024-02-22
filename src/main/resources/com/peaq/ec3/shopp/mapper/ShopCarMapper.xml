@@ -3,7 +3,7 @@
 <mapper namespace="com.peaq.ec3.shopp.mapper.ShopCarMapper">
     <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.ShopCar">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="product_id" jdbcType="BIGINT" property="productId"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
         <result column="del_flag" jdbcType="BIT" property="delFlag"/>
@@ -27,7 +27,7 @@
     insert into shop_car (id, user_id, product_id, 
       quantity, del_flag, create_time, 
       update_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT},
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT},
       #{quantity,jdbcType=INTEGER}, #{delFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -61,7 +61,7 @@
                 #{id,jdbcType=BIGINT},
             </if>
             <if test="userId != null">
-                #{userId,jdbcType=VARCHAR},
+                #{userId,jdbcType=BIGINT},
             </if>
             <if test="productId != null">
                 #{productId,jdbcType=BIGINT},
@@ -84,7 +84,7 @@
         update shop_car
         <set>
             <if test="userId != null">
-                user_id = #{userId,jdbcType=VARCHAR},
+                user_id = #{userId,jdbcType=BIGINT},
             </if>
             <if test="productId != null">
                 product_id = #{productId,jdbcType=BIGINT},
@@ -106,7 +106,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.ShopCar">
     update shop_car
-    set user_id = #{userId,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=BIGINT},
       quantity = #{quantity,jdbcType=INTEGER},
       del_flag = #{delFlag,jdbcType=BIT},
@@ -118,13 +118,13 @@
     <select id="getShopCarList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from shop_car where user_id = #{userId}  order by create_time desc
+        from shop_car where user_id = #{userId} and del_flag = 0 order by create_time desc
     </select>
 
     <update id="delCarBatch">
         UPDATE `shop_car` SET `del_flag` = '1' WHERE `id` IN
         <foreach collection="ids" open="(" close=")" item="id" separator="," index="index">
-            {#id}
+            #{id}
         </foreach>
     </update>
 
@@ -138,8 +138,13 @@
 
     <update id="updateBatch">
         <foreach collection="updateCar" item="car" index="index" separator=";">
-            update shop_car set quantity=${car.quantity} where user_id = ${car.userId}
+            update shop_car set quantity=#{car.quantity} where id = #{car.id}
         </foreach>
     </update>
+
+    <update id="delCarByUser">
+            update shop_car set del_flag = 1 where user_id = #{userId}
+    </update>
+
 
 </mapper>

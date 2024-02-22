@@ -8,11 +8,11 @@ import java.util.Date;
 public class OrderItem {
     private Long id;
 
-    private String userId;
+    private Long userId;
 
     private String orderId;
 
-    private String productNum;
+    private Long productId;
 
     private String masterPic;
 
@@ -22,9 +22,8 @@ public class OrderItem {
 
     private Long price;
 
+    //优惠权益后销售单价
     private Long equityPrice;
-
-    private Long costPrice;
 
     private Byte type;
 

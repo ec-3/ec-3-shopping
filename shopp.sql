@@ -1,7 +1,7 @@
 CREATE TABLE `ec^3`.`user_Info`(
   `id`          bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username`   varchar(32) NOT NULL  DEFAULT '' COMMENT '用户名称',
-  `password` varchar(32)  NOT NULL DEFAULT '' COMMENT '密码',
+  `username`    varchar(32) NOT NULL  DEFAULT '' COMMENT '用户名称',
+  `password`    varchar(32)  NOT NULL DEFAULT '' COMMENT '密码',
   `card_type`   tinyint(1)  NOT NULL DEFAULT '0' COMMENT '证件类型：0 身份证，1 护照',
   `card_no`     varchar(32)  NOT NULL DEFAULT '0'  COMMENT '证件号码',
   `mobile`      varchar(32)NOT NULL DEFAULT '' COMMENT '手机号',
@@ -17,7 +17,7 @@ CREATE TABLE `ec^3`.`user_Info`(
 
 CREATE TABLE `ec^3`.`shop_car`(
     `id`           bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `user_id`      varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
+    `user_id`      bigint(20) NOT NULL   COMMENT '用户ID',
     `product_id`   bigint NOT NULL COMMENT '商品ID',
     `quantity`     int(11) NOT NULL DEFAULT '0' COMMENT '购物车数量',
     `del_flag`  tinyint(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除：0 否; 1 是',
@@ -27,10 +27,10 @@ CREATE TABLE `ec^3`.`shop_car`(
     KEY `idx_user_product` (`user_id`,`product_num`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='购物车表';
 
-CREATE TABLE `ec^3`.`address_manage` (
+CREATE TABLE `ec^3`.`address_china` (
    `id` bigint(20) unsigned  NOT NULL AUTO_INCREMENT COMMENT '自增主键',
    `def_flag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否默认：0-否 1-是',
-   `user_id` varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
+   `user_id`  bigint(20) NOT NULL  COMMENT '用户ID',
    `recipient` varchar(32) NOT NULL DEFAULT '' COMMENT '收货人',
    `mobile` varchar(32) NOT NULL DEFAULT '' COMMENT '手机号',
    `province` varchar(32) NOT NULL DEFAULT '' COMMENT '收货地址所在的省',
@@ -49,10 +49,35 @@ CREATE TABLE `ec^3`.`address_manage` (
    KEY `idx_cp_addr_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='收货地址管理表';
 
+CREATE TABLE `ec^3`.`address_global` (
+   `id` bigint(20) unsigned  NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+   `def_flag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否默认：0-否 1-是',
+   `user_id`  bigint(20) NOT NULL  COMMENT '用户ID',
+   `recipient` varchar(32) NOT NULL DEFAULT '' COMMENT '收货人',
+   `phone` varchar(32) NOT NULL DEFAULT '' COMMENT '手机号',
+   `country` varchar(32) NOT NULL DEFAULT '' COMMENT '国家/地区',
+   `city` varchar(32) NOT NULL DEFAULT '' COMMENT '城镇/城市',
+   `street` varchar(32) NOT NULL DEFAULT '' COMMENT '街道地址',
+   `county` varchar(512) NOT NULL DEFAULT '' COMMENT '州/县',
+    `postcode` varchar(32) NOT NULL DEFAULT '' COMMENT '邮政编码',
+    `email` varchar(32) NOT NULL DEFAULT '' COMMENT '电子邮件地址',
+    `address` varchar(512) NOT NULL DEFAULT '' COMMENT '收货详细地址',
+   `label` tinyint(2) NOT NULL DEFAULT '0' COMMENT '标签：0-公司 1-家 2-学校',
+   `create_operator` varchar(32) NOT NULL DEFAULT '' COMMENT '创建人',
+   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   `update_operator` varchar(32) NOT NULL DEFAULT '' COMMENT '更新人',
+   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+   PRIMARY KEY (`id`),
+   KEY `idx_addr_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='收货地址管理表';
+
+
+
+
 CREATE TABLE `ec^3`.`order` (
   `id` bigint(20) unsigned  NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `order_id` varchar(32) NOT NULL DEFAULT '' COMMENT '支付订单号(唯一) 格式：年份后2位(yyyy) + 1年中的第?天数3位+ 一代后2位 + 雪花算法后11位,数字一共18位',
-  `user_id` varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
+  `user_id`  bigint(20)  NOT NULL  COMMENT '用户ID',
   `am_id` varchar(32) NOT NULL DEFAULT '' COMMENT '收货地址ID',
   `user_name` varchar(128) NOT NULL DEFAULT '' COMMENT '用户名称',
   `total_amount` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单总金额-单位分',
@@ -75,7 +100,8 @@ CREATE TABLE `ec^3`.`order` (
   `invoice_recipient_contact` varchar(32) NOT NULL DEFAULT '' COMMENT '发票收件人联系方式',
   `invoice_recipient_email` varchar(32) NOT NULL DEFAULT '' COMMENT '收票人邮箱',
   `invoice_additional_info` varchar(255) NOT NULL DEFAULT '' COMMENT '补充资料',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '支付状态：0-待支付 1-已支付 2-已取消 3-已关闭',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '支付状态：0-待支付 1-支付中 2-已支付 3-已取消',
+  `submit_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '提交类型：0-直接购买 1-购物车购买',
   `pay_time` datetime  DEFAULT null COMMENT '支付时间',
   `delivery_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '发货状态：0-待发货 1-部分发货 2-已发货（全部发货）',
   `cancel_time` datetime  DEFAULT null COMMENT '取消订单时间',
@@ -91,15 +117,14 @@ CREATE TABLE `ec^3`.`order` (
 
 CREATE TABLE `ec^3`.`order_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-  `user_id` varchar(20) NOT NULL DEFAULT '' COMMENT '用户id',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `order_id` varchar(32) NOT NULL DEFAULT '' COMMENT '订单号(对应order表的order_id字段)',
-  `product_num` varchar(32) NOT NULL DEFAULT '' COMMENT '商品编号',
+  `product_id`   bigint NOT NULL COMMENT '商品ID',
   `master_pic` varchar(255) NOT NULL DEFAULT '' COMMENT '商品主图',
   `product_name` varchar(32) NOT NULL DEFAULT '' COMMENT '商品名称',
   `quantity` int(11) NOT NULL DEFAULT '0' COMMENT '购买数量',
   `price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '销售单价',
   `equity_price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '优惠权益后销售单价',
-  `cost_price` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '商品成本价',
   `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '商品分类：0-xx, 1-xx',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -112,8 +137,7 @@ CREATE TABLE `ec^3`.`order_item` (
 
 
 CREATE TABLE `ec^3`.`product_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-  `product_num` varchar(32) NOT NULL DEFAULT '' COMMENT '商品编号',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品 ID 自增主键',
   `product_name` varchar(32) NOT NULL DEFAULT '' COMMENT '商品名称',
   `brand` varchar(32)  NOT NULL DEFAULT '' COMMENT '品牌',
   `specification` varchar(32)  NOT NULL DEFAULT '' COMMENT '产品规格',

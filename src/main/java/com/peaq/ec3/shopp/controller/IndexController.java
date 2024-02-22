@@ -26,13 +26,29 @@ public class IndexController {
         return "header";
     }
 
+    @RequestMapping("footer")
+    public String footer() {
+        return "footer";
+    }
+
     @RequestMapping("register")
     public String register() {
         return "register";
     }
+
     @RequestMapping("cart")
     public String cart() {
         return "cart";
+    }
+
+    @RequestMapping("order")
+    public String order() {
+        return "order";
+    }
+
+    @RequestMapping("account")
+    public String account() {
+        return "account";
     }
 
 

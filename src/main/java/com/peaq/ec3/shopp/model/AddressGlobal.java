@@ -5,25 +5,32 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class AddressManage {
+public class AddressGlobal {
     private Long id;
+
     private Byte defFlag;
 
-    private String userId;
+    private Long userId;
 
     private String recipient;
 
-    private String mobile;
+    private String phone;
 
-    private String province;
+    private String country;
 
     private String city;
 
-    private String district;
+    private String street;
+
+    private String county;
+
+    private String postcode;
+
+    private String email;
 
     private String address;
 
-    private Byte label;
+    private String label;
 
     private String createOperator;
 
@@ -32,11 +39,5 @@ public class AddressManage {
     private String updateOperator;
 
     private Date updateTime;
-
-    private String provinceAreaCode;
-
-    private String cityAreaCode;
-
-    private String districtAreaCode;
 
 }

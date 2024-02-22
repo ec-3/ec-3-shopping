@@ -198,91 +198,91 @@ var details = [{
 }]
 
 var car = [{
-		"src1": "img/shoppingCar/shoppingbag_lunbo1.jpg",
+		"src1": "img/cart/shoppingbag_lunbo1.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻眼部精华肌底液嘉年华...",
 		"price": "￥￥680.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo2.jpg",
+		"src1": "img/cart/shoppingbag_lunbo2.jpg",
 		"name1": "DIOR",
 		"name2": "克丽丝汀迪奥凝脂恒久气...",
 		"price": "￥570.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo3.jpg",
+		"src1": "img/cart/shoppingbag_lunbo3.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻肌底精华眼霜惠选套装",
 		"price": "￥520.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo4.jpg",
+		"src1": "img/cart/shoppingbag_lunbo4.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻水份缘舒悦凝霜惠选...",
 		"price": "￥575.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo5.jpg",
+		"src1": "img/cart/shoppingbag_lunbo5.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻肌底修护舒润精华...",
 		"price": "￥690.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo5.jpg",
+		"src1": "img/cart/shoppingbag_lunbo5.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻肌底修护舒润精华...",
 		"price": "￥690.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo4.jpg",
+		"src1": "img/cart/shoppingbag_lunbo4.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻水份缘舒悦凝霜惠选...",
 		"price": "￥575.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo3.jpg",
+		"src1": "img/cart/shoppingbag_lunbo3.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻肌底精华眼霜惠选套装",
 		"price": "￥520.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo2.jpg",
+		"src1": "img/cart/shoppingbag_lunbo2.jpg",
 		"name1": "DIOR",
 		"name2": "克丽丝汀迪奥凝脂恒久气...",
 		"price": "￥570.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo1.jpg",
+		"src1": "img/cart/shoppingbag_lunbo1.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻眼部精华肌底液嘉年华...",
 		"price": "￥￥680.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo1.jpg",
+		"src1": "img/cart/shoppingbag_lunbo1.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻眼部精华肌底液嘉年华...",
 		"price": "￥￥680.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo2.jpg",
+		"src1": "img/cart/shoppingbag_lunbo2.jpg",
 		"name1": "DIOR",
 		"name2": "克丽丝汀迪奥凝脂恒久气...",
 		"price": "￥570.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo3.jpg",
+		"src1": "img/cart/shoppingbag_lunbo3.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻肌底精华眼霜惠选套装",
 		"price": "￥520.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo4.jpg",
+		"src1": "img/cart/shoppingbag_lunbo4.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻水份缘舒悦凝霜惠选...",
 		"price": "￥575.00"
 	},
 	{
-		"src1": "img/shoppingCar/shoppingbag_lunbo5.jpg",
+		"src1": "img/cart/shoppingbag_lunbo5.jpg",
 		"name1": "LANCOME",
 		"name2": "兰蔻肌底修护舒润精华...",
 		"price": "￥690.00"

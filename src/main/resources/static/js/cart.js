@@ -1,46 +1,32 @@
 $(function () {
-    // 猜你喜欢
-    $.each(car, function (index, data) {
-        let carProduct = `<div class="longBoxContentLi l">
-						<div class="longBoxContentLiImg">
-							<img src="${data.src1}"/>
-						</div>
-						<div class="longBoxContentLiInfo">
-							<div class="infoTag">${data.name1}</div>
-							<div class="infoName">${data.name2}</div>
-							<div class="infoPrice">${data.price}</div>
-						</div>
-					</div>`;
-        $('.longBoxContent').append(carProduct)
-
-    });
-
-    // 加载购物车
-    let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+    $(".header-all").load("/header");
+    let cartMap = sessionStorage.getItem("cartMap");
     if (cartMap) {
-        forItems(cartMap);
+        forItems(JSON.parse(cartMap));
     } else {
-        let user = JSON.parse(localStorage.getItem("user"));
+        let user = JSON.parse(sessionStorage.getItem("user"));
         post(routing.cart, JSON.stringify({
             'userId': user['id']
         }), function (response) {
             if (response.code === 0) {
-                localStorage.setItem('cartMap', JSON.stringify(response.data));
-                forItems(response.data);
+                if (response.data) {
+                    sessionStorage.setItem('cartMap', JSON.stringify(response.data));
+                    forItems(response.data);
+                }
             } else {
                 alert(response.msg);
             }
         }, function (error) {
-            alert("System response timed out, please try again later ！");
+            alert(error_msg + error);
         });
     }
 
     function forItems(cartMap) {
         for (let key in cartMap) {
             let cart = cartMap[key];
-            let picMap = new Map(JSON.parse(localStorage.getItem("picMap")));
-            let product = JSON.parse(localStorage.getItem("productMap"))[key];
-            let carProduct = `<div class="productBodyItemContent">
+            let picMap = new Map(JSON.parse(sessionStorage.getItem("picMap")));
+            let product = JSON.parse(sessionStorage.getItem("productMap"))[key];
+            let carProduct = `<div class="productBodyItemContent" pId="${product.id}">
                     <em class="checkBox checkIcon"></em>
                     <a class="itemImg" href=""><img src="${picMap.get(product.id)}"/></a>
                     <div class="itemInfo">
@@ -53,7 +39,7 @@ $(function () {
                     </div>
                     <div class="itemInfoUnion2">
                     <div class="itemInfoUnion2Module lelt">
-                    <i class="itemMinus item_ma_css l"data-id="${product.id}">-</i>
+                    <i class="itemMinus item_ma_css l" data-id="${product.id}">-</i>
                     <input type="text" class="itemNum l" value="${cart.quantity}"/>
                     <i class="itemAdd item_ma_css l" data-id="${product.id}">+</i>
                     </div>
@@ -80,9 +66,9 @@ $(function () {
         let unitPrice = $('.itemPice').eq(index).text();
         sum.text(val * unitPrice + '.00');
         $('.itemMinus').eq(index).css('color', '#474747');
-        let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+        let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
         cartMap[$(this).attr('data-id')].quantity += 1;
-        localStorage.setItem('cartMap', JSON.stringify(cartMap));
+        sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
         setUpCart();
         if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
             $(".lumpSum").text(parseFloat($(".lumpSum").eq(0).text()) + parseFloat(unitPrice));
@@ -98,9 +84,9 @@ $(function () {
             num.val(val);
             let unitPrice = $('.itemPice').eq(index).text();
             $('.sumNum').eq(index).text(val * unitPrice + '.00');
-            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
             cartMap[$(this).attr('data-id')].quantity -= 1;
-            localStorage.setItem('cartMap', JSON.stringify(cartMap));
+            sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
             setUpCart();
             if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
                 $(".lumpSum").text(parseFloat($(".lumpSum").eq(0).text()) - parseFloat(unitPrice));
@@ -114,9 +100,9 @@ $(function () {
     $("#chekoutBody").on('click', '.delete', function () {
         if (confirm('Are you sure you want to delete this item ?')) {
             let index = $('.delete').index(this);
-            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
             delete cartMap[$(this).attr('data-id')];
-            localStorage.setItem('cartMap', JSON.stringify(cartMap));
+            delCartStorage(cartMap);
             setUpCart();
             let sum = parseFloat($(".lumpSum").eq(0).text());
             if (sum > 0) {
@@ -125,6 +111,14 @@ $(function () {
             $('.productBodyItemContent').eq(index).remove();
         }
     });
+
+    function delCartStorage(cartMap) {
+        if (Object.keys(cartMap).length === 0) {
+            sessionStorage.removeItem('cartMap');
+        } else {
+            sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
+        }
+    }
 
     let checkBoxArray = [];
     //批量选中
@@ -178,6 +172,7 @@ $(function () {
                     sum = 0;
                     checkBoxArray = [];
                 }
+                sessionStorage.removeItem('cartMap');
             } else {
                 if (confirm('确定删除这些商品吗？')) {
                     numberSort(checkBoxArray);
@@ -186,10 +181,14 @@ $(function () {
                             sum -= parseFloat($('.sumNum').eq(checkBoxArray[i]).text());
                         }
                     }
+                    let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
                     for (let i = 0; i < checkBoxArray.length; i++) {
                         // 这里需要减1，删除后index变化
                         $('.productBodyItemContent').eq(checkBoxArray[i] - i).remove();
+                        let pId = $('.productBodyItemContent').eq(checkBoxArray[i]).attr('pId');
+                        delete cartMap[pId];
                     }
+                    delCartStorage(cartMap);
                     for (let i = 0; i < checkBoxArray.length; i++) {
                         checkBoxArray = checkBoxArray.filter(item => item !== checkBoxArray[i]);
                     }
@@ -197,63 +196,51 @@ $(function () {
             }
             $(".lumpSum").text(sum);
             $("#itemTotal").text(checkBoxArray.length);
+            setUpCart();
         } else {
             confirm('请勾选商品');
         }
     });
 
-    //水平轮播
-    let i = 0;
-    $('.controlLeft').click(function () {
-        i--;
-        if (i == 0) {
-            $('.controlLeft').css('background-position', '0 0');
-        }
-        if (i < 0) {
-            i = 0;
-        }
-        $('.controlRight').css('background-position', '-50px -60px');
-        changePic(i);
-    })
-    $('.controlRight').click(function () {
-        i++;
-        $('.controlLeft').css('background-position', '0 -60px');
-        if (i == 2) {
-            $('.controlRight').css('background-position', '-50px 0');
-        }
-        if (i > 2) {
-            i = 2;
-        }
-        changePic(i);
-    })
-
-    function changePic() {
-        let nowLeft = -i * 1190;
-        $('.longBoxContent').css('left', nowLeft);
-    }
-
     $(window).bind('beforeunload', function () {
-        alert('离开购物车页面');
-        let upCart = setUpCart();
-        if (upCart) {
-            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
-            post(routing.execute, cartMap, function (response) {
-                if (response.code === 0) {
-
-                } else {
-                    alert(response.msg);
-                }
-            }, function (error) {
-                alert(error_msg + error);
-            });
+        if (sessionStorage.getItem('upCart')) {
+            let user = JSON.parse(sessionStorage.getItem("user"));
+            let cart = JSON.parse(sessionStorage.getItem("cartMap"));
+            sessionStorage.removeItem('upCart');
+            post(routing.execute, JSON.stringify({'userId': user.id, 'cart': cart}));
         }
     });
 
     function setUpCart() {
-        let upCart = localStorage.getItem('upCart');
-        if (!upCart) localStorage.setItem('upCart', true);
+        let upCart = sessionStorage.getItem('upCart');
+        if (!upCart) sessionStorage.setItem('upCart', true);
         return upCart;
     }
+
+    $('.rightSubmit').click(function () {
+        let user = JSON.parse(sessionStorage.getItem("user"));
+        if (!user) {
+            alert('请登录！');
+        } else {
+            if (checkBoxArray.length === 0) {
+                alert('请选择商品');
+            } else {
+                sessionStorage.setItem('buy_type', 1);
+                let order = {};
+                for (let i = 0; i < checkBoxArray.length; i++) {
+                    let pId = $('.productBodyItemContent').eq(checkBoxArray[i]).attr('pId');
+                    order[pId] = {
+                        'userId': user.id,
+                        'productId': pId,
+                        'quantity': $('.itemNum').eq(checkBoxArray[i]).val()
+                    };
+                }
+                sessionStorage.setItem('buyNow', JSON.stringify(order));
+                location.href = pageObj.order;
+            }
+
+        }
+    });
 
 });
 
