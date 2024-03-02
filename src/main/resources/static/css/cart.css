@@ -1,9 +1,6 @@
 body {
     background-color: #f5f5f5;
-}
-
-body a {
-    color: #000;
+    overflow-x: hidden;
 }
 
 .topContentLeft a {
@@ -666,4 +663,31 @@ body a {
 
 .controlRight {
     background-position: -50px -60px;
+}
+
+#body{
+    font:12px "微软雅黑","Arial Narrow",HELVETICA;background:#f5f5f5;
+}
+
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+
+body a {
+    color:#172c45;text-decoration:none
+}
+
+a:hover{color:#cd0200;text-decoration:none}
+
+#body em,i{font-style:normal}   li{list-style:none}
+#body img{border:0;vertical-align:middle}
+#body table{border-collapse:collapse;border-spacing:0}
+#body p{word-wrap:break-word}
+.t{ width: 100%; }
+.c{width: 1190px;margin: 0 auto;}
+.l{float: left;}
+.r{float: right;}
+
+
+.body-cart{
+    height: 400px;
+    border: white solid 1px;
 }

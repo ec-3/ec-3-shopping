@@ -65,17 +65,6 @@ public class UserInfoController {
         return userInfoMapper.getUserByLogin(user);
     }
 
-    @GetMapping("/test")
-    public String test() {
-
-        return "哈哈哈哈哈";
-    }
-
-    @PostMapping("/test2")
-    public String test2(@RequestBody Test test) {
-        System.out.println(test);
-        return "哈哈哈哈哈";
-    }
 
     @GetMapping("/verifyToken")
     public boolean verifyToken(@RequestParam String token) {

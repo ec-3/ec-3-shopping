@@ -10,9 +10,32 @@
         <script src="../lib/swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
         <script src="../js/index.js" type="text/javascript" charset="utf-8"></script>
+
+        <link rel="stylesheet" type="text/css" href="../css/header.css"/>
+
     </head>
     <body>
-        <div class="header-all"></div>
+        <!-- <div class="header-all"></div>-->
+        <div class="nav index" style="height: 80px;">
+            <div class="layui-container">
+                <div class="nav-logo"><a href="index.html"> <img src="../img/header/log.png" alt=""> </a></div>
+                <div class="nav-list">
+                    <button><span class=""></span><span style="display: block;"></span><span class=""></span></button>
+                    <ul class="layui-nav" lay-filter="">
+                        <li class="layui-nav-item"><a href="/">Product</a></li>
+                        <li class="layui-nav-item"><a href="#">Support</a></li>
+                        <li class="layui-nav-item"><a href="#">About Us</a></li>
+                        <li class="layui-nav-item"><a href="javascript:page('account');">Account</a></li>
+                        <li class="layui-nav-item"><a href="javascript:page('cart');"><img src="../img/header/cart.png"></a>
+                        </li>
+                        <li class="layui-nav-item"><a href="javascript:page('login')"><img
+                                src="../img/header/login.png"></a></li>
+                        <span class="layui-nav-bar" style="left: 342px; top: 78px; width: 0px; opacity: 0;"></span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
 
         <div class="swiper-container">
             <div class="swiper-wrapper">
@@ -37,173 +60,171 @@
         </div>
 
         <div class="content">
-
             <div class="remai xinpin">
                 <div class="container">
                     <ul id="products" class="clearfix">
-                       <!-- <li class="fl">
-                            <div class="small_phone">
-                                <a href="/details">
-                                    <span>新品</span>
-                                    <div class="box">
-                                        <p class="p1_name">魅族 EP3C 耳机</p>
-                                        <p class="p2_name">Hi-Res 认证高解析音质 | Type-C数字接口</p>
-                                        <p class="p3_name">￥129</p>
-                                    </div>
-                                    <img src="../img/index/meizu13.jpg">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="/details">
-                                    <span>热卖</span>
-                                    <div class="box">
-                                        <p class="p1">魅族 POP2 真无线蓝牙耳机</p>
-                                        <p class="p2">蓝牙5.0 | 单次8H续航 | 石墨烯振膜 | 双耳通话</p>
-                                        <p class="p3">￥399</p>
-                                    </div>
-                                    <img src="../img/index/meizu14.png">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    <span>热卖</span>
-                                    <div class="box">
-                                        <p class="p1">魅族 HIFI 解码耳放</p>
-                                        <p class="p2">高性能DAC芯片|纯净HiFi音质|600Ω高阻抗推力</p>
-                                        <p class="p3">￥169</p>
-                                    </div>
-                                    <img src="../img/index/meizu15.png">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    <span>热卖</span>
-                                    <div class="box">
-                                        <p class="p1">魅族 EP63NC 无线降噪耳机</p>
-                                        <p class="p2">AMS 芯片智能降噪|Qualcomm apt-X™ 高清音质</p>
-                                        <p class="p3">￥399 <s>￥400</s></p>
-                                    </div>
-                                    <img src="../img/index/meizu16.png">
-                                </a>
-                            </div>
-                        </li>
+                        <!-- <li class="fl">
+                             <div class="small_phone">
+                                 <a href="/details">
+                                     <span>新品</span>
+                                     <div class="box">
+                                         <p class="p1_name">魅族 EP3C 耳机</p>
+                                         <p class="p2_name">Hi-Res 认证高解析音质 | Type-C数字接口</p>
+                                         <p class="p3_name">￥129</p>
+                                     </div>
+                                     <img src="../img/index/meizu13.jpg">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="/details">
+                                     <span>热卖</span>
+                                     <div class="box">
+                                         <p class="p1">魅族 POP2 真无线蓝牙耳机</p>
+                                         <p class="p2">蓝牙5.0 | 单次8H续航 | 石墨烯振膜 | 双耳通话</p>
+                                         <p class="p3">￥399</p>
+                                     </div>
+                                     <img src="../img/index/meizu14.png">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     <span>热卖</span>
+                                     <div class="box">
+                                         <p class="p1">魅族 HIFI 解码耳放</p>
+                                         <p class="p2">高性能DAC芯片|纯净HiFi音质|600Ω高阻抗推力</p>
+                                         <p class="p3">￥169</p>
+                                     </div>
+                                     <img src="../img/index/meizu15.png">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     <span>热卖</span>
+                                     <div class="box">
+                                         <p class="p1">魅族 EP63NC 无线降噪耳机</p>
+                                         <p class="p2">AMS 芯片智能降噪|Qualcomm apt-X™ 高清音质</p>
+                                         <p class="p3">￥399 <s>￥400</s></p>
+                                     </div>
+                                     <img src="../img/index/meizu16.png">
+                                 </a>
+                             </div>
+                         </li>
 
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    <span>新品</span>
-                                    <div class="box">
-                                        <p class="p1_name">魅族 HiFi 解码耳放 PRO</p>
-                                        <p class="p2_name">超强二级运放 | Hi-Res 认证高解析音质</p>
-                                        <p class="p3_name">￥269</p>
-                                    </div>
-                                    <img src="../img/index/meizu17.jpg">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    <span>热卖</span>
-                                    <div class="box">
-                                        <p class="p1">魅族 HD60 头戴式蓝牙耳机</p>
-                                        <p class="p2">40mm生物振膜 | Type-C充电 | 触控操作 | 蓝牙5.0 | 轻奢品质</p>
-                                        <p class="p3">￥499</p>
-                                    </div>
-                                    <img src="../img/index/meizu18.png">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    &lt;!&ndash; <span>新品</span> &ndash;&gt;
-                                    <div class="box">
-                                        <p class="p1">魅族 EP52 Lite 蓝牙耳机</p>
-                                        <p class="p2">生物纤维振膜|8小时续航|IPX5级防水|轻巧亲肤</p>
-                                        <p class="p3">￥129</p>
-                                    </div>
-                                    <img src="../img/index/meizu19.png">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    &lt;!&ndash; <span>新品</span> &ndash;&gt;
-                                    <div class="box">
-                                        <p class="p1">魅族 EP2X 耳机</p>
-                                        <p class="p2">一体式线控 | 3.5mm接口 |流线设计</p>
-                                        <p class="p3">￥69<s>￥129</s></p>
-                                    </div>
-                                    <img src="../img/index/meizu20.png">
-                                </a>
-                            </div>
-                        </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     <span>新品</span>
+                                     <div class="box">
+                                         <p class="p1_name">魅族 HiFi 解码耳放 PRO</p>
+                                         <p class="p2_name">超强二级运放 | Hi-Res 认证高解析音质</p>
+                                         <p class="p3_name">￥269</p>
+                                     </div>
+                                     <img src="../img/index/meizu17.jpg">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     <span>热卖</span>
+                                     <div class="box">
+                                         <p class="p1">魅族 HD60 头戴式蓝牙耳机</p>
+                                         <p class="p2">40mm生物振膜 | Type-C充电 | 触控操作 | 蓝牙5.0 | 轻奢品质</p>
+                                         <p class="p3">￥499</p>
+                                     </div>
+                                     <img src="../img/index/meizu18.png">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     &lt;!&ndash; <span>新品</span> &ndash;&gt;
+                                     <div class="box">
+                                         <p class="p1">魅族 EP52 Lite 蓝牙耳机</p>
+                                         <p class="p2">生物纤维振膜|8小时续航|IPX5级防水|轻巧亲肤</p>
+                                         <p class="p3">￥129</p>
+                                     </div>
+                                     <img src="../img/index/meizu19.png">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     &lt;!&ndash; <span>新品</span> &ndash;&gt;
+                                     <div class="box">
+                                         <p class="p1">魅族 EP2X 耳机</p>
+                                         <p class="p2">一体式线控 | 3.5mm接口 |流线设计</p>
+                                         <p class="p3">￥69<s>￥129</s></p>
+                                     </div>
+                                     <img src="../img/index/meizu20.png">
+                                 </a>
+                             </div>
+                         </li>
 
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    &lt;!&ndash; <span>新品</span> &ndash;&gt;
-                                    <div class="box">
-                                        <p class="p1_name">MEIZU UR 高端定制耳机 预约</p>
-                                        <p class="p2_name">【预约专用】私人定制，为你而声</p>
-                                        <p class="p3_name">￥200</p>
-                                    </div>
-                                    <img src="../img/index/meizu21.jpg">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    &lt;!&ndash; <span>领券</span> &ndash;&gt;
-                                    <div class="box">
-                                        <p class="p1">魅族 EP21耳机</p>
-                                        <p class="p2">三键一体式线控 | 3.5mm接口 </p>
-                                        <p class="p3">￥39<s>￥89</s></p>
-                                    </div>
-                                    <img src="../img/index/meizu22.png">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    &lt;!&ndash; <span>新品</span> &ndash;&gt;
-                                    <div class="box">
-                                        <p class="p1">魅族 LIVE 四单元动铁耳机</p>
-                                        <p class="p2">Knowles四动铁 双通道导音系统 现场级音乐表现</p>
-                                        <p class="p3">￥1099<s>￥1299</s></p>
-                                    </div>
-                                    <img src="../img/index/meizu23.png">
-                                </a>
-                            </div>
-                        </li>
-                        <li class="fl">
-                            <div class="small_phone">
-                                <a href="details.html">
-                                    &lt;!&ndash; <span>新品</span> &ndash;&gt;
-                                    <div class="box">
-                                        <p class="p1">魅族 HALO 激光蓝牙耳机</p>
-                                        <p class="p2">炫酷夜跑神器 随性张扬</p>
-                                        <p class="p3">￥499<s>￥999</s></p>
-                                    </div>
-                                    <img src="../img/index/meizu24.png">
-                                </a>
-                            </div>
-                        </li>-->
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     &lt;!&ndash; <span>新品</span> &ndash;&gt;
+                                     <div class="box">
+                                         <p class="p1_name">MEIZU UR 高端定制耳机 预约</p>
+                                         <p class="p2_name">【预约专用】私人定制，为你而声</p>
+                                         <p class="p3_name">￥200</p>
+                                     </div>
+                                     <img src="../img/index/meizu21.jpg">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     &lt;!&ndash; <span>领券</span> &ndash;&gt;
+                                     <div class="box">
+                                         <p class="p1">魅族 EP21耳机</p>
+                                         <p class="p2">三键一体式线控 | 3.5mm接口 </p>
+                                         <p class="p3">￥39<s>￥89</s></p>
+                                     </div>
+                                     <img src="../img/index/meizu22.png">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     &lt;!&ndash; <span>新品</span> &ndash;&gt;
+                                     <div class="box">
+                                         <p class="p1">魅族 LIVE 四单元动铁耳机</p>
+                                         <p class="p2">Knowles四动铁 双通道导音系统 现场级音乐表现</p>
+                                         <p class="p3">￥1099<s>￥1299</s></p>
+                                     </div>
+                                     <img src="../img/index/meizu23.png">
+                                 </a>
+                             </div>
+                         </li>
+                         <li class="fl">
+                             <div class="small_phone">
+                                 <a href="details.html">
+                                     &lt;!&ndash; <span>新品</span> &ndash;&gt;
+                                     <div class="box">
+                                         <p class="p1">魅族 HALO 激光蓝牙耳机</p>
+                                         <p class="p2">炫酷夜跑神器 随性张扬</p>
+                                         <p class="p3">￥499<s>￥999</s></p>
+                                     </div>
+                                     <img src="../img/index/meizu24.png">
+                                 </a>
+                             </div>
+                         </li>-->
                     </ul>
                 </div>
             </div>
-
         </div>
-        <!--<div class="footer-all"></div>-->
+        <div class="footer-all"></div>
     </body>
 </html>

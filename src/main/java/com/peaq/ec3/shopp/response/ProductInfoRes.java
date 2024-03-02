@@ -10,5 +10,5 @@ import java.util.Map;
 public class ProductInfoRes<T> extends PageResponse<T>{
 
     private Map<Long, List<ProductPic>> keyPics;
-    private Map<Long, ProductInfo> productMap;
+    private Map<Long, List<ProductInfo>> productMap;
 }

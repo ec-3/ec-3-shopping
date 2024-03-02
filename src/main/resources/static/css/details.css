@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+
+body{
+	overflow-x: hidden;
+}
+
 .commodity-pic {
 	float: left;
 	width: 560px;
@@ -143,7 +148,7 @@
 .commodity-type {
 	padding: 18px 0;
 	padding-left: 10px;
-	height: 100px;
+	height: 80px;
 }
 
 .commodity-color {
@@ -184,8 +189,7 @@
 	position: relative;
 }
 
-.type-select a:nth-child(1),
-.color-select a:nth-child(2) {
+.type-select a:nth-child(1) {
 	border: 1px solid #000;
 }
 

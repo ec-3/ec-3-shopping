@@ -1,22 +1,17 @@
 package com.peaq.ec3.shopp.model;
 
 import lombok.Data;
-
 import java.util.Date;
 
 @Data
 public class ProductInfo {
     private Long id;
 
-    private String productNum;
+    private Long productId;
 
     private String productName;
 
-    private String brand;
-
-    private String specification;
-
-    private String supplierId;
+    private String model;
 
     private Long price;
 
@@ -26,7 +21,7 @@ public class ProductInfo {
 
     private Byte colorType;
 
-    private Byte publishStatus;
+    private Byte pushStatus;
 
     private Date productionDate;
 
@@ -35,5 +30,4 @@ public class ProductInfo {
     private Date createTime;
 
     private Date updateTime;
-
 }

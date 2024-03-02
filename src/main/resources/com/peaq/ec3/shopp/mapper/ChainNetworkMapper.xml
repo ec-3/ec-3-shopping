@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peaq.ec3.shopp.mapper.ChainNetworkMapper">
+  <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.ChainNetwork">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="chain_name" jdbcType="VARCHAR" property="chainName" />
+    <result column="chain_id" jdbcType="VARCHAR" property="chainId" />
+    <result column="network_id" jdbcType="VARCHAR" property="networkId" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="wallet_type" jdbcType="VARCHAR" property="walletType" />
+    <result column="coin_addr" jdbcType="VARCHAR" property="coinAddr" />
+    <result column="explorer_url" jdbcType="VARCHAR" property="explorerUrl" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="enable" jdbcType="BIT" property="enable" />
+    <result column="transfer_estimate_Time" jdbcType="VARCHAR" property="transferEstimateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, chain_name, chain_id, network_id, currency,wallet_type, coin_addr, explorer_url, company,
+    sort, `status`, `enable`, transfer_estimate_Time, create_time, update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chain_network
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from chain_network
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.peaq.ec3.shopp.model.ChainNetwork">
+    insert into chain_network (id, chain_name, chain_id, 
+      network_id, currency, coin_addr, 
+      explorer_url, company, sort, 
+      `status`, `enable`, transfer_estimate_Time, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{chainName,jdbcType=VARCHAR}, #{chainId,jdbcType=VARCHAR}, 
+      #{networkId,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, #{coinAddr,jdbcType=VARCHAR}, 
+      #{explorerUrl,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{enable,jdbcType=BIT}, #{transferEstimateTime,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.ChainNetwork">
+    insert into chain_network
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="chainName != null">
+        chain_name,
+      </if>
+      <if test="chainId != null">
+        chain_id,
+      </if>
+      <if test="networkId != null">
+        network_id,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="coinAddr != null">
+        coin_addr,
+      </if>
+      <if test="explorerUrl != null">
+        explorer_url,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="enable != null">
+        `enable`,
+      </if>
+      <if test="transferEstimateTime != null">
+        transfer_estimate_Time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="chainName != null">
+        #{chainName,jdbcType=VARCHAR},
+      </if>
+      <if test="chainId != null">
+        #{chainId,jdbcType=VARCHAR},
+      </if>
+      <if test="networkId != null">
+        #{networkId,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="coinAddr != null">
+        #{coinAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="explorerUrl != null">
+        #{explorerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=BIT},
+      </if>
+      <if test="transferEstimateTime != null">
+        #{transferEstimateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.ChainNetwork">
+    update chain_network
+    <set>
+      <if test="chainName != null">
+        chain_name = #{chainName,jdbcType=VARCHAR},
+      </if>
+      <if test="chainId != null">
+        chain_id = #{chainId,jdbcType=VARCHAR},
+      </if>
+      <if test="networkId != null">
+        network_id = #{networkId,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="coinAddr != null">
+        coin_addr = #{coinAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="explorerUrl != null">
+        explorer_url = #{explorerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIT},
+      </if>
+      <if test="enable != null">
+        `enable` = #{enable,jdbcType=BIT},
+      </if>
+      <if test="transferEstimateTime != null">
+        transfer_estimate_Time = #{transferEstimateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.ChainNetwork">
+    update chain_network
+    set chain_name = #{chainName,jdbcType=VARCHAR},
+      chain_id = #{chainId,jdbcType=VARCHAR},
+      network_id = #{networkId,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      coin_addr = #{coinAddr,jdbcType=VARCHAR},
+      explorer_url = #{explorerUrl,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=BIT},
+      `enable` = #{enable,jdbcType=BIT},
+      transfer_estimate_Time = #{transferEstimateTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from chain_network
+    where enable = 0 order by create_time desc
+  </select>
+
+</mapper>

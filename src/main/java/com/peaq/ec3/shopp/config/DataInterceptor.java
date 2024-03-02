@@ -16,10 +16,11 @@ public class DataInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader(ReturnMsg.AUTHORIZATION);
+      /*  String token = request.getHeader(ReturnMsg.AUTHORIZATION);
         if (StringUtils.isEmpty(token)){
             throw new Ec3Exception(ReturnEnum.Login.PLEASE_SIGN.getCode(),ReturnEnum.Login.PLEASE_SIGN.getMsg());
         }
-        return JWTHelper.verifyToken(token);
+        return JWTHelper.verifyToken(token);*/
+      return true;
     }
 }

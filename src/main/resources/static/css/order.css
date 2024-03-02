@@ -1,5 +1,6 @@
 body {
     background: #fff;
+    overflow-x: hidden;
 }
 /* 结算页面头部 */
 .js_head {
@@ -550,16 +551,31 @@ body {
     width: 990px; height: 50px;   margin: 0 auto;
 }
 .btn_submit {
+    /* float: right;
+     width: 135px;
+     height: 36px;
+     background: url(../img/order/btn-submit.jpg);
+    margin-top: 7px;*/
+
     float: right;
+/*    padding: 15px 0;*/
     width: 135px;
-    height: 36px;
-    background: url(../img/order/btn-submit.jpg);
+    font-size: 20px;
+    line-height: 24px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #008cff;
+    outline: none;
+    border: 1px solid #008cff;
+    cursor: pointer;
     margin-top: 7px;
+    height: 50px;
 }
-.btn_submit:hover {
+/*.btn_submit:hover {
     background: url(../img/order/btn-submit.jpg);
     background-position: 0px -36px;
-}
+}*/
+
 /* 新增收货地址盒子 */
 .add_address_big {
     position: absolute;

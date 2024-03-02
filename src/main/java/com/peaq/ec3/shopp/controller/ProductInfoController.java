@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.peaq.ec3.shopp.common.Result;
 import com.peaq.ec3.shopp.mapper.ProductInfoMapper;
 import com.peaq.ec3.shopp.mapper.ProductPicMapper;
+import com.peaq.ec3.shopp.model.Product;
 import com.peaq.ec3.shopp.model.ProductInfo;
 import com.peaq.ec3.shopp.model.ProductPic;
 import com.peaq.ec3.shopp.request.ProductListReq;
@@ -37,10 +38,15 @@ public class ProductInfoController {
                 .doSelectPage(() -> productInfoMapper.getProductInfoList(request));
         List<ProductInfo> info = page.getResult();
         List<Long> ids = new ArrayList<>(info.size());
-        Map<Long, ProductInfo> productMap = new HashMap<>(info.size());
+        Map<Long, List<ProductInfo>> productMap = new HashMap<>();
         for (ProductInfo product : info) {
-            ids.add(product.getId());
-            productMap.put(product.getId(), product);
+            ids.add(product.getProductId());
+            if (!productMap.containsKey(product.getProductId())) {
+                productMap.put(product.getProductId(), new ArrayList<>());
+            }
+            List<ProductInfo> list = productMap.get(product.getProductId());
+            list.add(product);
+            productMap.put(product.getProductId(), list);
         }
         ProductInfoRes<ProductRes> result = new ProductInfoRes<>();
         List<ProductRes> productRes = new ArrayList<>(info.size());
@@ -51,7 +57,7 @@ public class ProductInfoController {
             ProductRes res = new ProductRes();
             res.setPics(value);
             res.setMasterUrl(value.stream().filter(v -> v.getIsMaster() == 1).findFirst().get().getPicUrl());
-            res.setProduct(productMap.get(key));
+            res.setProduct(productMap.get(key).get(0));
             productRes.add(res);
         });
         result.setKeyPics(keyPics);

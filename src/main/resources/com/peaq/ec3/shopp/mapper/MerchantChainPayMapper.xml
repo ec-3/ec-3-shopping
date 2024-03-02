@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peaq.ec3.shopp.mapper.MerchantChainPayMapper">
+  <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.MerchantChainPay">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="merchant_id" jdbcType="VARCHAR" property="merchantId" />
+    <result column="wallet_type" jdbcType="VARCHAR" property="walletType" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="enable" jdbcType="BIT" property="enable" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, merchant_id, wallet_type, address, `enable`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_chain_pay
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from merchant_chain_pay
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.peaq.ec3.shopp.model.MerchantChainPay">
+    insert into merchant_chain_pay (id, merchant_id, wallet_type, 
+      address, `enable`, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{merchantId,jdbcType=VARCHAR}, #{walletType,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.MerchantChainPay">
+    insert into merchant_chain_pay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="walletType != null">
+        wallet_type,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="enable != null">
+        `enable`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="walletType != null">
+        #{walletType,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.MerchantChainPay">
+    update merchant_chain_pay
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="walletType != null">
+        wallet_type = #{walletType,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        `enable` = #{enable,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.MerchantChainPay">
+    update merchant_chain_pay
+    set merchant_id = #{merchantId,jdbcType=VARCHAR},
+      wallet_type = #{walletType,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      `enable` = #{enable,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="list" resultMap="BaseResultMap">
+      SELECT  `id`, `merchant_id`,`wallet_type`, `address`, `enable`,`create_time`, `update_time`
+      FROM  `ec^3`.`merchant_chain_pay`   order by `create_time` desc
+  </select>
+</mapper>

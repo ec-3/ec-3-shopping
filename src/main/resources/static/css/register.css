@@ -1,14 +1,17 @@
 @charset "utf-8";
 .floor2{
-	background-color: #F7F7F7;
-	height: 700px;
+	height: 889px;
+	background-color: #424549;
+	background-image: url(../img/login/ecosystem-bg.svg);
+	background-position: 50% 50%;
+	background-size: auto 500PX;
 }
 .floor2 .container .zhuce{
 	background-color: #FFFFFF;
-	width: 960px;
-	height: 100%;
-	margin: 0 auto;
-	margin-top: 50px;
+	width: 432px;
+	height: 650px;
+	margin: 130px auto;
+	/*margin-top: 50px;*/
 }
 .floor2 .container .zhuce .title{
 	text-align: center;
@@ -32,7 +35,7 @@
 	background-color: #FFFFFF;
 }
 .floor2 .container .bot{
-	width: 350px;
+	width: 370px;
 	height: 50px;
 	background-color: #FFFFFF;
 	margin: 0 auto;
@@ -42,7 +45,7 @@
 	font-size: 14px;
 }
 .floor2 .container .bot>input{
-	width: 340px;
+	width: 360px;
 	height: 50px;
 	padding-left: 5px;
 }
@@ -86,4 +89,17 @@
 
 .reg{
 	background-color: red;border: 0;color: white;cursor: pointer;
+}
+
+.have_account{
+	color: #1877f2;
+	font-family: SFProText-Semibold, Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	line-height: 20px;
+}
+
+.privacy_policy{
+	color: #777;
+	font-size: 11px;
+	width: 316px;
 }

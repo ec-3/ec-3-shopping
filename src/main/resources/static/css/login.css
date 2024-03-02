@@ -1,10 +1,18 @@
 @charset "utf-8";
 
+body{
+	overflow-x: hidden;
+}
+
 .floor2 {
-	height: 589px;
+	height: 889px;
 	width: 100%;
-	background: url(../img/picture/1.jpg) no-repeat center center;
 	position: relative;
+	background-color: #424549;
+	background-image: url(../img/login/ecosystem-bg.svg);
+	background-position: 50% 50%;
+	background-size: auto 500PX;
+
 }
 
 .floor2 .container .right {
@@ -115,14 +123,14 @@
 	height: 1px;
 	background-color: #a4a3a3;
 	float: left;
-	width: 127px;
+	width: 90px;
 	margin-top: 7px;
 }
 .footer>span:last-child{
 	height: 1px;
 	background-color: #a4a3a3;
 	float: right;
-	width: 127px;
+	width: 90px;
 	margin-top: 7px;
 }
 .icon{
@@ -136,28 +144,28 @@
 	cursor: pointer;
 }
 .floor2 .container .right .icon>ul>li:first-child{
-	background: url(../img/picture/qq.png) no-repeat center center;
+	background: url(../img/login/tt.png) no-repeat center center;
 }
 .floor2 .container .right .icon>ul>li:first-child:hover{
-	background: url(../img/picture/1.png) no-repeat center center;
+	background: url(../img/login/tt.png) no-repeat center center;
 }
 .floor2 .container .right .icon>ul>li:nth-child(2){
-	background: url(../img/picture/weixin.png) no-repeat center center ;
+	background: url(../img/login/dc.png) no-repeat center center ;
 }
 .floor2 .container .right .icon>ul>li:nth-child(2):hover{
-	background: url(../img/picture/6.png) no-repeat center center ;
+	background: url(../img/login/dc.png) no-repeat center center ;
 }
 .floor2 .container .right .icon>ul>li:nth-child(3){
-	background: url(../img/picture/weibo.png) no-repeat center center ;
+	background: url(../img/login/tg.png) no-repeat center center ;
 }
 .floor2 .container .right .icon>ul>li:nth-child(3):hover{
-	background: url(../img/picture/3.png) no-repeat center center ;
+	background: url(../img/login/tg.png) no-repeat center center ;
 }
 .floor2 .container .right .icon>ul>li:last-child{
-	background: url(../img/picture/zhifubao.png) no-repeat center center ;
+	background: url(../img/login/fb.png) no-repeat center center ;
 }
 .floor2 .container .right .icon>ul>li:last-child:hover{
-	background: url(../img/picture/7.png) no-repeat center center ;
+	background: url(../img/login/fb.png) no-repeat center center ;
 }
 .floor2 .container .right .content .content_two{
 	display: none;
@@ -181,7 +189,7 @@
 }
 .right.hide .tupian>span{
 	display: block;
-	margin-left: 50px;
+	margin-left: 25px;
 	font-size: 14px;
 	color: #000000;
 }

@@ -1,6 +1,6 @@
 $(function () {
-    $(".header-all").load("/header");
-
+    $(".header-all").load(pageName('header'));
+    $(".footer-all").load(pageName('footer'));
     $(".btn_login").click(function () {
         let login = $("#login").val();
         let value = '';
@@ -16,12 +16,20 @@ $(function () {
             user[value] = login;
             user['password'] = $("#password").val();
             // 登录
-            post(routing.login, JSON.stringify(user), function (response) {
+            post(ec3Mapping.login, JSON.stringify(user), function (response) {
                 if (response.code === 0) {
-                    sessionStorage.setItem("user", JSON.stringify(response.data.user));
-                    sessionStorage.setItem("token", response.data.token);
-                    window.location.replace("/");
-                    alert('login successful !');
+                    localStorage.setItem("user", JSON.stringify(response.data.user));
+                    localStorage.setItem("token", response.data.token);
+                    layer.msg("login successful !");
+                    let preLogin = localStorage.getItem('pre-login');
+                    let page = '/';
+                    if (preLogin) {
+                        page = preLogin;
+                        localStorage.removeItem('pre-login');
+                        location.href = pageName(page);
+                    }else{
+                        location.href =page;
+                    }
                 } else {
                     alert(response.msg);
                 }
@@ -35,7 +43,7 @@ $(function () {
     // 点击手机号登录改变
     $(".floor2 .container .three>a").click(function () {
         // 获取索引
-        let idx = $(this).index()
+   /*     let idx = $(this).index()
         if (idx == 0) {
             $(".content_two").show();
             $(".content_one").hide();
@@ -46,7 +54,7 @@ $(function () {
             $(".content_one").show();
             $(".none").hide();
             $(".show").show();
-        }
+        }*/
     })
     // 右上角改变事件
     $(".right .picture").click(function () {

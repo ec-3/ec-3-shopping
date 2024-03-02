@@ -10,10 +10,10 @@ spring:
     password: wayne
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  mvc:
-    view:
-      prefix: /views/
-      suffix: .html
+#  mvc:
+#    view:
+#      prefix: /views/
+#      suffix: .html
 
 
 snow:

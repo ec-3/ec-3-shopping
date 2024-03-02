@@ -1,5 +1,6 @@
 $(function () {
-    $(".header-all").load("/header");
+    /*$(".header-all").load(pageName('header'));*/
+    $(".footer-all").load(pageName('footer'));
     var swiper = new Swiper(".swiper-container", {
         loop: true,
         autoplay: true,
@@ -162,8 +163,9 @@ $(function () {
     });
 
     $("#products").on('click', '.pro_item', function () {
-        sessionStorage.setItem('pId', $(this).attr('pId'));
-        location.href = pageObj.details;
+        localStorage.setItem('pId', $(this).attr('pId'));
+        localStorage.setItem('pi_Id', $(this).attr('id'));
+        page('details');
     });
 
     function forProItems(productList) {
@@ -172,7 +174,7 @@ $(function () {
         for (let record of productList) {
             lis += ` <li class="fl">
                             <div class="small_phone">
-                                <a class="pro_item" pId="${record.product.id}">
+                                <a class="pro_item" id="${record.product.id}" pId="${record.product.productId}">
                                     <span>新品</span>
                                     <div class="box">
                                         <p class="p1">${record.product.productName}</p>
@@ -183,24 +185,33 @@ $(function () {
                                 </a>
                             </div>
                         </li>`;
-            picMap.set(record.product.id, record.masterUrl);
+            picMap.set(record.product.productId, record.masterUrl);
         }
         $('#products').append(lis);
-        sessionStorage.setItem('picMap', JSON.stringify(Array.from(picMap.entries())));
+        localStorage.setItem('picMap', JSON.stringify(Array.from(picMap.entries())));
     }
 
     // 加载商品列表
-    let productList = JSON.parse(sessionStorage.getItem("productList"));
+    let productList = localStorage.getItem("productList");
     if (productList) {
-        forProItems(productList);
+        forProItems(JSON.parse(productList));
     } else {
-        post(routing.productList, JSON.stringify({}), function (response) {
+        post(ec3Mapping.productList, JSON.stringify({}), function (response) {
             if (response.code === 0) {
-                productList = response.data.records;
-                sessionStorage.setItem('keyPics', JSON.stringify(response.data.keyPics));
-                sessionStorage.setItem('productMap', JSON.stringify(response.data.productMap));
-                sessionStorage.setItem('productList', JSON.stringify(productList));
-                forProItems(productList);
+                let data = response.data;
+                if (data) {
+                    if (Object.keys(data.keyPics).length > 0) {
+                        localStorage.setItem('keyPics', JSON.stringify(data.keyPics));
+                    }
+                    if (Object.keys(data.productMap).length > 0) {
+                        localStorage.setItem('productMap', JSON.stringify(data.productMap));
+                    }
+                }
+                productList = data.records;
+                if (productList && productList.length > 0) {
+                    localStorage.setItem('productList', JSON.stringify(productList));
+                    forProItems(productList);
+                }
             } else {
                 alert(response.msg);
             }

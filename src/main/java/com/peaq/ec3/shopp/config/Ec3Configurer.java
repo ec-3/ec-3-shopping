@@ -15,15 +15,29 @@ public class Ec3Configurer implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-      /*  registry.addInterceptor(dataInterceptor)
-        .addPathPatterns("/**")
-        .excludePathPatterns(
-                "/userInfo/login",
-                "/userInfo/register",
-                "/userInfo/signOut",
-                "/productInfo/list",
-                "/userInfo/verifyToken"
-        );
-        registry.addInterceptor(viewInterceptor).pathMatcher(new Ec3PathMatcher());*/
+        registry.addInterceptor(viewInterceptor).addPathPatterns("/views/**")
+                .excludePathPatterns(
+                        "/views/login.html",
+                        "/views/register.html",
+                        "/views/header.html",
+                        "/views/footer.html",
+                        "/views/index.html"
+                );
+        registry.addInterceptor(dataInterceptor).addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/",
+                        "/views/**",
+                        "/css/**",
+                        "/js/**",
+                        "/lib/**",
+                        "/img/**",
+                        "/fonts/**",
+                        "/userInfo/login",
+                        "/userInfo/register",
+                        "/userInfo/signOut",
+                        "/productInfo/list",
+                        "/userInfo/verifyToken"
+                );
+
     }
 }

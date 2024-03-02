@@ -1,0 +1,207 @@
+.bottom-footer.pc {
+    background-color: #181a1d;
+}
+
+article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+    display: block;
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, html, i, iframe, img, input, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: 400;
+    vertical-align: baseline;
+}
+
+body, html {
+    height: 100%;
+    line-height: 1;
+    font-family: SourceSansPro-Regular,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #313131;
+    background-color: #fff;
+}
+
+:root {
+    --animate-duration: 1s;
+    --animate-delay: 1s;
+    --animate-repeat: 1;
+}
+
+.bottom-footer.pc .inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1152PX;
+    padding: 40PX 12PX;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+}
+
+:root {
+    --adm-radius-s: 0.10667rem;
+    --adm-radius-m: 0.21333rem;
+    --adm-radius-l: 0.32rem;
+    --adm-font-size-1: 0.24rem;
+    --adm-font-size-2: 0.26667rem;
+    --adm-font-size-3: 0.29333rem;
+    --adm-font-size-4: 0.32rem;
+    --adm-font-size-5: 0.34667rem;
+    --adm-font-size-6: 0.37333rem;
+    --adm-font-size-7: 0.4rem;
+    --adm-font-size-8: 0.42667rem;
+    --adm-font-size-9: 0.45333rem;
+    --adm-font-size-10: 0.48rem;
+    --adm-color-primary: #1f6fff;
+    --adm-color-success: #5aeb46;
+    --adm-color-warning: #ff8f1f;
+    --adm-color-danger: #ff3141;
+    --adm-color-white: #fff;
+    --adm-color-text: #313131;
+    --adm-color-text-secondary: #606266;
+    --adm-color-weak: #999;
+    --adm-color-light: #ccc;
+    --adm-color-border: #eee;
+    --adm-color-box: #f5f5f5;
+    --adm-color-background: #fff;
+    --adm-font-size-main: var(--adm-font-size-5);
+    --adm-font-family: SourceSansPro-Regular,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+}
+
+.bottom-footer.pc .contact-us {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 60PX;
+}
+
+.bottom-footer.pc .contact-us .title {
+    padding-left: 22PX;
+    font-size: 40PX;
+    color: #fff;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.animate__animated.animate__slower {
+    -webkit-animation-duration: calc(1s * 3);
+    animation-duration: calc(1s * 3);
+    -webkit-animation-duration: calc(var(--animate-duration) * 3);
+    animation-duration: calc(var(--animate-duration) * 3);
+}
+
+.animate__fadeInUp {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+}
+
+
+.animate__animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-duration: var(--animate-duration);
+    animation-duration: var(--animate-duration);
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+:where(.css-xwdoie).ant-btn::before, :where(.css-xwdoie).ant-btn::after {
+    box-sizing: border-box;
+}
+
+:where(.css-xwdoie).ant-btn >span {
+    display: inline-block;
+}
+
+:where(.css-xwdoie).ant-btn::before, :where(.css-xwdoie).ant-btn::after {
+    box-sizing: border-box;
+}
+
+:where(.css-xwdoie).ant-btn-primary {
+    color: rgb(9, 9, 9);
+    background: #5aeb46;
+    box-shadow: 0 2px 0 rgba(72, 255, 5, 0.06);
+}
+
+:where(.css-xwdoie).ant-btn {
+    font-size: 16px;
+    line-height: 1.5;
+    height: 38px;
+    padding: 6px 20px;
+    border-radius: 4px;
+}
+
+:where(.css-xwdoie).ant-btn {
+    outline: none;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    user-select: none;
+    touch-action: manipulation;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+.bottom-footer.pc .contact-us .ant-btn {
+    margin-left: 132PX;
+}
+
+.adm-button, .ant-btn, .ant-carousel, .ant-dropdown .ant-dropdown-menu, .ant-input, [class^=ant-modal] {
+    font-family: SourceSansPro-Regular,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif!important;
+}
+
+a {
+    color: var(--adm-color-primary);
+    -webkit-transition: opacity .2s ease-in-out;
+    transition: opacity .2s ease-in-out;
+}
+
+.bottom-footer.pc .grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 12PX;
+    -webkit-column-gap: 12PX;
+    -moz-column-gap: 12PX;
+    column-gap: 12PX;
+    margin-bottom: 28PX;
+}
+
+.bottom-footer.pc .copyright {
+    font-size: 16PX;
+    color: #6d7077;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}

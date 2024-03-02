@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" type="text/css" href="../css/pay.css"/>
+        <script type="text/javascript" src="../js/jquery-3.7.1.min.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="../js/ethers-5.2.umd.min.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="../js/utils.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="../js/abi.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="../js/pay.js" charset="UTF-8"></script>
+    </head>
+    <body>
+
+        <div style="background-color: rgba(10,12,9,.94); height: 1000px">
+            <div class="header-all"></div>
+            <div class="runjs-1">
+                <div class="runjs-2">
+                    <div class="runjs-3">
+                        <div class="runjs-4">
+                            <div class="runjs-5">
+                                <div class="runjs-6">
+                                    <svg
+                                            focusable="false"
+                                            width="1em"
+                                            height="1em"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            viewBox="0 0 1024 1024"
+                                            data-icon="CheckOutlined"
+                                            class="runjs-7"
+                                    >
+                                        <path
+                                                d="M993.84121865 83.1150891a67.9798559 67.9798559 0 0 1 14.95556829 94.96785871l-543.83884723 747.77841493a67.9798559 67.9798559 0 0 1-100.40624717 10.53687766l-339.89927951-305.90935157a67.9798559 67.9798559 0 0 1 90.95704719-101.01806587l283.81589841 255.40031864 499.44800132-686.73250434a67.9798559 67.9798559 0 0 1 94.9678587-14.95556831z"
+                                                class="runjs-8"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <div class="select-coin-name">Select Crypto</div>
+                                <div class="select-coin">
+                                    <div class="select-token">
+                                        <div class="select-token-div">
+                                            <img src="../img/pay/USDT.png" class="select-token-img" id="select-token-img"/>
+                                            <span class="select-token-name" id="select-token-name">USDT</span>
+                                            <label class="select-token-full-name" id="select-token-full-name">Tether</label>
+                                        </div>
+                                        <svg
+                                                focusable="false"
+                                                width="1em"
+                                                height="1em"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                                viewBox="0 0 1024 1024"
+                                                data-icon="CaretDownOutlined"
+                                                class="runjs-16"
+                                        >
+                                            <path
+                                                    d="M929.1776 203.1616a61.44 61.44 0 0 1 46.8992 100.9664L559.104 799.0272a61.44 61.44 0 0 1-94.0032 0L47.9232 304.128a61.44 61.44 0 0 1 46.8992-100.9664h834.3552z"
+                                                    class="runjs-17"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="runjs-18">
+                                <div class="runjs-19">
+                                    <svg
+                                            focusable="false"
+                                            width="1em"
+                                            height="1em"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            viewBox="0 0 1024 1024"
+                                            data-icon="CheckOutlined"
+                                            class="runjs-20"
+                                    >
+                                        <path
+                                                d="M993.84121865 83.1150891a67.9798559 67.9798559 0 0 1 14.95556829 94.96785871l-543.83884723 747.77841493a67.9798559 67.9798559 0 0 1-100.40624717 10.53687766l-339.89927951-305.90935157a67.9798559 67.9798559 0 0 1 90.95704719-101.01806587l283.81589841 255.40031864 499.44800132-686.73250434a67.9798559 67.9798559 0 0 1 94.9678587-14.95556831z"
+                                                class="runjs-21"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <div class="runjs-22">Network</div>
+                                <div class="runjs-23">
+                                    <div class="select-network-base">
+                                        <div class="runjs-25">
+                                            <span class="select-token-name" id="select-network"></span>
+                                            <label class="select-token-full-name" id="select-network-name">Select Deposit Network</label>
+                                        </div>
+                                        <svg
+                                                focusable="false"
+                                                width="1em"
+                                                height="1em"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                                viewBox="0 0 1024 1024"
+                                                data-icon="CaretDownOutlined"
+                                                class="runjs-27"
+                                        >
+                                            <path
+                                                    d="M929.1776 203.1616a61.44 61.44 0 0 1 46.8992 100.9664L559.104 799.0272a61.44 61.44 0 0 1-94.0032 0L47.9232 304.128a61.44 61.44 0 0 1 46.8992-100.9664h834.3552z"
+                                                    class="runjs-28"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="kVRhnV dGlgYK" id="ConnectW">
+                    <div class="Xxitz"></div>
+                       Pay now
+                </button>
+
+                <!-- 代币选择模态框 -->
+                <div role="dialog" aria-labelledby="rc_unique_7" aria-modal="true" class="token-boss modal">
+                    <div tabindex="0" aria-hidden="true" class="rounded"></div>
+                    <div class="boss">
+                        <button type="button" aria-label="Close" class="token-close">
+      <span class="close-max">
+          <svg
+                  focusable="false" width="1em" height="1em" fill="currentColor" aria-hidden="true"
+                  viewBox="0 0 1024 1024" data-icon="CloseOutlined" class="close-img">
+          <path
+                  d="M512 592.440889l414.890667 414.890667 80.440889-80.440889L592.440889 512l414.890667-414.890667L926.890667 16.668444 512 431.559111 97.109333 16.668444 16.668444 97.109333 431.559111 512 16.668444 926.890667l80.440889 80.440889L512 592.440889z"
+                  class="close-svg-path"
+          ></path>
+          </svg>
+      </span>
+                        </button>
+                        <div class="token-boss-head">
+                            <div id="rc_unique_7" class="token-boss-head-text">Select Crypto to Deposit</div>
+                        </div>
+                        <div class="token-boss-body">
+                            <div class="boss-body-child">
+                                <div class="search-bar-boss">
+          <span class="search-bar">
+              <span class="magnifier">
+                  <svg focusable="false" width="1em" height="1em" fill="currentColor"
+                       aria-hidden="true" viewBox="0 0 16 16" data-icon="SearchOutlined" class="runjs-15">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M9.93186 10.8786C9.02879 11.5806 7.89393 11.9987 6.66146 11.9987C3.71594 11.9987 1.32812 9.6109 1.32812 6.66536C1.32812 3.71984 3.71594 1.33203 6.66146 1.33203C9.60699 1.33203 11.9948 3.71984 11.9948 6.66536C11.9948 7.89783 11.5767 9.0327 10.8747 9.93576L14.4662 13.5273C14.7265 13.7876 14.7265 14.2098 14.4662 14.4701C14.2059 14.7304 13.7837 14.7304 13.5234 14.4701L9.93186 10.8786ZM10.6615 6.66536C10.6615 8.8745 8.87059 10.6654 6.66146 10.6654C4.45232 10.6654 2.66146 8.8745 2.66146 6.66536C2.66146 4.45622 4.45232 2.66536 6.66146 2.66536C8.87059 2.66536 10.6615 4.45622 10.6615 6.66536Z"
+                      class="svg-path">
+                </path>
+                  </svg>
+              </span>
+              <input placeholder="Search" type="text" value="" class="search-bar-child"/>
+              <span class="search-close">
+                  <span role="button" tabindex="-1" class="search-close-b">
+                      <svg
+                              focusable="false"
+                              width="1em"
+                              height="1em"
+                              fill="currentColor"
+                              aria-hidden="true"
+                              viewBox="0 0 1024 1024"
+                              data-icon="CloseCircleFilled"
+                              class="search-close-svg">
+                  <path d="M1024 512c0 282.7776-229.2224 512-512 512S0 794.7776 0 512 229.2224 0 512 0s512 229.2224 512 512z m-296.6016-215.3984a51.2 51.2 0 0 0-72.3968 0L512 439.6032 368.9984 296.6016a51.2 51.2 0 0 0-72.3968 72.3968L439.6032 512l-143.0016 143.0016a51.2 51.2 0 1 0 72.3968 72.3968L512 584.3968l143.0016 143.0016a51.2 51.2 0 0 0 72.3968-72.3968L584.3968 512l143.0016-143.0016a51.2 51.2 0 0 0 0-72.3968z"
+                        class="svg-path">
+                  </path></svg></span></span
+              ></span>
+                                </div>
+                                <div class="token-body">
+                                    <div class="token-body-c1">
+                                        <div class="token-body-c2">
+                                          <!--  <div class="token-item" coinId="USDT" style="transform: translateY(0px);">
+                                                <div class="token-info">
+                                                    <img
+                                                            src="../USDT.png"
+                                                            class="token-img"
+                                                    />
+                                                    <div class="svg-path">
+                    <span class="token-name">USDT</span
+                    ><label class="token-company">Tether</label>
+                                                    </div>
+                                                </div>
+                                                <div class="token-amount">
+                                                    <small class="token-money">0</small>
+                                                    <span class="token-money-all"
+                                                    ><span dir="ltr" class="token-symbol"
+                                                    ><span dir="ltr" class="token-symbol">1</span
+                                                    ><span class="svg-path">USD</span></span
+                                                    ></span
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="token-item"  coinId="USDC"  style="transform: translateY(72px);">
+                                                <div class="token-info">
+                                                    <img
+                                                            src="../USDC.png"
+                                                            class="token-img"
+                                                    />
+                                                    <div class="svg-path">
+                    <span class="token-name">USDC</span
+                    ><label class="token-company">USDCoin</label>
+                                                    </div>
+                                                </div>
+                                                <div class="token-amount">
+                                                    <small class="token-money">0</small>
+                                                    <span class="token-money-all"
+                                                    ><span dir="ltr" class="token-symbol"
+                                                    ><span dir="ltr" class="token-symbol">1</span
+                                                    ><span class="svg-path">USD</span></span
+                                                    ></span
+                                                    >
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div tabindex="0" aria-hidden="true" class="rounded"></div>
+                </div>
+
+                <!-- 转账网络模态框 -->
+                <div role="dialog" aria-labelledby="rc_unique_12" aria-modal="true" class="network modal">
+                    <div tabindex="0" aria-hidden="true" class="network-2"></div>
+                    <div class="network-3">
+                        <button type="button" aria-label="Close" class="network-close">
+      <span class="network-5"
+      ><svg
+              focusable="false"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              aria-hidden="true"
+              viewBox="0 0 1024 1024"
+              data-icon="CloseOutlined"
+              class="network-6"
+      >
+          <path
+                  d="M512 592.440889l414.890667 414.890667 80.440889-80.440889L592.440889 512l414.890667-414.890667L926.890667 16.668444 512 431.559111 97.109333 16.668444 16.668444 97.109333 431.559111 512 16.668444 926.890667l80.440889 80.440889L512 592.440889z"
+                  class="svg-path"
+          ></path></svg
+      ></span>
+                        </button>
+                        <div class="network-8">
+                            <div id="rc_unique_12" class="network-9">Select Deposit Network</div>
+                        </div>
+                        <div class="token-boss-body">
+                            <div class="network-11">
+                                <div class="network-12">
+                                    <svg
+                                            focusable="false"
+                                            width="1em"
+                                            height="1em"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                            viewBox="0 0 1024 1024"
+                                            data-icon="AlertCircleFilled"
+                                            class="network-13"
+                                    >
+                                        <path
+                                                d="M1024 512c0 282.7776-229.2224 512-512 512S0 794.7776 0 512 229.2224 0 512 0s512 229.2224 512 512zM512 204.8a51.2 51.2 0 0 0-51.2 51.2v307.2a51.2 51.2 0 1 0 102.4 0V256a51.2 51.2 0 0 0-51.2-51.2z m0 614.4a76.8 76.8 0 1 0 0-153.6 76.8 76.8 0 0 0 0 153.6z"
+                                                class="svg-path"
+                                        ></path>
+                                    </svg>
+                                    <p class="network-15">
+                                        Ensure both your selected crypto and deposit network match the info on the exchange platform you are withdrawing funds from. Otherwise, your assets won't be credited and can't be retrieved.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="network-16">
+        <span class="search-bar"
+        ><span class="magnifier"
+        ><svg
+                focusable="false"
+                width="1em"
+                height="1em"
+                fill="currentColor"
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                data-icon="SearchOutlined"
+                class="network-19"
+        >
+              <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.93186 10.8786C9.02879 11.5806 7.89393 11.9987 6.66146 11.9987C3.71594 11.9987 1.32812 9.6109 1.32812 6.66536C1.32812 3.71984 3.71594 1.33203 6.66146 1.33203C9.60699 1.33203 11.9948 3.71984 11.9948 6.66536C11.9948 7.89783 11.5767 9.0327 10.8747 9.93576L14.4662 13.5273C14.7265 13.7876 14.7265 14.2098 14.4662 14.4701C14.2059 14.7304 13.7837 14.7304 13.5234 14.4701L9.93186 10.8786ZM10.6615 6.66536C10.6615 8.8745 8.87059 10.6654 6.66146 10.6654C4.45232 10.6654 2.66146 8.8745 2.66146 6.66536C2.66146 4.45622 4.45232 2.66536 6.66146 2.66536C8.87059 2.66536 10.6615 4.45622 10.6615 6.66536Z"
+                      class="svg-path"
+              ></path></svg></span
+        ><input
+                placeholder="Search"
+                type="text"
+                value=""
+                class="search-bar-child"/><span class="search-close"
+        ><span role="button" tabindex="-1" class="search-close-b"
+        ><svg
+                focusable="false"
+                width="1em"
+                height="1em"
+                fill="currentColor"
+                aria-hidden="true"
+                viewBox="0 0 1024 1024"
+                data-icon="CloseCircleFilled"
+                class="search-close-svg"
+        >
+                <path
+                        d="M1024 512c0 282.7776-229.2224 512-512 512S0 794.7776 0 512 229.2224 0 512 0s512 229.2224 512 512z m-296.6016-215.3984a51.2 51.2 0 0 0-72.3968 0L512 439.6032 368.9984 296.6016a51.2 51.2 0 0 0-72.3968 72.3968L439.6032 512l-143.0016 143.0016a51.2 51.2 0 1 0 72.3968 72.3968L512 584.3968l143.0016 143.0016a51.2 51.2 0 0 0 72.3968-72.3968L584.3968 512l143.0016-143.0016a51.2 51.2 0 0 0 0-72.3968z"
+                        class="svg-path"
+                ></path></svg></span></span
+        ></span>
+                            </div>
+                            <div class="svg-path">
+                                <div class="network-27">
+
+                                  <!--  <div class="network-item">
+                                        <div class="svg-path">
+              <span class="network-name">ETH</span
+              >
+                                            <p class="network-name-info">Ethereum(ERC20)</p>
+                                        </div>
+                                    </div>
+                                    <div class="network-item">
+                                        <div class="svg-path">
+              <span class="network-name">ARB</span
+              >
+                                            <p class="network-name-info">Arbitrum One(ARB)</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="network-item">
+                                        <div class="svg-path">
+              <span class="network-name">OP</span
+              >
+                                            <p class="network-name-info">Optimism(OP)</p>
+                                        </div>
+                                    </div>
+-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div tabindex="0" aria-hidden="true" class="rounded"></div>
+                </div>
+
+            </div>
+            <div class="footer-all"></div>
+        </div>
+
+
+    </body>
+</html>

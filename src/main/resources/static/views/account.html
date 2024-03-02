@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/account.css" />
 		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
 		<script type="text/javascript" src="../js/jquery-3.7.1.min.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="../js/ethers-5.2.umd.min.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="../js/utils.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="../js/account.js" charset="UTF-8"></script>
 	</head>
@@ -22,32 +23,31 @@
 								<div class="pic fl">
 									<img src="../img/account/icon2.png" >
 								</div>
-								<div class="word fl">个人中心</div>
+								<div class="word fl">Center</div>
 							</div>
 							<div class="menu">
-								<a href="javascript:void(0)" id="myorder">我的订单</a>
+								<a href="javascript:void(0)" id="myorder">My Order</a>
 							</div>
 							<div class="menu">
-								<a href="">地址管理</a>
+								<a href="">My Address</a>
 							</div>
 						</div>
 					</div>
 					<div class="right fr">
 						<div class="right-main">
 							<div class="order-btn">
-								<a href="javascript:void(0)" class="all">全部订单</a><span>|</span>
-								<a href="javascript:void(0)" class="pay">待付款 </a><span>|</span>
-								<a href="javascript:void(0)" class="pay">转账中 </a><span>|</span>
-								<a href="javascript:void(0)" class="pay">已付款 </a><span>|</span>
-								<a href="javascript:void(0)">待发货</a><span>|</span>
-								<a href="javascript:void(0)">已发货</a>
+								<a href="javascript:void(0)" class="all">All orders</a><span>|</span>
+								<a href="javascript:void(0)" class="pay">wait pay</a><span>|</span>
+								<a href="javascript:void(0)" class="pay">pay</a><span>|</span>
+								<a href="javascript:void(0)" class="pay">success</a><span>|</span>
+							<!--	<a href="javascript:void(0)">待发货</a><span>|</span>
+								<a href="javascript:void(0)">已发货</a>-->
 							</div>
 							<ul class="order-menu clearfix">
-								<li>订单号</li>
-								<li>总金额</li>
-								<li>支付状态</li>
-								<li>发货状态</li>
-								<li>下单时间</li>
+								<li style="margin-left: 35px">orderId</li>
+								<li style="margin-left: 90px">totalAmount</li>
+								<li style="margin-left: 60px">PayStatus</li>
+								<li style="margin-left: 100px">orderTime</li>
 							</ul>
 							<!-- 无下单 -->
 							<div class="order-detail">
@@ -55,40 +55,14 @@
 							</div>
 							<!-- 下单 -->
 							<table class="order-message" cellpadding="0" cellspacing="0">
-								<!--<tr class="tr2">
-									<td>
-										订单号
-									</td>
-									<td>
-										商品名称
-									</td>
-									<td>收货人</td>
-									<td>金额</td>
-									<td>支付状态</td>
-									<td>发货状态</td>
-									<td>下单时间</td>
+							<!--	<tr class="tr2">
+									<td>${order.orderId}</td>
+									<td>${order.totalAmount}</td>
+									<td id="${order.orderId}">${statusName}</td>
+									<td>${javaDate(order.createTime)}</td>
 									<td class="tr2-4">
-										<span><a href="">立即付款</a></span>
-										<a class="cancel" style="cursor: pointer;">取消订单</a><br>
-										<a href="">查看详情</a>
-									</td>
-								</tr>
-								<tr class="tr2">
-									<td>
-										订单号
-									</td>
-									<td>
-										商品名称
-									</td>
-									<td>收货人</td>
-									<td>金额</td>
-									<td>支付状态</td>
-									<td>发货状态</td>
-									<td>下单时间</td>
-									<td class="tr2-4">
-										<span><a href="">立即付款</a></span>
-										<a class="cancel" style="cursor: pointer;">取消订单</a><br>
-										<a href="">查看详情</a>
+										<span><a  class="pay-now" orderId="${order.id}">pay now</a></span>
+										<a class="cancel" style="cursor: pointer;">cancel order</a><br>
 									</td>
 								</tr>-->
 							</table>

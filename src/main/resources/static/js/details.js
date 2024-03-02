@@ -1,7 +1,7 @@
 $(function () {
 
-    $(".header-all").load("/header");
-
+    $(".header-all").load(pageName('header'));
+    $(".footer-all").load(pageName('footer'));
     $(".pic-min ul li:nth-child(1)").click(function () {
         $(".pic-max").find("img").css("display", "none");
         $(".pic-max .max01 img").css("display", "block");
@@ -45,74 +45,7 @@ $(function () {
             $(this).addClass("disabled");
         }
     });
-    //型号选择
-    $(".commodity-type .type-select a:nth-child(1)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-    });
-    $(".commodity-type .type-select a:nth-child(2)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-    });
-    $(".commodity-type .type-select a:nth-child(3)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-    });
-    $(".commodity-type .type-select a:nth-child(4)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-    });
-    $(".commodity-type .type-select a:nth-child(5)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-    });
-    //颜色选择
-    $(".commodity-color .color-select a:nth-child(1)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-        $(".white").css("display", "none");
-        $(".gray").css("display", "none");
-        $(".blue").css("display", "block");
-        $(".float-nav .price span").text("深蓝");
-        $(this).addClass("selected")
-        $(this).nextAll().removeClass("selected")
-        $(this).prevAll().removeClass("selected")
-    });
-    $(".commodity-color .color-select a:nth-child(2)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-        $(".gray").css("display", "none");
-        $(".blue").css("display", "none");
-        $(".white").css("display", "block");
-        $(".float-nav .price span").text("月白");
-        $(this).addClass("selected")
-        $(this).nextAll().removeClass("selected")
-        $(this).prevAll().removeClass("selected")
-    });
-    $(".commodity-color .color-select a:nth-child(3)").click(function () {
-        $(this).siblings().css("border", "1px solid #BFBFBF");
-        $(this).css("border", "1px solid #000");
-        $(".blue").css("display", "none");
-        $(".white").css("display", "none");
-        $(".gray").css("display", "block");
-        $(".float-nav .price span").text("云灰");
-        $(this).addClass("selected")
-        $(this).nextAll().removeClass("selected")
-        $(this).prevAll().removeClass("selected")
-    });
-    //详情选项卡
-    $(".details-hd ul li:first-child").click(function () {
-        $(this).css("border-bottom", "2px solid #000");
-        $(".details-hd ul li:last-child").css("border-bottom", "none");
-        $(".more-tbl").css("display", "none");
-        $(".more-img").css("display", "block");
-    });
-    $(".details-hd ul li:last-child").click(function () {
-        $(this).css("border-bottom", "2px solid #000");
-        $(".details-hd ul li:first-child").css("border-bottom", "none");
-        $(".more-img").css("display", "none");
-        $(".more-tbl").css("display", "block");
-    });
+
     //页面回到顶部
     $(document).scroll(function () {
         var top = $(document).scrollTop();
@@ -131,13 +64,26 @@ $(function () {
     });
 
     // 加载详情
-    let pId;
-
+    let pId;  //  product
+    let pi_Id;  //  base product
+    let productMap = JSON.parse(localStorage.getItem("productMap"));
+    let picMap = new Map(JSON.parse(localStorage.getItem("picMap"))); // 加载图片
     function initDetails() {
-        pId = sessionStorage.getItem('pId');
-        let picMap = new Map(JSON.parse(sessionStorage.getItem("picMap")));
-        let productMap = JSON.parse(sessionStorage.getItem("productMap"));
-        let product = productMap[pId];
+        pi_Id = parseInt(localStorage.getItem('pId'));
+        pId = localStorage.getItem('pi_Id');
+        setDetails();
+        // 型号
+        let as = '';
+        let products = productMap[pi_Id];
+        for (let p in products) {
+            as += ` <a pId="${products[p].id}" class="model">${products[p].model}</a>`;
+        }
+        $('.type-select').append(as);
+    }
+
+    function setDetails() {
+        let products = productMap[pi_Id];
+        let product = products.find(item => item.id == pId);
         $("#price").text(product.price);
         $("#describe").text(product.describe);
         $("#productName").text(product.productName);
@@ -145,33 +91,52 @@ $(function () {
 
     initDetails();
 
+    $(".type-select").on('click', '.model', function () {
+        pId = $(this).attr('pId');
+        setDetails();
+        $(this).siblings().css("border", "1px solid #BFBFBF");
+        $(this).css("border", "1px solid #000");
+    });
+
     // 立即购买
     $("#buy_now").click(function () {
-        let user = JSON.parse(sessionStorage.getItem("user"));
-        if (!user) {
-            alert('请登录！');
-        } else {
+        if (please_login('details')) {
             let order = {};
-            order[pId] = {'userId': user.id, 'productId': pId, 'quantity': $('#quantity').val()};
-            sessionStorage.setItem('buyNow', JSON.stringify(order));
-            location.href = pageObj.order;
+            let obj = order[pi_Id];
+            let o = {
+                'userId': JSON.parse(localStorage.getItem("user")).id,
+                'productId': pId,
+                'quantity': $('#quantity').val()
+            };
+            if (obj) {
+                let product = obj.find(item => item.productId == pId);
+                if (product) {
+                    product.quantity = parseInt(product.quantity) + o.quantity;
+                } else {
+                    obj.push(o);
+                }
+            } else {
+                order[pi_Id] = [o];
+            }
+            localStorage.setItem('buyNow', JSON.stringify(order));
+            page('order');
         }
     });
 
     // 添加购物车
     $("#add_cart").click(function () {
-        let user = JSON.parse(sessionStorage.getItem("user"));
+        let user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
-            alert('请登录！');
+            please_login();
         } else {
             let cart = {'userId': user.id, 'productId': pId, 'quantity': $('#quantity').val()};
-            let cartMap = sessionStorage.getItem("cartMap");
+            let cartMap = localStorage.getItem("cartMap");
             if (!cartMap) {
-                post(routing.cart, JSON.stringify({
+                post(ec3Mapping.cart, JSON.stringify({
                     'userId': user.id
                 }), function (response) {
                     if (response.code === 0) {
-                        setCart(response.data?response.data:{}, cart);
+                        setCart(response.data ? response.data : {}, cart);
                     } else {
                         alert(response.msg);
                     }
@@ -185,12 +150,18 @@ $(function () {
     });
 
     function setCart(cartMap, cart) {
-        if (cartMap[pId]) {
-            cartMap[pId].quantity = parseInt(cartMap[pId].quantity) + parseInt(cart.quantity);
+        if (cartMap[pi_Id]) {
+            let products = cartMap[pi_Id];
+            let product = products.find(item => item.id == cart.productId);
+            if (product) {
+                product.quantity = parseInt(product.quantity) + parseInt(cart.quantity);
+            } else {
+                products.push(cart);
+            }
         } else {
-            cartMap[pId] = cart;
+            cartMap[pi_Id] = [cart];
         }
-        sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
+        localStorage.setItem('cartMap', JSON.stringify(cartMap));
         layer.msg("Added successfully");
     }
 

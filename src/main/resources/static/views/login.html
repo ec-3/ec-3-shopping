@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="../css/login.css"/>
         <script src="../js/jquery-3.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../lib/layer/layer.js" type="text/javascript" charset="utf-8"></script>
         <script src="../js/utils.js" type="text/javascript" charset="utf-8"></script>
         <script src="../js/login.js" type="text/javascript" charset="utf-8"></script>
     </head>
@@ -14,17 +15,16 @@
         <div class="box">
             <div class="floor2">
                 <!-- 有效宽度 -->
-                <div class="container">
+                <div class="container"  style="background-color: rgba(10,12,9,.94);">
                     <div class="right">
                         <!-- 头部 -->
-                        <div class="header">联想会员登录</div>
-                        <div class="saoma"><img src="../img/picture/2.png"><span>扫码登录更安全</span></div>
+                        <div class="header">EC3 member login</div>
                         <div class="picture"><a href="javascript:void(0)"><img src="../img/picture/4.png"></a></div>
                         <!-- 内容 -->
                         <div class="content">
                             <div class="content_one">
-                                <div class="one"><input id="login" type="text" placeholder="邮箱/手机号码"></div>
-                                <div class="one"><input id="password" type="password" placeholder="密码"></div>
+                                <div class="one"><input id="login" type="text" placeholder="Phone or email address"></div>
+                                <div class="one"><input id="password" type="password" placeholder="Password"></div>
                             </div>
                             <div class="content_two">
                                 <div class="one"><input type="text" placeholder="手机号码"></div>
@@ -32,16 +32,17 @@
                                     <button class="btn2">短信验证码</button>
                                 </div>
                             </div>
-                            <div class="two clearfix"><input type="checkbox" checked="checked"/>自动登录</div>
-                            <button class="bnt1 btn_login">登录</button>
-                            <div class="three clearfix"><a class="show" href="javascript:void(0)">手机验证码登录</a><a
+                            <div class="two clearfix"><input type="checkbox" checked="checked"/>auto login</div>
+                            <button class="bnt1 btn_login">LOG IN</button>
+                            <div class="three clearfix"><a class="show" href="javascript:void(0)">phone code login</a><a
                                     class="none" href="javascript:void(0)">用户名密码登录</a><span><a
-                                    class="red" href="">忘记密码?</a></span><span>|</span><span><a class="red"
-                                                                                               href="/register">立即注册</a></span>
+                                    class="red" href="">forget password?</a></span><span>&nbsp;|&nbsp;</span><span><a class="red"
+                                                                                               href="javascript:page('register');">register</a></span>
                             </div>
                         </div>
                         <!-- 尾部 -->
-                        <div class="footer clearfix"><span></span>其他登陆方法<span></span></div>
+                      <div class="footer clearfix"><span></span>&nbsp;&nbsp;Other login methods<span></span></div>
+
                         <!-- 小图标 -->
                         <div class="icon">
                             <ul>
@@ -54,22 +55,13 @@
                     </div>
                     <div class="right hide">
                         <!-- 头部 -->
-                        <div class="header">联想会员扫码登录</div>
+                        <div class="header">EC3 member QR code login</div>
                         <div class="picture"><a href="javascript:void(0)"><img src="../img/picture/5.png"></a></div>
-                        <div class="tupian"><img src="../img/picture/3.gif"><span>打开微信扫码登录</span></div>
+                        <div class="tupian"><img src="../img/picture/3.gif"><span>Mobile app Scan code</span></div>
                     </div>
                 </div>
             </div>
-           <!-- <div class="floor3">
-                <div class="container">
-                    <div class="wenzi">版权所有：1998-2019 联想集团|法律公告|隐私权政策</div>
-                </div>
-            </div>-->
-            <!--<div class="floor4">
-                <div class="container">
-                    <div class="wenzi">京ICP备11035381|京公网安备110108007970号|营业执照：110000410127232</div>
-                </div>
-            </div>-->
         </div>
+        <div class="footer-all"></div>
     </body>
 </html>

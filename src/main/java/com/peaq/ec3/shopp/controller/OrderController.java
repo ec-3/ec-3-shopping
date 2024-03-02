@@ -55,7 +55,7 @@ public class OrderController {
 
     @Transactional
     @PostMapping("/submit")
-    public Result submitOrder(@RequestBody SubmitOrderReq orderReq) {
+    public Result<Order> submitOrder(@RequestBody SubmitOrderReq orderReq) {
         Order order = orderReq.getOrder();
         order.setOrderId(cpIdCreator.createOrderId());
         orderMapper.insertSelective(order);
@@ -70,7 +70,7 @@ public class OrderController {
         if (!CollectionUtils.isEmpty(orderReq.getCarIds())) {
             shopCarMapper.delCarBatch(orderReq.getCarIds());
         }
-        return Result.returnSuccess();
+        return Result.returnSuccess(order);
     }
 
 

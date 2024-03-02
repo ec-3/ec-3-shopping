@@ -1,16 +1,25 @@
 $(function () {
-    $(".header-all").load("/header");
-    let cartMap = sessionStorage.getItem("cartMap");
+    $(".header-all").load(pageName('header'));
+    $(".footer-all").load(pageName('footer'));
+
+    function removeBodyClass() {
+        $('#body').removeClass('body-cart');
+        $('#checkSubmitInfo').css({'margin-top': '0'});
+    }
+
+    let cartMap = localStorage.getItem("cartMap");
     if (cartMap) {
+        removeBodyClass();
         forItems(JSON.parse(cartMap));
     } else {
-        let user = JSON.parse(sessionStorage.getItem("user"));
-        post(routing.cart, JSON.stringify({
+        let user = JSON.parse(localStorage.getItem("user"));
+        post(ec3Mapping.cart, JSON.stringify({
             'userId': user['id']
         }), function (response) {
             if (response.code === 0) {
                 if (response.data) {
-                    sessionStorage.setItem('cartMap', JSON.stringify(response.data));
+                    removeBodyClass();
+                    localStorage.setItem('cartMap', JSON.stringify(response.data));
                     forItems(response.data);
                 }
             } else {
@@ -22,17 +31,20 @@ $(function () {
     }
 
     function forItems(cartMap) {
+        let picMap = new Map(JSON.parse(localStorage.getItem("picMap")));
+        let products = JSON.parse(localStorage.getItem("productMap"));
         for (let key in cartMap) {
-            let cart = cartMap[key];
-            let picMap = new Map(JSON.parse(sessionStorage.getItem("picMap")));
-            let product = JSON.parse(sessionStorage.getItem("productMap"))[key];
-            let carProduct = `<div class="productBodyItemContent" pId="${product.id}">
+            let i = parseInt(key);
+            let cart = cartMap[i];
+            for (let ite of cart) {
+                let pros = products[i];
+                let product = pros.find(item => item.id == ite.productId);
+                let carProduct = `<div class="productBodyItemContent" pi_id="${i}" pId="${product.id}">
                     <em class="checkBox checkIcon"></em>
-                    <a class="itemImg" href=""><img src="${picMap.get(product.id)}"/></a>
+                    <a class="itemImg" href=""><img src="${picMap.get(i)}"/></a>
                     <div class="itemInfo">
-                    <h5>${product.brand}</h5>
                     <a href="">${product.productName}</a>
-                    <div><span>规格：${product.specification}<i></i></span></div>
+                    <div><span>model：${product.model}<i></i></span></div>
                     </div>
                     <div class="itemInfoUnion1">
                     <span class="itemPice">${product.price}</span>
@@ -40,18 +52,21 @@ $(function () {
                     <div class="itemInfoUnion2">
                     <div class="itemInfoUnion2Module lelt">
                     <i class="itemMinus item_ma_css l" data-id="${product.id}">-</i>
-                    <input type="text" class="itemNum l" value="${cart.quantity}"/>
+                    <input type="text" class="itemNum l" value="${ite.quantity}"/>
                     <i class="itemAdd item_ma_css l" data-id="${product.id}">+</i>
                     </div>
                     </div>
                     <div class="itemInfoUnion3">
-                    <span class="sumNum">${cart.quantity * product.price}</span>
+                    <span class="sumNum">${ite.quantity * product.price}</span>
                     </div>
                     <div class="itemInfoUnion4">
                     <i class="delete" data-id="${product.id}"></i>
                     </div>
                     </div>`;
-            $('.productBodyItem').append(carProduct);
+                $('.productBodyItem').append(carProduct);
+            }
+
+
         }
     }
 
@@ -66,9 +81,9 @@ $(function () {
         let unitPrice = $('.itemPice').eq(index).text();
         sum.text(val * unitPrice + '.00');
         $('.itemMinus').eq(index).css('color', '#474747');
-        let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
+        let cartMap = JSON.parse(localStorage.getItem("cartMap"));
         cartMap[$(this).attr('data-id')].quantity += 1;
-        sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
+        localStorage.setItem('cartMap', JSON.stringify(cartMap));
         setUpCart();
         if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
             $(".lumpSum").text(parseFloat($(".lumpSum").eq(0).text()) + parseFloat(unitPrice));
@@ -84,9 +99,9 @@ $(function () {
             num.val(val);
             let unitPrice = $('.itemPice').eq(index).text();
             $('.sumNum').eq(index).text(val * unitPrice + '.00');
-            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
+            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
             cartMap[$(this).attr('data-id')].quantity -= 1;
-            sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
+            localStorage.setItem('cartMap', JSON.stringify(cartMap));
             setUpCart();
             if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
                 $(".lumpSum").text(parseFloat($(".lumpSum").eq(0).text()) - parseFloat(unitPrice));
@@ -100,7 +115,7 @@ $(function () {
     $("#chekoutBody").on('click', '.delete', function () {
         if (confirm('Are you sure you want to delete this item ?')) {
             let index = $('.delete').index(this);
-            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
+            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
             delete cartMap[$(this).attr('data-id')];
             delCartStorage(cartMap);
             setUpCart();
@@ -114,9 +129,9 @@ $(function () {
 
     function delCartStorage(cartMap) {
         if (Object.keys(cartMap).length === 0) {
-            sessionStorage.removeItem('cartMap');
+            localStorage.removeItem('cartMap');
         } else {
-            sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
+            localStorage.setItem('cartMap', JSON.stringify(cartMap));
         }
     }
 
@@ -167,95 +182,98 @@ $(function () {
         let sum = parseFloat($(".lumpSum").eq(0).text());
         if (checkBoxArray.length > 0) {
             if (checkBoxArray.length === length - 2) {
-                if (confirm('确定删除全部商品吗？')) {
+                if (confirm('Are you sure you want to delete all products ?')) {
                     $('.productBodyItemContent').remove();
                     sum = 0;
                     checkBoxArray = [];
                 }
-                sessionStorage.removeItem('cartMap');
+                localStorage.removeItem('cartMap');
             } else {
-                if (confirm('确定删除这些商品吗？')) {
+                if (confirm('Are you sure you want to delete these items ?')) {
                     numberSort(checkBoxArray);
                     for (let i = 0; i < checkBoxArray.length; i++) {
                         if (sum > 0) {
                             sum -= parseFloat($('.sumNum').eq(checkBoxArray[i]).text());
                         }
                     }
-                    let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
+                    let cartMap = JSON.parse(localStorage.getItem("cartMap"));
                     for (let i = 0; i < checkBoxArray.length; i++) {
                         // 这里需要减1，删除后index变化
-                        $('.productBodyItemContent').eq(checkBoxArray[i] - i).remove();
-                        let pId = $('.productBodyItemContent').eq(checkBoxArray[i]).attr('pId');
-                        delete cartMap[pId];
+                        let eq = $('.productBodyItemContent').eq(checkBoxArray[i] - i);
+                        let pId = eq.attr('pId');
+                        let pi_id = eq.attr('pi_id');
+                        if (cartMap[pi_id].length > 0) {
+                            cartMap[pi_id] = cartMap[pi_id].filter(item => item.productId !== pId);
+                            if (cartMap[pi_id].length === 0) {
+                                delete cartMap[pi_id];
+                            }
+                        }
+                        eq.remove();
                     }
                     delCartStorage(cartMap);
-                    for (let i = 0; i < checkBoxArray.length; i++) {
-                        checkBoxArray = checkBoxArray.filter(item => item !== checkBoxArray[i]);
-                    }
+                    checkBoxArray = [];
                 }
             }
+
             $(".lumpSum").text(sum);
             $("#itemTotal").text(checkBoxArray.length);
             setUpCart();
         } else {
-            confirm('请勾选商品');
+            confirm('Please select product');
         }
     });
 
     $(window).bind('beforeunload', function () {
-        if (sessionStorage.getItem('upCart')) {
-            let user = JSON.parse(sessionStorage.getItem("user"));
-            let cart = JSON.parse(sessionStorage.getItem("cartMap"));
-            sessionStorage.removeItem('upCart');
-            post(routing.execute, JSON.stringify({'userId': user.id, 'cart': cart}));
+        if (localStorage.getItem('upCart')) {
+            let user = JSON.parse(localStorage.getItem("user"));
+            let cart = JSON.parse(localStorage.getItem("cartMap"));
+            localStorage.removeItem('upCart');
+            post(ec3Mapping.execute, JSON.stringify({'userId': user.id, 'cart': cart}));
         }
     });
 
     function setUpCart() {
-        let upCart = sessionStorage.getItem('upCart');
-        if (!upCart) sessionStorage.setItem('upCart', true);
+        let upCart = localStorage.getItem('upCart');
+        if (!upCart) localStorage.setItem('upCart', true);
         return upCart;
     }
 
+    // 结算
     $('.rightSubmit').click(function () {
-        let user = JSON.parse(sessionStorage.getItem("user"));
-        if (!user) {
-            alert('请登录！');
-        } else {
+        if (please_login('cart')) {
             if (checkBoxArray.length === 0) {
-                alert('请选择商品');
+                alert('Please select product !');
             } else {
-                sessionStorage.setItem('buy_type', 1);
+                localStorage.setItem('buy_type', 1);
                 let order = {};
                 for (let i = 0; i < checkBoxArray.length; i++) {
-                    let pId = $('.productBodyItemContent').eq(checkBoxArray[i]).attr('pId');
-                    order[pId] = {
-                        'userId': user.id,
+                    let eq = $('.productBodyItemContent').eq(checkBoxArray[i]);
+                    let pId = eq.attr('pId');
+                    let pi_id = eq.attr('pi_id');
+                    let obj = order[pi_id];
+                    let o = {
+                        'userId': JSON.parse(localStorage.getItem("user")).id,
                         'productId': pId,
                         'quantity': $('.itemNum').eq(checkBoxArray[i]).val()
                     };
+                    if (obj) {
+                        let product = obj.find(item => item.productId == pId);
+                        if (product) {
+                            product.quantity = parseInt(product.quantity) + o.quantity;
+                        } else {
+                            obj.push(o);
+                        }
+                    } else {
+                        order[pi_id] = [o];
+                    }
                 }
-                sessionStorage.setItem('buyNow', JSON.stringify(order));
-                location.href = pageObj.order;
+                localStorage.setItem('buyNow', JSON.stringify(order));
+                page('order');
             }
-
         }
     });
 
 });
 
-//吸底
-window.onload = function () {
-    let gocar = document.getElementsByClassName('checkSubmitInfoBooking')[0];
-    document.onscroll = function () {
-        if (document.documentElement.scrollTop < 411) {
-            gocar.style.position = 'fixed';
-            gocar.style.bottom = '0';
-            gocar.style.boxShadow = '0 0 8px 0 rgba(0,0,0,.1)';
-        } else {
-            gocar.style.position = 'relative';
-            gocar.style.boxShadow = '0 #fff';
-        }
-    }
-};
+
 

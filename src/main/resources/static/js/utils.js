@@ -1,4 +1,4 @@
-let routing = {
+var ec3Mapping = {
     login: '/userInfo/login',
     register: '/userInfo/register',
     itemList: '/orderItem/list',
@@ -9,21 +9,28 @@ let routing = {
     address: '/addressGlobal/list',
     address_save: '/addressGlobal/save',
     orderItem: '/orderItem/list',
-    order: '/order/list'
+    order: '/order/list',
+    order_update: '/order/update',
+    coin: '/coin/coinInfo',
+    merchant: '/merchant/chainPayList'
 };
 
-let pageObj = {
-    cart: '/cart',
-    login: '/login',
-    index: '/index',
-    header: '/header',
-    details: '/details',
-    register: '/register',
-    order: '/order',
-    account: '/account'
-};
+function page(name) {
+    if (!['login', 'register', 'header', 'index'].includes(name)) {
+        if (!localStorage.getItem("user")) {
+            localStorage.setItem('pre-login', name);
+            location.href = pageName('login');
+            return;
+        }
+    }
+    location.href = pageName(name);
+}
 
-let error_msg = "System response timed out, please try again later ！: ";
+function pageName(name) {
+    return '/views/' + name + '.html';
+}
+
+var error_msg = "System response timed out, please try again later ！: ";
 
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -42,7 +49,7 @@ function post(url, data, success, fail) {
         "timeout": 0,
         "headers": {
             "Content-Type": "application/json",
-            "Authorization": sessionStorage.getItem("token")
+            "Authorization": localStorage.getItem("token")
         },
         "data": data
     };
@@ -57,7 +64,7 @@ function postSync(url, data, success, fail) {
         "timeout": 0,
         "headers": {
             "Content-Type": "application/json",
-            "Authorization": sessionStorage.getItem("token")
+            "Authorization": localStorage.getItem("token")
         },
         "data": data
     };
@@ -72,22 +79,12 @@ function get(url, success, fail) {
     }).done(success).fail(fail);
 }
 
-function page_jump(page) {
-    let token = sessionStorage.getItem("token");
-    if (token) {
-        location.href = page;
-    } else {
-        alert('please sign in');
-        location.href = pageObj.login;
-    }
-}
 
 function numberSort(array) {
     array.sort((x, y) => {
         return x - y;
     });
 }
-
 
 function isEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -108,5 +105,15 @@ function phoneHide(phone) {
 }
 
 function javaDate(date) {
-   return  date.split('.')[0].replace("T"," ");
+    return date.split('.')[0].replace("T", " ");
+}
+
+function please_login(name) {
+    if (!localStorage.getItem("user")) {
+        alert('please sign in !');
+        localStorage.setItem('pre-login', name);
+        location.href = pageName('login');
+        return false;
+    }
+    return true;
 }

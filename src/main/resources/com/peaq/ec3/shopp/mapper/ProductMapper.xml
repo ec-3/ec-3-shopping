@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peaq.ec3.shopp.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.peaq.ec3.shopp.model.Product">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_num" jdbcType="VARCHAR" property="productNum" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="supplier_id" jdbcType="VARCHAR" property="supplierId" />
+    <result column="price" jdbcType="BIGINT" property="price" />
+    <result column="cost_price" jdbcType="BIGINT" property="costPrice" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_num, product_name, supplier_id, price, cost_price, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.peaq.ec3.shopp.model.Product">
+    insert into product (id, product_num, product_name, 
+      supplier_id, price, cost_price, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{productNum,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{supplierId,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{costPrice,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.peaq.ec3.shopp.model.Product">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productNum != null">
+        product_num,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="costPrice != null">
+        cost_price,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productNum != null">
+        #{productNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=BIGINT},
+      </if>
+      <if test="costPrice != null">
+        #{costPrice,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.peaq.ec3.shopp.model.Product">
+    update product
+    <set>
+      <if test="productNum != null">
+        product_num = #{productNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="costPrice != null">
+        cost_price = #{costPrice,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.peaq.ec3.shopp.model.Product">
+    update product
+    set product_num = #{productNum,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=VARCHAR},
+      price = #{price,jdbcType=BIGINT},
+      cost_price = #{costPrice,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

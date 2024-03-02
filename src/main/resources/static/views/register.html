@@ -16,12 +16,12 @@
             <div class="header"></div>
             <!-- 第二层，写注册页面 -->
             <div class="floor2">
-                <div class="container">
+                <div class="container" style="background-color: rgba(10,12,9,.94);">
                     <div class="zhuce">
-                        <div class="title">注册EC3会员</div>
+                        <div class="title">Register EC3 member</div>
                         <div class="menu">
-                            <span><a href="javascript:void(0)" class="moren">个人用户注册</a><span>|</span><a
-                                    href="javascript:void(0)">企业用户注册</a></span>
+                            <span><a href="javascript:void(0)" class="moren">Person</a><span>|</span><a
+                                    href="javascript:void(0)">Enterprise</a></span>
                         </div>
 
 
@@ -34,29 +34,36 @@
                                 <input type="text" class="msg_code" placeholder="短信验证码"/><button class="btn1" type="button">获取验证码</button>
                             </div>-->
                             <div class="bot">
-                                <input id="email" class="number" type="text" placeholder="输入邮箱"/>
+                                <input id="email" class="number" type="text" placeholder="Phone or email address"/>
+                            </div>
+                            <div class="bot">  <!-- 输入密码，密码长度为8-20位字符 -->
+                                <input id="password" type="password" placeholder="Password"/>
                             </div>
                             <div class="bot">
-                                <input id="password" type="password" placeholder="输入密码，密码长度为8-20位字符"/>
+                                <input id="pass_again" type="password" placeholder="Enter password again"/>
                             </div>
                             <div class="bot">
-                                <input id="pass_again" type="password" placeholder="再次输入密码"/>
+                                <input id="personal_reg" type="button" value="Sign up now" class="reg"/>
                             </div>
-                            <div class="bot">
-                                <input id="personal_reg" type="button" value="立即注册" class="reg"/>
-                            </div>
-                            <div class="bot wenzi">注册账号即表示您同意并愿意遵守联想
+                           <!-- <div class="bot wenzi">注册账号即表示您同意并愿意遵守联想
                                 <span style="font-weight: bold;color: #000000;">使用条款</span>
                                 和
                                 <span style="font-weight: bold;color: #000000;">隐私权政策</span>
                                 <span>
                                     已有账号
-                                    <a href="/login" style="font-weight: bold; color: #000000;">点此登录></a>
+                                    <a href="javascript:page('login')" style="font-weight: bold; color: #000000;">点此登录></a>
                                 </span>
+                            </div>-->
+
+                            <div style="margin-left: 20px;margin-top: 20px; width: 400px">
+                                <p class="privacy_policy">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS Notifications from us and can opt out any time.</p>
+                            </div>
+
+
+                            <div style="margin-left: 115px;margin-top: 50px">
+                                <a class="have_account" href="">Already have an account?</a>
                             </div>
                         </div>
-
-
 
                         <div class="two">
                             <div class="bot"><input id="username" type="text" placeholder="输入手机号"/></div>
@@ -74,12 +81,13 @@
                             <div class="bot wenzi clearfix">注册账号即表示您同意并愿意遵守ec3<span
                                     style="font-weight: bold;color: #000000;">使用条款</span>和<span
                                     style="font-weight: bold;color: #000000;">隐私权政策</span><span>已有账号
-									&nbsp; <a href="/login" style="font-weight: bold; color: #000000;">点此登录></a></span>
+									&nbsp; <a href="javascript:page('login')" style="font-weight: bold; color: #000000;">点此登录></a></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="footer-all"></div>
         </div>
     </body>
 </html>

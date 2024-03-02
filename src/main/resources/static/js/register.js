@@ -1,13 +1,13 @@
 $(function () {
-    $(".header").load("/header");
-
+    $(".header").load(pageName('header'));
+    $(".footer-all").load(pageName('footer'));
     // 注册
     $("#personal_reg").click(function () {
         let email = $("#email").val();
         let password = $("#password").val();
         let passAgain = $("#pass_again").val();
         if (check_account(email, password, passAgain)) {
-            post(routing.register, JSON.stringify({
+            post(ec3Mapping.register, JSON.stringify({
                 email: email,
                 password: password,
             }), function (response) {

@@ -1,9 +1,11 @@
 package com.peaq.ec3.shopp.mapper;
 
 import com.peaq.ec3.shopp.model.ProductInfo;
-import com.peaq.ec3.shopp.request.ProductListReq;
 
 import java.util.List;
+
+import com.peaq.ec3.shopp.request.ProductListReq;
+import org.apache.ibatis.annotations.Param;
 
 public interface ProductInfoMapper {
 
