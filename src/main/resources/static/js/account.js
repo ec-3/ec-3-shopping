@@ -8,7 +8,7 @@ $(function () {
                 if (response.data) {
                     let tr = '';
                     for (let order of response.data.records) {
-                        // 支付状态：0-待支付 1-已支付 2-已取消
+                        // 0-待支付 1-支付中 2-支付成功 3-已取消
                         let statusName = 'pay wait';
                         let paySpan = `<span><a class="pay-now" orderId="${order.id}">pay now</a></span>`;
                         let cancel = `<a class="cancel" style="cursor: pointer;">cancel order</a><br>`;
@@ -45,10 +45,10 @@ $(function () {
                 }
 
             } else {
-                alert(response.msg);
+                console.log(response.msg);
             }
         }, function (error) {
-            alert(error_msg + error);
+            console.log(error_msg + error);
         });
     }
 
@@ -90,10 +90,12 @@ $(function () {
                 post(ec3Mapping.order_update, JSON.stringify(order), function (response) {
                     if (response.code === 0) {
                         localStorage.removeItem('submitted_order');
-                        $('#' + order.orderId).text('支付成功');
-                    } else alert(response.msg);
+                        $('#' + order.orderId).text('pay successful');
+                    } else{
+                        console.log(response.msg);
+                    }
                 }, function (error) {
-                    alert(error_msg + error);
+                    console.log(error_msg + error);
                 });
             }
         }).catch((err) => {

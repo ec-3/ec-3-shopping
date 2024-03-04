@@ -10,7 +10,7 @@ $(function () {
             value = 'mobile';
         }
         if (value === '') {
-            alert('Email or mobile phone number format is wrong!');
+             layer.msg('Email or mobile phone number format is wrong!');
         } else {
             let user = {};
             user[value] = login;
@@ -31,10 +31,10 @@ $(function () {
                         location.href =page;
                     }
                 } else {
-                    alert(response.msg);
+                    console.log(response.msg);
                 }
             }, function (error) {
-                alert(error_msg + error);
+                console.log(error_msg + error);
             });
         }
 

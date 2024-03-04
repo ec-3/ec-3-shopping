@@ -18,10 +18,10 @@ $(function () {
                     forCoins(coinObj.coins);
                     forNetwork(coinObj.chainNetworks);
                 } else {
-                    alert(response.msg);
+                    console.log(response.msg);
                 }
             }, function (error) {
-                alert(error_msg + error);
+                console.log(error_msg + error);
             });
         }
         if (!localStorage.getItem("merchant")) {
@@ -39,7 +39,7 @@ $(function () {
     async function paying() {
         let ethereum = window.ethereum;
         if (!ethereum) {
-            alert("please install wallet first!");
+            layer.msg("please install wallet first!");
             return;
         }
         if (await ethereum.request({method: 'eth_accounts'})) {
@@ -63,20 +63,22 @@ $(function () {
                                 localStorage.setItem('submitted_order', order);
                                 localStorage.removeItem('to_be_paid_order');
                                 page('account');
-                            } else alert(response.msg);
+                            } else{
+                                console.log(response.msg);
+                            }
                         }, function (error) {
-                            alert(error_msg + error);
+                            console.log(error_msg + error);
                         });
-                        alert('Payments. . . . Please check your order later');
+                         layer.msg('Payments. . . . Please check your order later');
                         $('#ConnectW').css('display', 'none');
 
                     }).catch((err) => {
-                        alert('Payment canceled or failed');
+                        layer.msg('Payment canceled or failed');
                         $('#ConnectW').css('display', 'flex');
                     });
                 }
             } else {
-                alert('Wallet not connected');
+                layer.msg('Wallet not connected');
                 $('#ConnectW').css('display', 'flex');
             }
         }

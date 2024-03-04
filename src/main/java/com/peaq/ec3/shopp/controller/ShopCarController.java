@@ -38,12 +38,18 @@ public class ShopCarController {
     }
 
     @PostMapping("/cart")
-    public Result<Map<Long, ShopCar>> cart(@RequestBody ListReq request) {
+    public Result<Map<Long, List<ShopCar>>> cart(@RequestBody ListReq request) {
         List<ShopCar> shopCarList = shopCarMapper.getShopCarList(request.getUserId());
         if (!CollectionUtils.isEmpty(shopCarList)) {
-            Map<Long, ShopCar> map = new HashMap<>(shopCarList.size());
+            Map<Long, List<ShopCar>> map = new HashMap<>();
             for (ShopCar shopCar : shopCarList) {
-                map.put(shopCar.getProductId(), shopCar);
+                if (map.containsKey(shopCar.getBaseId())) {
+                    map.get(shopCar.getBaseId()).add(shopCar);
+                } else {
+                    List<ShopCar> list = new ArrayList<>();
+                    list.add(shopCar);
+                    map.put(shopCar.getBaseId(), list);
+                }
             }
             return Result.returnSuccess(map);
         }
@@ -75,15 +81,16 @@ public class ShopCarController {
         if (CollectionUtils.isEmpty(cartReq.getCart())) {
             shopCarMapper.delCarByUser(cartReq.getUserId());
         } else {
+            Map<Long, ShopCar> shopCars = convert(cartReq.getCart());
             OperateCartReq operate = new OperateCartReq();
             List<ShopCar> shopCarList = shopCarMapper.getShopCarList(cartReq.getUserId());
             if (CollectionUtils.isEmpty(shopCarList)) {
-                setAddCar(operate, cartReq);
+                setAddCar(operate, shopCars);
             } else {
                 operate.setDelCart(new ArrayList<>());
                 operate.setUpdateCart(new ArrayList<>());
                 for (ShopCar cart : shopCarList) {
-                    ShopCar car = cartReq.getCart().get(cart.getProductId());
+                    ShopCar car = shopCars.get(cart.getProductId());
                     if (car == null) {
                         operate.getDelCart().add(cart.getId());
                     } else {
@@ -93,16 +100,26 @@ public class ShopCarController {
                         cartReq.getCart().remove(car.getProductId());
                     }
                 }
-                setAddCar(operate, cartReq);
+                setAddCar(operate, shopCars);
             }
             operateCar(operate);
         }
         return Result.returnSuccess();
     }
 
-    private void setAddCar(OperateCartReq operate, ExecuteCartReq cartReq) {
+    private Map<Long, ShopCar> convert(Map<Long, List<ShopCar>> map) {
+        Map<Long, ShopCar> result = new HashMap<>();
+        map.forEach((k, v) -> {
+            for (ShopCar car : v) {
+                result.put(car.getId(), car);
+            }
+        });
+        return result;
+    }
+
+    private void setAddCar(OperateCartReq operate, Map<Long, ShopCar> shopCars) {
         operate.setAddCart(new ArrayList<>());
-        cartReq.getCart().forEach((key, value) -> {
+        shopCars.forEach((key, value) -> {
             operate.getAddCart().add(value);
         });
     }

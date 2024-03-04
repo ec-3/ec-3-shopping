@@ -2,18 +2,25 @@ $(function () {
 
     $(".header-all").load(pageName('header'));
     $(".footer-all").load(pageName('footer'));
-    $(".pic-min ul li:nth-child(1)").click(function () {
+    /* $(".pic-min ul li:nth-child(1)").click(function () {
+         $(".pic-max").find("img").css("display", "none");
+         $(".pic-max .max01 img").css("display", "block");
+     });
+     $(".pic-min ul li:nth-child(2)").click(function () {
+         $(".pic-max").find("img").css("display", "none");
+         $(".pic-max .max02 img").css("display", "block");
+     });
+     $(".pic-min ul li:nth-child(3)").click(function () {
+         $(".pic-max").find("img").css("display", "none");
+         $(".pic-max .max03 img").css("display", "block");
+     });*/
+
+    $('.pic-min').on('click', '.lii', function () {
         $(".pic-max").find("img").css("display", "none");
-        $(".pic-max .max01 img").css("display", "block");
+        let select = '.pic-max .max0' + $(this).attr('data') + ' img';
+        $(select).css("display", "block");
     });
-    $(".pic-min ul li:nth-child(2)").click(function () {
-        $(".pic-max").find("img").css("display", "none");
-        $(".pic-max .max02 img").css("display", "block");
-    });
-    $(".pic-min ul li:nth-child(3)").click(function () {
-        $(".pic-max").find("img").css("display", "none");
-        $(".pic-max .max03 img").css("display", "block");
-    });
+
     //数量选择
     //数量增加
     $(".number-select .num-plus").click(function () {
@@ -63,7 +70,7 @@ $(function () {
         }, 500);
     });
 
-    // 加载详情
+    // init details
     let pId;  //  product
     let pi_Id;  //  base product
     let productMap = JSON.parse(localStorage.getItem("productMap"));
@@ -72,7 +79,8 @@ $(function () {
         pi_Id = parseInt(localStorage.getItem('pId'));
         pId = localStorage.getItem('pi_Id');
         setDetails();
-        // 型号
+        setPicture();
+        // model
         let as = '';
         let products = productMap[pi_Id];
         for (let p in products) {
@@ -89,6 +97,23 @@ $(function () {
         $("#productName").text(product.productName);
     }
 
+    function setPicture() {
+        let keyPics = JSON.parse(localStorage.getItem('keyPics'))[pi_Id];
+        let picMax = '';
+        let picMin = `<ul>`;
+        for (let k in keyPics) {
+            if (k == 0) {
+                picMax += `<a href="javascript:void(0)" class="max0${k}"><img src="${keyPics[k].picUrl}" width="560px"></a>`;
+            } else {
+                picMax += `<a href="javascript:void(0)" class="max01"><img   style="display: none" src="${keyPics[k].picUrl}" width="560px"></a>`;
+            }
+            let li = `<li data="${k}" class="lii"><a href="javascript:void(0)"><img src="${keyPics[k].picUrl}" width="80px"></a></li>`;
+            picMin += li;
+        }
+        $('.pic-max').append(picMax);
+        $('.pic-min').append(picMin + `</ul>`);
+    }
+
     initDetails();
 
     $(".type-select").on('click', '.model', function () {
@@ -98,7 +123,7 @@ $(function () {
         $(this).css("border", "1px solid #000");
     });
 
-    // 立即购买
+    // pay now
     $("#buy_now").click(function () {
         if (please_login('details')) {
             let order = {};
@@ -123,13 +148,14 @@ $(function () {
         }
     });
 
-    // 添加购物车
+    // add cart
     $("#add_cart").click(function () {
         let user = JSON.parse(localStorage.getItem("user"));
         if (!user) {
             please_login();
         } else {
-            let cart = {'userId': user.id, 'productId': pId, 'quantity': $('#quantity').val()};
+            setUpCart();
+            let cart = {'userId': user.id, 'baseId': pi_Id, 'productId': pId, 'quantity': $('#quantity').val()};
             let cartMap = localStorage.getItem("cartMap");
             if (!cartMap) {
                 post(ec3Mapping.cart, JSON.stringify({
@@ -138,10 +164,10 @@ $(function () {
                     if (response.code === 0) {
                         setCart(response.data ? response.data : {}, cart);
                     } else {
-                        alert(response.msg);
+                        console.log(response.msg);
                     }
                 }, function (error) {
-                    alert(error_msg + error);
+                    console.log(error_msg + error);
                 });
             } else {
                 setCart(JSON.parse(cartMap), cart);
@@ -149,14 +175,20 @@ $(function () {
         }
     });
 
+    function setUpCart() {
+        let upCart = localStorage.getItem('upCart');
+        if (!upCart) localStorage.setItem('upCart', true);
+        return upCart;
+    }
+
     function setCart(cartMap, cart) {
         if (cartMap[pi_Id]) {
-            let products = cartMap[pi_Id];
-            let product = products.find(item => item.id == cart.productId);
-            if (product) {
-                product.quantity = parseInt(product.quantity) + parseInt(cart.quantity);
+            let cars = cartMap[pi_Id];
+            let car = cars.find(item => item.productId == cart.productId);
+            if (car) {
+                car.quantity = parseInt(car.quantity) + parseInt(cart.quantity);
             } else {
-                products.push(cart);
+                cars.push(cart);
             }
         } else {
             cartMap[pi_Id] = [cart];
@@ -164,6 +196,16 @@ $(function () {
         localStorage.setItem('cartMap', JSON.stringify(cartMap));
         layer.msg("Added successfully");
     }
+
+    $(window).bind('beforeunload', function () {
+        if (localStorage.getItem('upCart')) {
+            let user = JSON.parse(localStorage.getItem("user"));
+            let cart = JSON.parse(localStorage.getItem("cartMap"));
+            localStorage.removeItem('upCart');
+            let res = JSON.stringify({'userId': user.id, 'cart': cart});
+            post(ec3Mapping.execute, res);
+        }
+    });
 
 
 });

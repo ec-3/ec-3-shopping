@@ -9,5 +9,5 @@ import java.util.Map;
 @Data
 public class ExecuteCartReq {
     private Long userId;
-    private Map<Long, ShopCar> cart;
+    private Map<Long, List<ShopCar>> cart;
 }

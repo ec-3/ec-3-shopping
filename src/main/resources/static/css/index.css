@@ -18,55 +18,6 @@ li{
 	cursor: pointer;
 }
 
-.swiper-container .slider1 {
-	height: 100%;
-	background: url(../img/index/01.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider2 {
-	height: 100%;
-	background: url(../img/index/02.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider3 {
-	height: 100%;
-	background: url(../img/index/03.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider4 {
-	height: 100%;
-	background: url(../img/index/04.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider5 {
-	height: 100%;
-	background: url(../img/index/05.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider6 {
-	height: 100%;
-	background: url(../img/index/06.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider7 {
-	height: 100%;
-	background: url(../img/index/07.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-.swiper-container .slider8 {
-	height: 100%;
-	background: url(../img/index/08.jpg) no-repeat center top;
-	background-size: cover;
-}
-
-
 .banner .box {
 	margin: auto;
 	width: 100%;

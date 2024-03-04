@@ -162,32 +162,21 @@ $(function () {
         })
     });
 
-    $("#products").on('click', '.pro_item', function () {
+    $(".swiper-wrapper").on('click', '.swiper-slide', function () {
         localStorage.setItem('pId', $(this).attr('pId'));
         localStorage.setItem('pi_Id', $(this).attr('id'));
         page('details');
     });
 
     function forProItems(productList) {
-        let lis = '';
+        let divs = '';
         let picMap = new Map();
         for (let record of productList) {
-            lis += ` <li class="fl">
-                            <div class="small_phone">
-                                <a class="pro_item" id="${record.product.id}" pId="${record.product.productId}">
-                                    <span>新品</span>
-                                    <div class="box">
-                                        <p class="p1">${record.product.productName}</p>
-                                        <p class="p1">${record.product.describe}</p>
-                                        <p class="p1">${record.product.price}</p>
-                                    </div>
-                                    <img src="${record.masterUrl}">
-                                </a>
-                            </div>
-                        </li>`;
+            divs += `<div id="${record.product.id}" pId="${record.product.productId}" class="swiper-slide"
+ style="height: 100%;background: url(${record.masterUrl}) no-repeat center top;background-size: cover;"></div>`;
             picMap.set(record.product.productId, record.masterUrl);
         }
-        $('#products').append(lis);
+        $('.swiper-wrapper').append(divs);
         localStorage.setItem('picMap', JSON.stringify(Array.from(picMap.entries())));
     }
 
@@ -213,10 +202,10 @@ $(function () {
                     forProItems(productList);
                 }
             } else {
-                alert(response.msg);
+                console.log(response.msg);
             }
         }, function (error) {
-            alert(error_msg + error);
+            console.log(error_msg + error);
         });
     }
 });

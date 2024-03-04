@@ -5,13 +5,14 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="base_id" jdbcType="BIGINT" property="baseId"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
         <result column="del_flag" jdbcType="BIT" property="delFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, user_id, product_id, quantity, del_flag, create_time, update_time
+    id, user_id, product_id,base_id, quantity, del_flag, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -24,10 +25,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.peaq.ec3.shopp.model.ShopCar">
-    insert into shop_car (id, user_id, product_id, 
+    insert into shop_car (id, user_id, product_id, base_id,
       quantity, del_flag, create_time, 
       update_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT},
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{baseId,jdbcType=BIGINT},
       #{quantity,jdbcType=INTEGER}, #{delFlag,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -42,6 +43,9 @@
             </if>
             <if test="productId != null">
                 product_id,
+            </if>
+            <if test="baseId != null">
+                base_id,
             </if>
             <if test="quantity != null">
                 quantity,
@@ -66,6 +70,9 @@
             <if test="productId != null">
                 #{productId,jdbcType=BIGINT},
             </if>
+            <if test="baseId != null">
+                #{baseId,jdbcType=BIGINT},
+            </if>
             <if test="quantity != null">
                 #{quantity,jdbcType=INTEGER},
             </if>
@@ -89,6 +96,9 @@
             <if test="productId != null">
                 product_id = #{productId,jdbcType=BIGINT},
             </if>
+            <if test="baseId != null">
+                base_id = #{baseId,jdbcType=BIGINT},
+            </if>
             <if test="quantity != null">
                 quantity = #{quantity,jdbcType=INTEGER},
             </if>
@@ -108,6 +118,7 @@
     update shop_car
     set user_id = #{userId,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=BIGINT},
+      base_id = #{baseId,jdbcType=BIGINT},
       quantity = #{quantity,jdbcType=INTEGER},
       del_flag = #{delFlag,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -129,10 +140,10 @@
     </update>
 
     <insert id="addBatch">
-        INSERT INTO `shop_car` ( `user_id`,`product_id`,`quantity`)
+        INSERT INTO `shop_car` ( `user_id`,`product_id`,`quantity`,`base_id`)
         VALUES
         <foreach collection="cars" item="car" separator="," index="index">
-            (#{car.userId}, #{car.productId},#{car.quantity})
+            (#{car.userId}, #{car.productId},#{car.quantity},#{car.baseId})
         </foreach>
     </insert>
 

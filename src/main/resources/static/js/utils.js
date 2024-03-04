@@ -16,13 +16,13 @@ var ec3Mapping = {
 };
 
 function page(name) {
-    if (!['login', 'register', 'header', 'index'].includes(name)) {
+/*    if (!['login', 'register', 'header', 'index'].includes(name)) {
         if (!localStorage.getItem("user")) {
             localStorage.setItem('pre-login', name);
             location.href = pageName('login');
             return;
         }
-    }
+    }*/
     location.href = pageName(name);
 }
 
@@ -32,14 +32,14 @@ function pageName(name) {
 
 var error_msg = "System response timed out, please try again later ！: ";
 
-$.ajaxSetup({
+/*$.ajaxSetup({
     beforeSend: function (xhr, settings) {
         //alert('请求前');
     },
     complete: function (xhr, status) {
         //alert('请求完成后');
     }
-});
+});*/
 
 
 function post(url, data, success, fail) {
@@ -110,7 +110,7 @@ function javaDate(date) {
 
 function please_login(name) {
     if (!localStorage.getItem("user")) {
-        alert('please sign in !');
+        layer.msg('please sign in !');
         localStorage.setItem('pre-login', name);
         location.href = pageName('login');
         return false;

@@ -23,10 +23,10 @@ $(function () {
                     forItems(response.data);
                 }
             } else {
-                alert(response.msg);
+                console.log(response.msg);
             }
         }, function (error) {
-            alert(error_msg + error);
+            console.log(error_msg + error);
         });
     }
 
@@ -51,9 +51,9 @@ $(function () {
                     </div>
                     <div class="itemInfoUnion2">
                     <div class="itemInfoUnion2Module lelt">
-                    <i class="itemMinus item_ma_css l" data-id="${product.id}">-</i>
+                    <i class="itemMinus item_ma_css l" pi_id="${i}" data-id="${product.id}">-</i>
                     <input type="text" class="itemNum l" value="${ite.quantity}"/>
-                    <i class="itemAdd item_ma_css l" data-id="${product.id}">+</i>
+                    <i class="itemAdd item_ma_css l" pi_id="${i}" data-id="${product.id}">+</i>
                     </div>
                     </div>
                     <div class="itemInfoUnion3">
@@ -65,8 +65,6 @@ $(function () {
                     </div>`;
                 $('.productBodyItem').append(carProduct);
             }
-
-
         }
     }
 
@@ -82,7 +80,15 @@ $(function () {
         sum.text(val * unitPrice + '.00');
         $('.itemMinus').eq(index).css('color', '#474747');
         let cartMap = JSON.parse(localStorage.getItem("cartMap"));
-        cartMap[$(this).attr('data-id')].quantity += 1;
+        let proId = $(this).attr('data-id');
+        let pi_id = $(this).attr('pi_id');
+        let cars = cartMap[pi_id];
+        if (cars) {
+            let car = cars.find(item => item.productId == proId);
+            if (car) {
+                car.quantity += 1;
+            }
+        }
         localStorage.setItem('cartMap', JSON.stringify(cartMap));
         setUpCart();
         if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
@@ -100,7 +106,15 @@ $(function () {
             let unitPrice = $('.itemPice').eq(index).text();
             $('.sumNum').eq(index).text(val * unitPrice + '.00');
             let cartMap = JSON.parse(localStorage.getItem("cartMap"));
-            cartMap[$(this).attr('data-id')].quantity -= 1;
+            let proId = $(this).attr('data-id');
+            let pi_id = $(this).attr('pi_id');
+            let cars = cartMap[pi_id];
+            if (cars) {
+                let car = cars.find(item => item.productId == proId);
+                if (car) {
+                    car.quantity -= 1;
+                }
+            }
             localStorage.setItem('cartMap', JSON.stringify(cartMap));
             setUpCart();
             if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
@@ -117,6 +131,15 @@ $(function () {
             let index = $('.delete').index(this);
             let cartMap = JSON.parse(localStorage.getItem("cartMap"));
             delete cartMap[$(this).attr('data-id')];
+            let proId = $(this).attr('data-id');
+            let pi_id = $(this).attr('pi_id');
+            let cars = cartMap[pi_id];
+            if (cars && cars.length > 0) {
+                cars = cars.filter(item => item.productId !== proId);
+                if (cars.length === 0) {
+                    delete cartMap[pi_id];
+                }
+            }
             delCartStorage(cartMap);
             setUpCart();
             let sum = parseFloat($(".lumpSum").eq(0).text());
@@ -242,7 +265,7 @@ $(function () {
     $('.rightSubmit').click(function () {
         if (please_login('cart')) {
             if (checkBoxArray.length === 0) {
-                alert('Please select product !');
+                layer.msg("Please select product !");
             } else {
                 localStorage.setItem('buy_type', 1);
                 let order = {};

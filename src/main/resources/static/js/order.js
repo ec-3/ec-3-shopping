@@ -70,10 +70,10 @@ $(function () {
                 if (response.code === 0) {
                     add_addr_item(response.data);
                 } else {
-                    alert(response.msg);
+                    console.log(response.msg);
                 }
             }, function (error) {
-                alert(error_msg + error);
+                console.log(error_msg + error);
             });
         }
     }
@@ -137,7 +137,7 @@ $(function () {
 
     function check() {
         if (!localStorage.getItem("address") || !localStorage.getItem("def_addr")) {
-            alert('Please add shipping address !');
+            layer.msg('Please add shipping address !');
             return false;
         }
         return true;
@@ -160,7 +160,7 @@ $(function () {
             }
             post(ec3Mapping.submit, JSON.stringify(order), function (response) {
                 if (response.code === 0) {
-                    alert('Orders submitted successfully！');
+                    layer.msg('Orders submitted successfully！');
                     localStorage.setItem('to_be_paid_order', JSON.stringify(response.data));
                     if (buyType) {
                         for (let id in buyNow) {
@@ -175,10 +175,10 @@ $(function () {
                     localStorage.removeItem('buy_type');
                     page('pay');
                 } else {
-                    alert(response.msg);
+                    console.log(response.msg);
                 }
             }, function (error) {
-                alert(error_msg + error);
+                console.log(error_msg + error);
             });
         }
     });
@@ -350,7 +350,7 @@ $(function () {
         };
         post(ec3Mapping.address_save, JSON.stringify(addressGlobal), function (response) {
             if (response.code === 0) {
-                alert('added successfully !');
+                layer.msg('added successfully !');
                 $(".add_address_big").hide();
                 let addr_array = JSON.parse(localStorage.getItem("address"));
                 addr_array.push(addressGlobal);
@@ -358,7 +358,7 @@ $(function () {
                 $('.shouhuo_bottom').append(add_addr(addressGlobal));
             }
         }, function (error) {
-            alert(error_msg + error);
+            console.log(error_msg + error);
         });
 
     });
