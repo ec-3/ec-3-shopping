@@ -16,13 +16,6 @@ var ec3Mapping = {
 };
 
 function page(name) {
-/*    if (!['login', 'register', 'header', 'index'].includes(name)) {
-        if (!localStorage.getItem("user")) {
-            localStorage.setItem('pre-login', name);
-            location.href = pageName('login');
-            return;
-        }
-    }*/
     location.href = pageName(name);
 }
 
@@ -48,8 +41,8 @@ function post(url, data, success, fail) {
         "method": "POST",
         "timeout": 0,
         "headers": {
-            "Content-Type": "application/json",
-            "Authorization": localStorage.getItem("token")
+            "Content-Type": "application/json"
+           /* "Authorization": sessionStorage.getItem("token")*/
         },
         "data": data
     };
@@ -64,7 +57,7 @@ function postSync(url, data, success, fail) {
         "timeout": 0,
         "headers": {
             "Content-Type": "application/json",
-            "Authorization": localStorage.getItem("token")
+            "Authorization": sessionStorage.getItem("token")
         },
         "data": data
     };
@@ -106,14 +99,4 @@ function phoneHide(phone) {
 
 function javaDate(date) {
     return date.split('.')[0].replace("T", " ");
-}
-
-function please_login(name) {
-    if (!localStorage.getItem("user")) {
-        layer.msg('please sign in !');
-        localStorage.setItem('pre-login', name);
-        location.href = pageName('login');
-        return false;
-    }
-    return true;
 }

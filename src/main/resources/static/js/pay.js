@@ -2,18 +2,18 @@ $(function () {
     $(".header-all").load(pageName('header'));
     $(".footer-all").load(pageName('footer'));
     function init() {
-        let coinList = localStorage.getItem("coinList");
+        let coinList = sessionStorage.getItem("coinList");
         if (coinList) {
             forCoins(JSON.parse(coinList));
-            forNetwork(JSON.parse(localStorage.getItem("networks")));
+            forNetwork(JSON.parse(sessionStorage.getItem("networks")));
         } else {
             post(ec3Mapping.coin, JSON.stringify({}), function (response) {
                 if (response.code === 0) {
                     let coinObj = response.data;
                     if (coinObj) {
-                        localStorage.setItem('coinList', JSON.stringify(coinObj.coins));
-                        localStorage.setItem('networks', JSON.stringify(coinObj.chainNetworks));
-                        localStorage.setItem('coinNet', JSON.stringify(coinObj.coinNet));
+                        sessionStorage.setItem('coinList', JSON.stringify(coinObj.coins));
+                        sessionStorage.setItem('networks', JSON.stringify(coinObj.chainNetworks));
+                        sessionStorage.setItem('coinNet', JSON.stringify(coinObj.coinNet));
                     }
                     forCoins(coinObj.coins);
                     forNetwork(coinObj.chainNetworks);
@@ -24,9 +24,9 @@ $(function () {
                 console.log(error_msg + error);
             });
         }
-        if (!localStorage.getItem("merchant")) {
+        if (!sessionStorage.getItem("merchant")) {
             post(ec3Mapping.merchant, JSON.stringify({}), function (res) {
-                localStorage.setItem("merchant", JSON.stringify(res.data))
+                sessionStorage.setItem("merchant", JSON.stringify(res.data))
             });
         }
     }
@@ -60,8 +60,8 @@ $(function () {
                         order = JSON.stringify(order);
                         post(ec3Mapping.order_update, order, function (response) {
                             if (response.code === 0) {
-                                localStorage.setItem('submitted_order', order);
-                                localStorage.removeItem('to_be_paid_order');
+                                sessionStorage.setItem('submitted_order', order);
+                                sessionStorage.removeItem('to_be_paid_order');
                                 page('account');
                             } else{
                                 console.log(response.msg);
@@ -86,7 +86,7 @@ $(function () {
 
     function getPayAddress() {
         let wt = $('#select-network').text();
-        let payList = JSON.parse(localStorage.getItem("merchant"));
+        let payList = JSON.parse(sessionStorage.getItem("merchant"));
         for (let k in payList) {
             if (wt ===  payList[k].walletType) {
                 return payList[k].address;
@@ -95,10 +95,10 @@ $(function () {
     }
 
     function getOrder() {
-        let order = localStorage.getItem('to_be_paid_order');
+        let order = sessionStorage.getItem('to_be_paid_order');
         if (!order) {
-            let orderId = localStorage.getItem('pay_orderId');
-            return JSON.parse(localStorage.getItem('wait_order'))[orderId];
+            let orderId = sessionStorage.getItem('pay_orderId');
+            return JSON.parse(sessionStorage.getItem('wait_order'))[orderId];
         }
         return JSON.parse(order);
     }
@@ -189,16 +189,16 @@ $(function () {
 
     $(window).bind('beforeunload', function () {
         // 将立即支付订单删除，加入到未支付队列
-        let order = localStorage.getItem('to_be_paid_order');
+        let order = sessionStorage.getItem('to_be_paid_order');
         if (order) {
             order = JSON.parse(order);
-            let waitOrder = localStorage.getItem('wait_order');
+            let waitOrder = sessionStorage.getItem('wait_order');
             let res = waitOrder ? JSON.parse(waitOrder) : {};
             res[order.id] = order;
-            localStorage.setItem('wait_order', JSON.stringify(res));
-            localStorage.removeItem('to_be_paid_order');
+            sessionStorage.setItem('wait_order', JSON.stringify(res));
+            sessionStorage.removeItem('to_be_paid_order');
         }
-        localStorage.removeItem('pay_orderId');
+        sessionStorage.removeItem('pay_orderId');
     });
 
 });

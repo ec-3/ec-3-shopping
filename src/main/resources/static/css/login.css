@@ -7,12 +7,11 @@ body{
 .floor2 {
 	height: 889px;
 	width: 100%;
-	position: relative;
+	/*position: relative;*/
 	background-color: #424549;
 	background-image: url(../img/login/ecosystem-bg.svg);
 	background-position: 50% 50%;
 	background-size: auto 500PX;
-
 }
 
 .floor2 .container .right {
@@ -23,6 +22,7 @@ body{
 	bottom: 30px;
 	width: 410px;
 	height: 529px;
+	margin-top: 100px;
 }
 /* 头部样式 */
 .floor2 .container .right .header {

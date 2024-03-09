@@ -1,3 +1,4 @@
+
 package com.peaq.ec3.shopp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -5,10 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
-public class Ec3Configurer implements WebMvcConfigurer {
+//@Configuration
+//public class Ec3Configurer implements WebMvcConfigurer {
+public class Ec3Configurer{
 
-    @Autowired
+ /*   @Autowired
     DataInterceptor dataInterceptor;
     @Autowired
     ViewInterceptor viewInterceptor;
@@ -39,5 +41,6 @@ public class Ec3Configurer implements WebMvcConfigurer {
                         "/userInfo/verifyToken"
                 );
 
-    }
+    }*/
 }
+

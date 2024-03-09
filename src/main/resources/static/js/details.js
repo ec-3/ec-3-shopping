@@ -2,18 +2,6 @@ $(function () {
 
     $(".header-all").load(pageName('header'));
     $(".footer-all").load(pageName('footer'));
-    /* $(".pic-min ul li:nth-child(1)").click(function () {
-         $(".pic-max").find("img").css("display", "none");
-         $(".pic-max .max01 img").css("display", "block");
-     });
-     $(".pic-min ul li:nth-child(2)").click(function () {
-         $(".pic-max").find("img").css("display", "none");
-         $(".pic-max .max02 img").css("display", "block");
-     });
-     $(".pic-min ul li:nth-child(3)").click(function () {
-         $(".pic-max").find("img").css("display", "none");
-         $(".pic-max .max03 img").css("display", "block");
-     });*/
 
     $('.pic-min').on('click', '.lii', function () {
         $(".pic-max").find("img").css("display", "none");
@@ -21,8 +9,7 @@ $(function () {
         $(select).css("display", "block");
     });
 
-    //数量选择
-    //数量增加
+    //num add
     $(".number-select .num-plus").click(function () {
         var number = $(".number-select input").val();
         var tol = 0;
@@ -31,13 +18,13 @@ $(function () {
             $(".number-select input").val(number);
             $(".number-select .num-minus").removeClass("disabled");
             tol = number * 129;
-            $(".float-nav .price p").text("￥" + tol + ".00");
+            $(".float-nav .price p").text("$" + tol + ".00");
         }
         if (number == 5) {
             $(this).addClass("disabled");
         }
     });
-    //数量减少
+    //num minus
     $(".number-select .num-minus").click(function () {
         var number = $(".number-select input").val();
         var tol = 0;
@@ -46,7 +33,7 @@ $(function () {
             $(".number-select input").val(number);
             $(".number-select .num-plus").removeClass("disabled");
             tol = number * 129;
-            $(".float-nav .price p").text("￥" + tol + ".00");
+            $(".float-nav .price p").text("$" + tol + ".00");
         }
         if (number == 1) {
             $(this).addClass("disabled");
@@ -73,11 +60,11 @@ $(function () {
     // init details
     let pId;  //  product
     let pi_Id;  //  base product
-    let productMap = JSON.parse(localStorage.getItem("productMap"));
-    let picMap = new Map(JSON.parse(localStorage.getItem("picMap"))); // 加载图片
+    let productMap = JSON.parse(sessionStorage.getItem("productMap"));
+    let picMap = new Map(JSON.parse(sessionStorage.getItem("picMap"))); // 加载图片
     function initDetails() {
-        pi_Id = parseInt(localStorage.getItem('pId'));
-        pId = localStorage.getItem('pi_Id');
+        pi_Id = parseInt(sessionStorage.getItem('pId'));
+        pId = sessionStorage.getItem('pi_Id');
         setDetails();
         setPicture();
         // model
@@ -98,7 +85,7 @@ $(function () {
     }
 
     function setPicture() {
-        let keyPics = JSON.parse(localStorage.getItem('keyPics'))[pi_Id];
+        let keyPics = JSON.parse(sessionStorage.getItem('keyPics'))[pi_Id];
         let picMax = '';
         let picMin = `<ul>`;
         for (let k in keyPics) {
@@ -125,11 +112,9 @@ $(function () {
 
     // pay now
     $("#buy_now").click(function () {
-        if (please_login('details')) {
             let order = {};
             let obj = order[pi_Id];
             let o = {
-                'userId': JSON.parse(localStorage.getItem("user")).id,
                 'productId': pId,
                 'quantity': $('#quantity').val()
             };
@@ -143,43 +128,16 @@ $(function () {
             } else {
                 order[pi_Id] = [o];
             }
-            localStorage.setItem('buyNow', JSON.stringify(order));
+            sessionStorage.setItem('buyNow', JSON.stringify(order));
             page('order');
-        }
     });
 
     // add cart
     $("#add_cart").click(function () {
-        let user = JSON.parse(localStorage.getItem("user"));
-        if (!user) {
-            please_login();
-        } else {
-            setUpCart();
-            let cart = {'userId': user.id, 'baseId': pi_Id, 'productId': pId, 'quantity': $('#quantity').val()};
-            let cartMap = localStorage.getItem("cartMap");
-            if (!cartMap) {
-                post(ec3Mapping.cart, JSON.stringify({
-                    'userId': user.id
-                }), function (response) {
-                    if (response.code === 0) {
-                        setCart(response.data ? response.data : {}, cart);
-                    } else {
-                        console.log(response.msg);
-                    }
-                }, function (error) {
-                    console.log(error_msg + error);
-                });
-            } else {
-                setCart(JSON.parse(cartMap), cart);
-            }
-        }
+            let cart = {'baseId': pi_Id, 'productId': pId, 'quantity': $('#quantity').val()};
+            let cartMap = sessionStorage.getItem("cartMap");
+            setCart(JSON.parse(cartMap), cart);
     });
-
-    function setUpCart() {
-        let upCart = localStorage.getItem('upCart');
-        if (!upCart) localStorage.setItem('upCart', true);
-        return upCart;
-    }
 
     function setCart(cartMap, cart) {
         if (cartMap[pi_Id]) {
@@ -193,19 +151,10 @@ $(function () {
         } else {
             cartMap[pi_Id] = [cart];
         }
-        localStorage.setItem('cartMap', JSON.stringify(cartMap));
+        sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
         layer.msg("Added successfully");
     }
 
-    $(window).bind('beforeunload', function () {
-        if (localStorage.getItem('upCart')) {
-            let user = JSON.parse(localStorage.getItem("user"));
-            let cart = JSON.parse(localStorage.getItem("cartMap"));
-            localStorage.removeItem('upCart');
-            let res = JSON.stringify({'userId': user.id, 'cart': cart});
-            post(ec3Mapping.execute, res);
-        }
-    });
 
 
 });

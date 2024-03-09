@@ -7,32 +7,15 @@ $(function () {
         $('#checkSubmitInfo').css({'margin-top': '0'});
     }
 
-    let cartMap = localStorage.getItem("cartMap");
+    let cartMap = sessionStorage.getItem("cartMap");
     if (cartMap) {
         removeBodyClass();
         forItems(JSON.parse(cartMap));
-    } else {
-        let user = JSON.parse(localStorage.getItem("user"));
-        post(ec3Mapping.cart, JSON.stringify({
-            'userId': user['id']
-        }), function (response) {
-            if (response.code === 0) {
-                if (response.data) {
-                    removeBodyClass();
-                    localStorage.setItem('cartMap', JSON.stringify(response.data));
-                    forItems(response.data);
-                }
-            } else {
-                console.log(response.msg);
-            }
-        }, function (error) {
-            console.log(error_msg + error);
-        });
     }
 
     function forItems(cartMap) {
-        let picMap = new Map(JSON.parse(localStorage.getItem("picMap")));
-        let products = JSON.parse(localStorage.getItem("productMap"));
+        let picMap = new Map(JSON.parse(sessionStorage.getItem("picMap")));
+        let products = JSON.parse(sessionStorage.getItem("productMap"));
         for (let key in cartMap) {
             let i = parseInt(key);
             let cart = cartMap[i];
@@ -79,7 +62,7 @@ $(function () {
         let unitPrice = $('.itemPice').eq(index).text();
         sum.text(val * unitPrice + '.00');
         $('.itemMinus').eq(index).css('color', '#474747');
-        let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+        let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
         let proId = $(this).attr('data-id');
         let pi_id = $(this).attr('pi_id');
         let cars = cartMap[pi_id];
@@ -89,8 +72,7 @@ $(function () {
                 car.quantity += 1;
             }
         }
-        localStorage.setItem('cartMap', JSON.stringify(cartMap));
-        setUpCart();
+        sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
         if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
             $(".lumpSum").text(parseFloat($(".lumpSum").eq(0).text()) + parseFloat(unitPrice));
         }
@@ -105,7 +87,7 @@ $(function () {
             num.val(val);
             let unitPrice = $('.itemPice').eq(index).text();
             $('.sumNum').eq(index).text(val * unitPrice + '.00');
-            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
             let proId = $(this).attr('data-id');
             let pi_id = $(this).attr('pi_id');
             let cars = cartMap[pi_id];
@@ -115,8 +97,7 @@ $(function () {
                     car.quantity -= 1;
                 }
             }
-            localStorage.setItem('cartMap', JSON.stringify(cartMap));
-            setUpCart();
+            sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
             if ($('.checkBox').eq(index + 1).hasClass('checktoggle')) {
                 $(".lumpSum").text(parseFloat($(".lumpSum").eq(0).text()) - parseFloat(unitPrice));
             }
@@ -129,7 +110,7 @@ $(function () {
     $("#chekoutBody").on('click', '.delete', function () {
         if (confirm('Are you sure you want to delete this item ?')) {
             let index = $('.delete').index(this);
-            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
             delete cartMap[$(this).attr('data-id')];
             let proId = $(this).attr('data-id');
             let pi_id = $(this).attr('pi_id');
@@ -141,7 +122,6 @@ $(function () {
                 }
             }
             delCartStorage(cartMap);
-            setUpCart();
             let sum = parseFloat($(".lumpSum").eq(0).text());
             if (sum > 0) {
                 $(".lumpSum").text(sum - parseFloat($('.sumNum').eq(index).text()));
@@ -152,9 +132,9 @@ $(function () {
 
     function delCartStorage(cartMap) {
         if (Object.keys(cartMap).length === 0) {
-            localStorage.removeItem('cartMap');
+            sessionStorage.removeItem('cartMap');
         } else {
-            localStorage.setItem('cartMap', JSON.stringify(cartMap));
+            sessionStorage.setItem('cartMap', JSON.stringify(cartMap));
         }
     }
 
@@ -210,7 +190,7 @@ $(function () {
                     sum = 0;
                     checkBoxArray = [];
                 }
-                localStorage.removeItem('cartMap');
+                sessionStorage.removeItem('cartMap');
             } else {
                 if (confirm('Are you sure you want to delete these items ?')) {
                     numberSort(checkBoxArray);
@@ -219,7 +199,7 @@ $(function () {
                             sum -= parseFloat($('.sumNum').eq(checkBoxArray[i]).text());
                         }
                     }
-                    let cartMap = JSON.parse(localStorage.getItem("cartMap"));
+                    let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
                     for (let i = 0; i < checkBoxArray.length; i++) {
                         // 这里需要减1，删除后index变化
                         let eq = $('.productBodyItemContent').eq(checkBoxArray[i] - i);
@@ -240,59 +220,40 @@ $(function () {
 
             $(".lumpSum").text(sum);
             $("#itemTotal").text(checkBoxArray.length);
-            setUpCart();
         } else {
             confirm('Please select product');
         }
     });
 
-    $(window).bind('beforeunload', function () {
-        if (localStorage.getItem('upCart')) {
-            let user = JSON.parse(localStorage.getItem("user"));
-            let cart = JSON.parse(localStorage.getItem("cartMap"));
-            localStorage.removeItem('upCart');
-            post(ec3Mapping.execute, JSON.stringify({'userId': user.id, 'cart': cart}));
-        }
-    });
-
-    function setUpCart() {
-        let upCart = localStorage.getItem('upCart');
-        if (!upCart) localStorage.setItem('upCart', true);
-        return upCart;
-    }
-
     // 结算
     $('.rightSubmit').click(function () {
-        if (please_login('cart')) {
-            if (checkBoxArray.length === 0) {
-                layer.msg("Please select product !");
-            } else {
-                localStorage.setItem('buy_type', 1);
-                let order = {};
-                for (let i = 0; i < checkBoxArray.length; i++) {
-                    let eq = $('.productBodyItemContent').eq(checkBoxArray[i]);
-                    let pId = eq.attr('pId');
-                    let pi_id = eq.attr('pi_id');
-                    let obj = order[pi_id];
-                    let o = {
-                        'userId': JSON.parse(localStorage.getItem("user")).id,
-                        'productId': pId,
-                        'quantity': $('.itemNum').eq(checkBoxArray[i]).val()
-                    };
-                    if (obj) {
-                        let product = obj.find(item => item.productId == pId);
-                        if (product) {
-                            product.quantity = parseInt(product.quantity) + o.quantity;
-                        } else {
-                            obj.push(o);
-                        }
+        if (checkBoxArray.length === 0) {
+            layer.msg("Please select product !");
+        } else {
+            sessionStorage.setItem('buy_type', 1);
+            let order = {};
+            for (let i = 0; i < checkBoxArray.length; i++) {
+                let eq = $('.productBodyItemContent').eq(checkBoxArray[i]);
+                let pId = eq.attr('pId');
+                let pi_id = eq.attr('pi_id');
+                let obj = order[pi_id];
+                let o = {
+                    'productId': pId,
+                    'quantity': $('.itemNum').eq(checkBoxArray[i]).val()
+                };
+                if (obj) {
+                    let product = obj.find(item => item.productId == pId);
+                    if (product) {
+                        product.quantity = parseInt(product.quantity) + o.quantity;
                     } else {
-                        order[pi_id] = [o];
+                        obj.push(o);
                     }
+                } else {
+                    order[pi_id] = [o];
                 }
-                localStorage.setItem('buyNow', JSON.stringify(order));
-                page('order');
             }
+            sessionStorage.setItem('buyNow', JSON.stringify(order));
+            page('order');
         }
     });
 

@@ -4,9 +4,10 @@ $(function () {
     $(".footer-all").load(pageName('footer'));
     let itemSum = 0;
     let current_addr = null;
-    let orders = JSON.parse(localStorage.getItem("buyNow"));
-    let products = JSON.parse(localStorage.getItem("productMap"));
-    let picMap = new Map(JSON.parse(localStorage.getItem("picMap")));
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    let orders = JSON.parse(sessionStorage.getItem("buyNow"));
+    let products = JSON.parse(sessionStorage.getItem("productMap"));
+    let picMap = new Map(JSON.parse(sessionStorage.getItem("picMap")));
 
     function initItems() {
         let items = '';
@@ -61,26 +62,9 @@ $(function () {
     // 加载订单商品
     initItems();
 
-    // 加载地址
-    function initAddress() {
-        if (!check_addr_storage()) {
-            let user = JSON.parse(localStorage.getItem("user"));
-            post(ec3Mapping.address, JSON.stringify({userId: user.id}), function (response) {
-                let address = '';
-                if (response.code === 0) {
-                    add_addr_item(response.data);
-                } else {
-                    console.log(response.msg);
-                }
-            }, function (error) {
-                console.log(error_msg + error);
-            });
-        }
-    }
-
     function check_addr_storage() {
-        let address = localStorage.getItem("address");
-        let defAddr = localStorage.getItem("def_addr");
+        let address = sessionStorage.getItem("address");
+        let defAddr = sessionStorage.getItem("def_addr");
         let addr_html = '';
         if (defAddr) {
             let addr = JSON.parse(defAddr);
@@ -105,11 +89,11 @@ $(function () {
                 addr_array.push(addr);
             } else {
                 setAddress(addr);
-                localStorage.setItem("def_addr", JSON.stringify(addr));
+                sessionStorage.setItem("def_addr", JSON.stringify(addr));
             }
             address += add_addr(addr);
         }
-        localStorage.setItem("address", JSON.stringify(addr_array));
+        sessionStorage.setItem("address", JSON.stringify(addr_array));
         $('.shouhuo_bottom').append(address);
     }
 
@@ -133,10 +117,8 @@ $(function () {
 
     }
 
-    initAddress();
-
     function check() {
-        if (!localStorage.getItem("address") || !localStorage.getItem("def_addr")) {
+        if (!sessionStorage.getItem("address") || !sessionStorage.getItem("def_addr")) {
             layer.msg('Please add shipping address !');
             return false;
         }
@@ -147,9 +129,9 @@ $(function () {
     $('.btn_submit').click(function () {
         if (check()) {
             let order = createOrder();
-            let cartMap = JSON.parse(localStorage.getItem("cartMap"));
-            let buyNow = JSON.parse(localStorage.getItem("buyNow"));
-            let buyType = localStorage.getItem('buy_type');
+            let cartMap = JSON.parse(sessionStorage.getItem("cartMap"));
+            let buyNow = JSON.parse(sessionStorage.getItem("buyNow"));
+            let buyType = sessionStorage.getItem('buy_type');
             if (buyType) {
                 order['submitType'] = 1;
                 let ids = [];
@@ -161,18 +143,19 @@ $(function () {
             post(ec3Mapping.submit, JSON.stringify(order), function (response) {
                 if (response.code === 0) {
                     layer.msg('Orders submitted successfully！');
-                    localStorage.setItem('to_be_paid_order', JSON.stringify(response.data));
+                    sessionStorage.setItem('to_be_paid_order', JSON.stringify(response.data));
                     if (buyType) {
                         for (let id in buyNow) {
                             delete cartMap[id];
                         }
+                        post(ec3Mapping.execute, JSON.stringify({'userId': user.id, 'cart': cartMap}));
                         if (Object.keys(cartMap).length === 0) {
-                            localStorage.removeItem('cartMap');
+                            sessionStorage.removeItem('cartMap');
                         } else {
-                            localStorage.setItem("cartMap", cartMap);
+                            sessionStorage.setItem("cartMap", cartMap);
                         }
                     }
-                    localStorage.removeItem('buy_type');
+                    sessionStorage.removeItem('buy_type');
                     page('pay');
                 } else {
                     console.log(response.msg);
@@ -185,8 +168,7 @@ $(function () {
 
     function createOrder() {
         let addr = current_addr ? current_addr :
-            JSON.parse(localStorage.getItem('def_addr'));
-        let user = JSON.parse(localStorage.getItem("user"));
+            JSON.parse(sessionStorage.getItem('def_addr'));
         let userId = user.id;
         let amId = addr.id;               // 收货地址ID
         let userName = user.username;
@@ -215,19 +197,6 @@ $(function () {
             }
         }
 
-       /* for (let key in orders) {
-            let buy = orders[key];
-            let pro = products.find(item => item.id == buy.productId);
-            let item = {
-                userId: userId,
-                productId: key,
-                masterPic: picMap.get(parseInt(key)),
-                productName: pro.productName,
-                quantity: buy.quantity,
-                price: pro.price
-            };
-            orderItems.push(item);
-        }*/
         let order = {
             userId: userId,
             amId: amId,
@@ -264,8 +233,8 @@ $(function () {
             $(this).find("em").show();
             let k = current_addr ? current_addr.index : 0;
             let addrId = $(this).attr('addrId');
-            let defAddr = JSON.parse(localStorage.getItem("def_addr"));
-            let addrBase = JSON.parse(localStorage.getItem("address"));
+            let defAddr = JSON.parse(sessionStorage.getItem("def_addr"));
+            let addrBase = JSON.parse(sessionStorage.getItem("address"));
             current_addr = addrBase.find(item => item.id == addrId);
             if (!current_addr) {
                 current_addr = defAddr;
@@ -290,12 +259,6 @@ $(function () {
         $(this).siblings().find("i").hide();
     });
 
-    /*    // 设置为默认地址
-            $(".shouhuo_address:first .address_right .moren_biaoshi").show();
-            $(".default_address").click(function () {
-                $(this).siblings(".moren_biaoshi").show();
-                $(this).parents(".shouhuo_address").siblings().find(".address_right .moren_biaoshi").hide();
-            });*/
 
     // 删除地址
     $(".dele").click(function () {
@@ -331,7 +294,7 @@ $(function () {
 
     // 保存收货人信息
     $(".baocun_info").click(function () {
-        let user = JSON.parse(localStorage.getItem("user"));
+        let user = JSON.parse(sessionStorage.getItem("user"));
         let recipient = $("#Receiver").val();     //  收货人
         let phone = $("#Phone").val();     // 手机号
         let country = $("#Country").val();   // 所在地区
@@ -352,9 +315,9 @@ $(function () {
             if (response.code === 0) {
                 layer.msg('added successfully !');
                 $(".add_address_big").hide();
-                let addr_array = JSON.parse(localStorage.getItem("address"));
+                let addr_array = JSON.parse(sessionStorage.getItem("address"));
                 addr_array.push(addressGlobal);
-                localStorage.setItem("address", JSON.stringify(addr_array));
+                sessionStorage.setItem("address", JSON.stringify(addr_array));
                 $('.shouhuo_bottom').append(add_addr(addressGlobal));
             }
         }, function (error) {

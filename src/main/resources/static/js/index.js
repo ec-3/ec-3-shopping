@@ -163,8 +163,8 @@ $(function () {
     });
 
     $(".swiper-wrapper").on('click', '.swiper-slide', function () {
-        localStorage.setItem('pId', $(this).attr('pId'));
-        localStorage.setItem('pi_Id', $(this).attr('id'));
+        sessionStorage.setItem('pId', $(this).attr('pId'));
+        sessionStorage.setItem('pi_Id', $(this).attr('id'));
         page('details');
     });
 
@@ -177,11 +177,11 @@ $(function () {
             picMap.set(record.product.productId, record.masterUrl);
         }
         $('.swiper-wrapper').append(divs);
-        localStorage.setItem('picMap', JSON.stringify(Array.from(picMap.entries())));
+        sessionStorage.setItem('picMap', JSON.stringify(Array.from(picMap.entries())));
     }
 
     // 加载商品列表
-    let productList = localStorage.getItem("productList");
+    let productList = sessionStorage.getItem("productList");
     if (productList) {
         forProItems(JSON.parse(productList));
     } else {
@@ -190,15 +190,15 @@ $(function () {
                 let data = response.data;
                 if (data) {
                     if (Object.keys(data.keyPics).length > 0) {
-                        localStorage.setItem('keyPics', JSON.stringify(data.keyPics));
+                        sessionStorage.setItem('keyPics', JSON.stringify(data.keyPics));
                     }
                     if (Object.keys(data.productMap).length > 0) {
-                        localStorage.setItem('productMap', JSON.stringify(data.productMap));
+                        sessionStorage.setItem('productMap', JSON.stringify(data.productMap));
                     }
                 }
                 productList = data.records;
                 if (productList && productList.length > 0) {
-                    localStorage.setItem('productList', JSON.stringify(productList));
+                    sessionStorage.setItem('productList', JSON.stringify(productList));
                     forProItems(productList);
                 }
             } else {
