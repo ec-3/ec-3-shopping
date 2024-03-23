@@ -72,7 +72,7 @@ func (c *Client) pay(req *PayReq) (*PayResp, error) {
 		if err != nil {
 			return nil, err
 		}
-		return nil, fmt.Errorf("Retcode %d, msg %x", res.StatusCode, msg)
+		return nil, fmt.Errorf("Retcode %d, msg %s", res.StatusCode, msg)
 	}
 	resp := &PayResp{}
 	err = json.NewDecoder(res.Body).Decode(resp)
