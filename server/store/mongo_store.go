@@ -4,6 +4,7 @@ import (
 	"context"
 	"server/model"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -37,5 +38,42 @@ func (s *MongoStore) Connect() error {
 func (s *MongoStore) CreateOrder(order *model.Order) error {
 	collection := s.client.Database(database).Collection(orderCollection)
 	_, err := collection.InsertOne(context.Background(), order)
+	return err
+}
+
+func (s *MongoStore) ListOrders(status int) ([]*model.Order, error) {
+	collection := s.client.Database(database).Collection(orderCollection)
+	filter := bson.D{{"status", status}}
+	rs, err := collection.Find(context.Background(), filter)
+	if err != nil {
+		return nil, err
+	}
+	var ret []*model.Order
+	err = rs.All(context.Background(), &ret)
+	if err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+func (s *MongoStore) ListOrdersByFilter(filter bson.D) ([]*model.Order, error) {
+	collection := s.client.Database(database).Collection(orderCollection)
+	rs, err := collection.Find(context.Background(), filter)
+	if err != nil {
+		return nil, err
+	}
+	var ret []*model.Order
+	err = rs.All(context.Background(), &ret)
+	if err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+func (s *MongoStore) UpdateOrder(order *model.Order) error {
+	filter := bson.D{{"paymentid", order.PaymentID}}
+	update := bson.D{{"$set", order}}
+	collection := s.client.Database(database).Collection(orderCollection)
+	_, err := collection.UpdateOne(context.Background(), filter, update)
 	return err
 }

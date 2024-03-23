@@ -3,7 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"server/api"
+	"server/background"
+	"server/payment"
+	"server/store"
 	"strings"
 	"time"
 
@@ -17,23 +21,55 @@ import (
 // 4. Order management. Anthentication.
 
 func main() {
-	apiServer, err := api.NewAPI()
+	apikey := os.Getenv("NOWPAYMENT_API_KEY")
+	if apikey == "" {
+		log.Fatalln("empty nowpayment api key")
+	}
+	cstr := os.Getenv("ConnectStr")
+	if cstr == "" {
+		log.Fatalln("empty cosmos connect str")
+	}
+	payClient := payment.NewClient("https://api.nowpayments.io/v1/invoice", apikey)
+	mstore := store.NewMongoStore(cstr)
+	if err := mstore.Connect(); err != nil {
+		log.Fatal(err)
+	}
+	apiServer, err := api.NewAPI(payClient, mstore)
 	if err != nil {
 		log.Fatalf("Failed to create api %s", err)
 	}
-	r := mux.NewRouter()
-	r.Use(CORSMiddleware)
-	r.Methods(http.MethodPost).Path("/api/order").HandlerFunc(apiServer.CreateOrder)
-	r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
-	srv := &http.Server{
-		Handler: r,
-		Addr:    "0.0.0.0:8000",
-		// Good practice: enforce timeouts for servers you create!
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
+	role := os.Getenv("Role")
+
+	if role == "management" {
+		log.Default().Println("start as management")
+		go background.NewBackGround(mstore, payClient).Run()
+		r := mux.NewRouter()
+		r.Use(CORSMiddleware)
+		r.Methods(http.MethodGet).Path("/api/order").HandlerFunc(apiServer.ListOrder)
+		r.Methods(http.MethodPut).Path("/api/order").HandlerFunc(apiServer.UpdateOrder)
+		r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
+		srv := &http.Server{
+			Handler:      r,
+			Addr:         "0.0.0.0:8080",
+			WriteTimeout: 15 * time.Second,
+			ReadTimeout:  15 * time.Second,
+		}
+		log.Fatal(srv.ListenAndServe())
+	} else {
+		log.Default().Println("start as shopping")
+		r := mux.NewRouter()
+		r.Use(CORSMiddleware)
+		r.Methods(http.MethodPost).Path("/api/order").HandlerFunc(apiServer.CreateOrder)
+		r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
+		srv := &http.Server{
+			Handler:      r,
+			Addr:         "0.0.0.0:8080",
+			WriteTimeout: 15 * time.Second,
+			ReadTimeout:  15 * time.Second,
+		}
+		log.Fatal(srv.ListenAndServe())
 	}
 
-	log.Fatal(srv.ListenAndServe())
 }
 
 var AllowedMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}

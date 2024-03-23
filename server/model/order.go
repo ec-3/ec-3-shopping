@@ -1,8 +1,7 @@
 package model
 
 type Order struct {
-	FirstName   string `validate:"required"`
-	LastName    string `validate:"required"`
+	Name        string `validate:"required"`
 	CompanyName string
 	Country     string         `validate:"required"`
 	Province    string         `validate:"required"`
@@ -16,6 +15,22 @@ type Order struct {
 	PaymentID   string
 	PaymentURL  string
 	Amount      int `validate:"required"`
-	Status      int // 0 for created. 1 for paid. 2 for notified. 3 for finished.  9 for failed
+	Status      int
 	StatusStr   string
+	SuccURL     string `validate:"required"`
+	CancelURL   string `validate:"required"`
+
+	CreateTime    int
+	PaidTime      int
+	DepartureTime int
+	FinishTime    int
 }
+
+const (
+	StatusFailed   = 9
+	StatusCreated  = 0
+	StatusPaid     = 1
+	StatusNotified = 2
+	StatusSent     = 3
+	StatusDeliverd = 4
+)
