@@ -7,14 +7,10 @@ import (
 	"io"
 	"net"
 	"net/http"
-	"os"
 	"time"
 )
 
 func NewClient(url, key string) *Client {
-	if key == "" {
-		os.Exit(1)
-	}
 	t := &http.Transport{
 		Dial: (&net.Dialer{
 			Timeout:   60 * time.Second,

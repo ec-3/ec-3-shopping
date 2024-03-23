@@ -14,11 +14,34 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-var payClient = payment.NewClient("https://api.nowpayments.io/v1/invoice", os.Getenv("NOWPAYMENT_API_KEY"))
-var mstore = store.NewMongoStore(os.Getenv("ConnectStr"))
-var validate = validator.New(validator.WithRequiredStructEnabled())
+type API struct {
+	payClient *payment.Client
+	store     *store.MongoStore
+	validate  *validator.Validate
+}
 
-func CreateOrder(w http.ResponseWriter, r *http.Request) {
+func NewAPI() (*API, error) {
+	apikey := os.Getenv("NOWPAYMENT_API_KEY")
+	if apikey == "" {
+		return nil, fmt.Errorf("empty nowpayment api key")
+	}
+	cstr := os.Getenv("ConnectStr")
+	if cstr == "" {
+		return nil, fmt.Errorf("empty cosmos connect str")
+	}
+	payClient := payment.NewClient("https://api.nowpayments.io/v1/invoice", apikey)
+	mstore := store.NewMongoStore(cstr)
+	if err := mstore.Connect(); err != nil {
+		return nil, err
+	}
+	return &API{
+		payClient: payClient,
+		store:     mstore,
+		validate:  validator.New(validator.WithRequiredStructEnabled()),
+	}, nil
+}
+
+func (api *API) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
@@ -31,12 +54,12 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error unmarshalling JSON", http.StatusBadRequest)
 		return
 	}
-	if err := validateOrder(order); err != nil {
+	if err := api.validateOrder(order); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	order.Status = 0
-	payUrl, err := createOrder(&order)
+	payUrl, err := api.createOrder(&order)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
@@ -45,14 +68,14 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, payUrl)
 }
 
-func createOrder(order *model.Order) (string, error) {
-	id, url, err := payClient.Pay(order.Amount, "xxxx", "https://www.ec-cube.io/mall", "https://www.ec-cube.io/mall")
+func (api *API) createOrder(order *model.Order) (string, error) {
+	id, url, err := api.payClient.Pay(order.Amount, "xxxx", "https://www.ec-cube.io/mall", "https://www.ec-cube.io/mall")
 	if err != nil {
 		return "", err
 	}
 	order.PaymentID = id
 	order.PaymentURL = url
-	if err := mstore.CreateOrder(order); err != nil {
+	if err := api.store.CreateOrder(order); err != nil {
 		return "", err
 	}
 	return order.PaymentURL, nil
@@ -64,8 +87,8 @@ func generateID(order model.Order) string {
 	return fmt.Sprintf("%x", checksum)
 }
 
-func validateOrder(order model.Order) error {
-	err := validate.Struct(order)
+func (api *API) validateOrder(order model.Order) error {
+	err := api.validate.Struct(order)
 	if err != nil {
 		return err
 	}

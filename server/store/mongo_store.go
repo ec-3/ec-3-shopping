@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"os"
 	"server/model"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -18,9 +17,6 @@ const database = "cube"
 const orderCollection = "order"
 
 func NewMongoStore(cstr string) *MongoStore {
-	if cstr == "" {
-		os.Exit(1)
-	}
 	return &MongoStore{cstr: cstr}
 }
 
