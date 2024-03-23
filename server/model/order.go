@@ -13,8 +13,9 @@ type Order struct {
 	Phone       string         `validate:"required,e164"`
 	Email       string         `validate:"required,email"`
 	Details     map[string]int `validate:"required"`
-	Status      int
 	PaymentID   string
 	PaymentURL  string
 	Amount      int `validate:"required"`
+	Status      int // 0 for created. 1 for paid. 2 for notified. 3 for finished.  9 for failed
+	StatusStr   string
 }

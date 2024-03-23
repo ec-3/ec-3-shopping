@@ -15,7 +15,7 @@ import (
 )
 
 var payClient = payment.NewClient("https://api.nowpayments.io/v1/invoice", os.Getenv("NOWPAYMENT_API_KEY"))
-var mstore = store.NewMemStore()
+var mstore = store.NewMongoStore(os.Getenv("ConnectStr"))
 var validate = validator.New(validator.WithRequiredStructEnabled())
 
 func CreateOrder(w http.ResponseWriter, r *http.Request) {
@@ -35,6 +35,7 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	order.Status = 0
 	payUrl, err := createOrder(&order)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
