@@ -44,12 +44,11 @@ func main() {
 		log.Default().Println("start as management")
 		go background.NewBackGround(mstore, payClient).Run()
 		r := mux.NewRouter()
-		r.Use(CORSMiddleware)
 		r.Methods(http.MethodGet).Path("/api/order").HandlerFunc(apiServer.ListOrder)
 		r.Methods(http.MethodPut).Path("/api/order").HandlerFunc(apiServer.UpdateOrder)
 		r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
 		srv := &http.Server{
-			Handler:      r,
+			Handler:      CORSMiddleware(r),
 			Addr:         "0.0.0.0:8080",
 			WriteTimeout: 15 * time.Second,
 			ReadTimeout:  15 * time.Second,
@@ -58,11 +57,10 @@ func main() {
 	} else {
 		log.Default().Println("start as shopping")
 		r := mux.NewRouter()
-		r.Use(CORSMiddleware)
 		r.Methods(http.MethodPost).Path("/api/order").HandlerFunc(apiServer.CreateOrder)
 		r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
 		srv := &http.Server{
-			Handler:      r,
+			Handler:      CORSMiddleware(r),
 			Addr:         "0.0.0.0:8080",
 			WriteTimeout: 15 * time.Second,
 			ReadTimeout:  15 * time.Second,
@@ -76,10 +74,10 @@ var AllowedMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 
 func CORSMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "https://www.ec-cube.io")
 		w.Header().Set("Access-Control-Allow-Methods", strings.Join(AllowedMethods, ","))
 		w.Header().Set("Access-Control-Allow-Headers", "*")
-		if r.Method == "OPTIONS" {
+		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
 			return
 		}

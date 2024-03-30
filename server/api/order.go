@@ -150,6 +150,11 @@ func (api *API) UpdateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	order := orders[0]
+	// check status
+	validateStatus(req.Status, order)
+
+	// double check: make sure the previous status is correct.
+	filter = bson.D{{"paymentid", order.PaymentID}, {"status", order.Status}}
 	order.Status = req.Status
 	if req.Status == model.StatusSent {
 		order.DepartureTime = int(time.Now().Unix())
@@ -157,10 +162,24 @@ func (api *API) UpdateOrder(w http.ResponseWriter, r *http.Request) {
 	if req.Status == model.StatusDeliverd {
 		order.FinishTime = int(time.Now().Unix())
 	}
-	api.store.UpdateOrder(order)
+	api.store.UpdateOrderWithFilter(order, filter)
 	bs, _ := json.Marshal(order)
 	w.WriteHeader(200)
 	w.Write(bs)
+}
+
+func validateStatus(status int, order *model.Order) error {
+	switch status {
+	case model.StatusDeliverd:
+		if order.Status == model.StatusSent {
+			return nil
+		}
+	case model.StatusSent:
+		if order.Status == model.StatusPaid {
+			return nil
+		}
+	}
+	return fmt.Errorf("Invalid status update req: previous status %d, target status %d", order.Status, status)
 }
 
 func (api *API) createOrder(order *model.Order) (string, error) {
