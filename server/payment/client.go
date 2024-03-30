@@ -7,24 +7,20 @@ import (
 	"io"
 	"net"
 	"net/http"
-	"os"
 	"time"
 )
 
 func NewClient(url, key string) *Client {
-	if key == "" {
-		os.Exit(1)
-	}
 	t := &http.Transport{
 		Dial: (&net.Dialer{
 			Timeout:   60 * time.Second,
 			KeepAlive: 30 * time.Second,
 		}).Dial,
-		// We use ABSURDLY large keys, and should probably not.
 		TLSHandshakeTimeout: 60 * time.Second,
 	}
 	httpClient := &http.Client{
 		Transport: t,
+		Timeout:   60 * time.Second,
 	}
 	return &Client{
 		apikey:     key,
@@ -52,6 +48,32 @@ func (c *Client) Pay(price int, desc string, succURL string, cancelURL string) (
 		return "", "", err
 	}
 	return resp.ID, resp.InvoiceURL, nil
+}
+
+func (c *Client) GetStatus(url string) (string, error) {
+	httpReq, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return "", err
+	}
+	httpReq.Header.Set("x-api-key", c.apikey)
+	res, err := c.httpClient.Do(httpReq)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		msg, err := io.ReadAll(res.Body)
+		if err != nil {
+			return "", err
+		}
+		return "", fmt.Errorf("Retcode %d, msg %s", res.StatusCode, msg)
+	}
+	resp := &StatusResp{}
+	err = json.NewDecoder(res.Body).Decode(resp)
+	if err != nil {
+		return "", err
+	}
+	return resp.PaymentStatus, nil
 }
 
 func (c *Client) pay(req *PayReq) (*PayResp, error) {
@@ -101,4 +123,8 @@ type PayResp struct {
 	CancelURL        string    `json:"cancel_url"`
 	CreatedAt        time.Time `json:"created_at"`
 	UpdatedAt        time.Time `json:"updated_at"`
+}
+
+type StatusResp struct {
+	PaymentStatus string `json:"payment_status"`
 }
