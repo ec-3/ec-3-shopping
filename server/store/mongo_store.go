@@ -64,11 +64,14 @@ func (s *MongoStore) ListOrders(status int) ([]*model.Order, error) {
 	return ret, nil
 }
 
-func (s *MongoStore) ListOrdersByFilter(filter bson.D) ([]*model.Order, error) {
+func (s *MongoStore) ListOrdersByFilter(filter bson.D, skip int, limit int) ([]*model.Order, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	collection := s.client.Database(database).Collection(orderCollection)
-	rs, err := collection.Find(ctx, filter)
+	findOptions := options.Find()
+	findOptions.SetSkip(int64(skip))
+	findOptions.SetLimit(int64(limit))
+	rs, err := collection.Find(ctx, filter, findOptions)
 	if err != nil {
 		return nil, err
 	}
