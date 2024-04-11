@@ -66,7 +66,26 @@ func (api *API) ListOrder(w http.ResponseWriter, r *http.Request) {
 	phone := r.URL.Query().Get("phone")
 	status := r.URL.Query().Get("status")
 
+	skip := 0
+	limit := 100
+	pageSize := r.URL.Query().Get("pagesize")
+	pageNum := r.URL.Query().Get("pagenum")
+	if pageSize != "" && pageNum != "" {
+		s, err := strconv.Atoi(pageSize)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		n, err := strconv.Atoi(pageNum)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		skip = (n - 1) * s
+		limit = s
+	}
 	filter := bson.D{{}}
+
 	if starttime != "" {
 		s, err := strconv.Atoi(starttime)
 		if err != nil {
@@ -90,7 +109,8 @@ func (api *API) ListOrder(w http.ResponseWriter, r *http.Request) {
 		filter = append(filter, bson.E{"phone", phone})
 	}
 	if name != "" {
-		filter = append(filter, bson.E{"name", name})
+		filter = append(filter, bson.E{"name", bson.D{{"$regex", name}}})
+		// filter = append(filter, bson.E{"name", name})
 	}
 	if status != "" {
 		s, err := strconv.Atoi(status)
@@ -100,7 +120,7 @@ func (api *API) ListOrder(w http.ResponseWriter, r *http.Request) {
 		}
 		filter = append(filter, bson.E{"status", s})
 	}
-	orders, err := api.store.ListOrdersByFilter(filter)
+	orders, err := api.store.ListOrdersByFilter(filter, skip, limit)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -136,7 +156,7 @@ func (api *API) UpdateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	filter := bson.D{{"paymentid", req.ID}}
-	orders, err := api.store.ListOrdersByFilter(filter)
+	orders, err := api.store.ListOrdersByFilter(filter, 0, 100)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

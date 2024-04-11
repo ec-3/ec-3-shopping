@@ -1,6 +1,7 @@
 package background
 
 import (
+	"fmt"
 	"log"
 	"server/model"
 	"server/payment"
@@ -31,7 +32,7 @@ func (bg *BackGround) processOrders() {
 		return
 	}
 	for _, order := range unpaidOrders {
-		status, err := bg.payClient.GetStatus(order.PaymentURL)
+		status, err := bg.payClient.GetStatus(fmt.Sprintf("https://api.nowpayments.io/v1/payment/%s", order.PaymentID))
 		if err != nil {
 			log.Default().Printf("Failed to get status for pay %s, err %s", order.PaymentURL, err)
 			continue
