@@ -26,6 +26,7 @@ func SendEmail(receiver string, subject, body string) error {
 	auth := smtp.PlainAuth("", config.Sender, passwd, config.SMTPHost)
 	message := []byte("To: " + receiver + "\r\n" +
 		"Subject: " + subject + "\r\n" +
+		"From: " + config.Sender + "\r\n" +
 		"\r\n" +
 		body + "\r\n")
 	return smtp.SendMail(config.SMTPHost+":"+config.SMTPPort, auth, config.Sender, []string{receiver}, message)

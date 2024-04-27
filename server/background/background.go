@@ -32,13 +32,14 @@ func (bg *BackGround) processOrders() {
 		return
 	}
 	for _, order := range unpaidOrders {
-		status, err := bg.payClient.GetStatus(fmt.Sprintf("https://api.nowpayments.io/v1/payment/%s", order.PaymentID))
+		url := fmt.Sprintf("https://api.nowpayments.io/v1/payment/%s", order.PaymentID)
+		status, err := bg.payClient.GetStatus(url)
 		if err != nil {
-			log.Default().Printf("Failed to get status for pay %s, err %s", order.PaymentURL, err)
+			log.Default().Printf("Failed to get status for pay %s, err %s", url, err)
 			continue
 		}
 		if status == "" {
-			log.Default().Printf("Failed to get status for pay %s, empty status", order.PaymentURL)
+			log.Default().Printf("Failed to get status for pay %s, empty status", url)
 			continue
 		}
 		if status == "finished" {
