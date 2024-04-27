@@ -125,10 +125,11 @@ func (api *API) ListOrder(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	if len(orders) == 0 {
-		http.Error(w, "Not Found", http.StatusNotFound)
-		return
-	}
+	// not return 404.
+	//if len(orders) == 0 {
+	//	http.Error(w, "Not Found", http.StatusNotFound)
+	//	return
+	//}
 	bs, _ := json.Marshal(orders)
 	w.WriteHeader(http.StatusOK)
 	w.Write(bs)

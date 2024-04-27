@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"server/api"
@@ -48,7 +50,7 @@ func main() {
 		r.Methods(http.MethodPut).Path("/api/order").HandlerFunc(apiServer.UpdateOrder)
 		r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
 		srv := &http.Server{
-			Handler:      CORSMiddleware(r),
+			Handler:      r,
 			Addr:         "0.0.0.0:8080",
 			WriteTimeout: 15 * time.Second,
 			ReadTimeout:  15 * time.Second,
@@ -60,7 +62,7 @@ func main() {
 		r.Methods(http.MethodPost).Path("/api/order").HandlerFunc(apiServer.CreateOrder)
 		r.Methods(http.MethodGet).Path("/hello").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.Write([]byte("hello")) })
 		srv := &http.Server{
-			Handler:      CORSMiddleware(r),
+			Handler:      IPBlockMiddleware(r),
 			Addr:         "0.0.0.0:8080",
 			WriteTimeout: 15 * time.Second,
 			ReadTimeout:  15 * time.Second,
@@ -70,6 +72,7 @@ func main() {
 
 }
 
+// This is not used now since CORS can be configured in Azure Web Service
 var AllowedMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 
 func CORSMiddleware(next http.Handler) http.Handler {
@@ -86,6 +89,25 @@ func CORSMiddleware(next http.Handler) http.Handler {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func IPBlockMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		tcpAddr, ok := r.Context().Value(http.LocalAddrContextKey).(net.Addr)
+		if !ok {
+			fmt.Println("Failed to retrieve TCP address")
+			return
+		}
+		// Extract IP address from the TCP address
+		ipAddress, _, err := net.SplitHostPort(tcpAddr.String())
+		if err != nil {
+			fmt.Println("Error extracting IP address:", err)
+			return
+		}
+		// Print the IP address
+		fmt.Println("Incoming request from IP:", ipAddress)
 		next.ServeHTTP(w, r)
 	})
 }

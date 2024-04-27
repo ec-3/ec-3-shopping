@@ -71,6 +71,7 @@ func (s *MongoStore) ListOrdersByFilter(filter bson.D, skip int, limit int) ([]*
 	findOptions := options.Find()
 	findOptions.SetSkip(int64(skip))
 	findOptions.SetLimit(int64(limit))
+	findOptions.SetSort(bson.D{{"createtime", -1}})
 	rs, err := collection.Find(ctx, filter, findOptions)
 	if err != nil {
 		return nil, err
