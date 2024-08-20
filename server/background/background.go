@@ -3,6 +3,7 @@ package background
 import (
 	"fmt"
 	"log"
+	"server/mail"
 	"server/model"
 	"server/payment"
 	"server/store"
@@ -46,6 +47,7 @@ func (bg *BackGround) processOrders() {
 			log.Default().Printf("Found 1 paid order. About to send email.")
 			// send email and update cosmos as notified.
 			//TODO: Send email
+			mail.SendEmail(order.Email, "Order Confirmation: Your Order Has Been Successfully Placed!", "Thank you for your recent order with us! We are excited to confirm that your order has been successfully placed. Your order will be delivered to the following address: "+order.Address)
 			order.Status = model.StatusNotified
 			order.PaidTime = int(time.Now().Unix())
 			bg.store.UpdateOrder(order)
