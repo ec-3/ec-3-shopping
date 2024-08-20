@@ -3,6 +3,7 @@ package background
 import (
 	"fmt"
 	"log"
+	"server/mail"
 	"server/model"
 	"server/payment"
 	"server/store"
@@ -32,19 +33,21 @@ func (bg *BackGround) processOrders() {
 		return
 	}
 	for _, order := range unpaidOrders {
-		status, err := bg.payClient.GetStatus(fmt.Sprintf("https://api.nowpayments.io/v1/payment/%s", order.PaymentID))
+		url := fmt.Sprintf("https://api.nowpayments.io/v1/payment/%s", order.PaymentID)
+		status, err := bg.payClient.GetStatus(url)
 		if err != nil {
-			log.Default().Printf("Failed to get status for pay %s, err %s", order.PaymentURL, err)
+			log.Default().Printf("Failed to get status for pay %s, err %s", url, err)
 			continue
 		}
 		if status == "" {
-			log.Default().Printf("Failed to get status for pay %s, empty status", order.PaymentURL)
+			log.Default().Printf("Failed to get status for pay %s, empty status", url)
 			continue
 		}
 		if status == "finished" {
 			log.Default().Printf("Found 1 paid order. About to send email.")
 			// send email and update cosmos as notified.
 			//TODO: Send email
+			mail.SendEmail(order.Email, "Order Confirmation: Your Order Has Been Successfully Placed!", "Thank you for your recent order with us! We are excited to confirm that your order has been successfully placed. Your order will be delivered to the following address: "+order.Address)
 			order.Status = model.StatusNotified
 			order.PaidTime = int(time.Now().Unix())
 			bg.store.UpdateOrder(order)
